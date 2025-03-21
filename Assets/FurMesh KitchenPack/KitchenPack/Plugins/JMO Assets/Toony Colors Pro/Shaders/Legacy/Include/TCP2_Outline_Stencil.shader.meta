@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 6a47c98d22d7b354aa739e29001b2f61
+timeCreated: 1497606515
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 257443
+  packageName: 3D Game Ready Kitchen Mini Pack
+  packageVersion: 1.0.0
+  assetPath: Assets/FurMesh KitchenPack/KitchenPack/Plugins/JMO Assets/Toony Colors
+    Pro/Shaders/Legacy/Include/TCP2_Outline_Stencil.shader
+  uploadId: 610421

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 22f2ef54430906348b022b68ba895598
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 257443
+  packageName: 3D Game Ready Kitchen Mini Pack
+  packageVersion: 1.0.0
+  assetPath: Assets/FurMesh KitchenPack/KitchenPack/Plugins/JMO Assets/Toony Colors
+    Pro/Scripts/TCP2_CameraDepth.cs
+  uploadId: 610421

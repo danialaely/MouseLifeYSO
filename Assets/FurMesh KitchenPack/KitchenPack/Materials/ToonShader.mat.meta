@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7b391fe6bd477454dafdf2a0c86ec638
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 257443
+  packageName: 3D Game Ready Kitchen Mini Pack
+  packageVersion: 1.0.0
+  assetPath: Assets/FurMesh KitchenPack/KitchenPack/Materials/ToonShader.mat
+  uploadId: 610421

@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 5d83281ea07708940a9cf4fe0b981655
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 257443
+  packageName: 3D Game Ready Kitchen Mini Pack
+  packageVersion: 1.0.0
+  assetPath: Assets/FurMesh KitchenPack/KitchenPack/Plugins/JMO Assets/Toony Colors
+    Pro/Shaders/Hybrid/TCP2 Hybrid URP Support.cginc
+  uploadId: 610421

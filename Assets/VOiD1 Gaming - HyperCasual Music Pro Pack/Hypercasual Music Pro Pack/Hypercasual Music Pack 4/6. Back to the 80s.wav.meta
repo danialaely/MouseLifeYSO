@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: f3a61cb990eac214da530ab4e07007be
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 174379
+  packageName: Untitled
+  packageVersion: 1.0
+  assetPath: Assets/VOiD1 Gaming - HyperCasual Music Pro Pack/Hypercasual Music Pro
+    Pack/Hypercasual Music Pack 4/6. Back to the 80s.wav
+  uploadId: 378081

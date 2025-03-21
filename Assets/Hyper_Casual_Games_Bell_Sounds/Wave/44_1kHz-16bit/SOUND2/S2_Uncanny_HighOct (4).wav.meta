@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: b5a17330333b57e47a5f9943d585a530
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 307922
+  packageName: 'HYPER-CASUAL GAMES: BELL SOUNDS'
+  packageVersion: 1.0
+  assetPath: Assets/Hyper_Casual_Games_Bell_Sounds/Wave/44_1kHz-16bit/SOUND2/S2_Uncanny_HighOct
+    (4).wav
+  uploadId: 723704

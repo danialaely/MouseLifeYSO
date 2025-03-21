@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: f8d49205b3b0a644195633020367689d
+timeCreated: 1468581146
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 257443
+  packageName: 3D Game Ready Kitchen Mini Pack
+  packageVersion: 1.0.0
+  assetPath: Assets/FurMesh KitchenPack/KitchenPack/Plugins/JMO Assets/Toony Colors
+    Pro/Shaders/Standard PBS/TCP2_Standard PBS.shader
+  uploadId: 610421

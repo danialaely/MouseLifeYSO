@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: a6da473b89caeb1409bac856668af764
+timeCreated: 1532449519
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 257443
+  packageName: 3D Game Ready Kitchen Mini Pack
+  packageVersion: 1.0.0
+  assetPath: Assets/FurMesh KitchenPack/KitchenPack/Plugins/JMO Assets/Toony Colors
+    Pro/Shaders/Legacy/Variants Base/TCP2_Mobile_Specular.shader
+  uploadId: 610421

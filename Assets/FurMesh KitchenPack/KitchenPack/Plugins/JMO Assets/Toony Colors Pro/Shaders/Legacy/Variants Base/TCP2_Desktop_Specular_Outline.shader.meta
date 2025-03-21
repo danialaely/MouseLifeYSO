@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: fdcc1f820770fb24da5893988fbe0a8d
+timeCreated: 1532449258
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 257443
+  packageName: 3D Game Ready Kitchen Mini Pack
+  packageVersion: 1.0.0
+  assetPath: Assets/FurMesh KitchenPack/KitchenPack/Plugins/JMO Assets/Toony Colors
+    Pro/Shaders/Legacy/Variants Base/TCP2_Desktop_Specular_Outline.shader
+  uploadId: 610421
