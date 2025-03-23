@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.AI.Navigation;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class MouseMovement : MonoBehaviour
 {
@@ -34,7 +35,11 @@ public class MouseMovement : MonoBehaviour
     public GameObject cheesePopUpPanel;
     public GameObject giftPopUpPanel;
     public GameObject Cam;
-                                          //TO BE DONE: In this prototype the player has to gather multple items to enable/spawn gift box.
+
+    public Slider cageSlider;   // Reference to the UI Slider
+    public float sliderSpeed = 0.5f; // Speed of slider movement
+
+    //TO BE DONE: In this prototype the player has to gather multple items to enable/spawn gift box.
     private void OnEnable()
     {
         playerControls.Enable();
@@ -52,6 +57,11 @@ public class MouseMovement : MonoBehaviour
         mouseAnim = GetComponent<Animator>();
         cheesePopUpPanel.SetActive(false);
         giftPopUpPanel.SetActive(false);
+
+        if (cageSlider != null) 
+        {
+            cageSlider.maxValue = maxCheese; // Set slider max value
+        }
     }
 
     void Update()
@@ -94,7 +104,7 @@ public class MouseMovement : MonoBehaviour
             Destroy(other.gameObject);  // Remove the cheese
             cheeseCount++;
             AudioManager.instance.PlaySFX("PickCheese4");
-            if (cheeseCount >= maxCheese)
+            if (cheeseCount > maxCheese)
             {
                 SpawnGift();
                 cheeseCount = 0; // Reset cheese count
@@ -121,6 +131,23 @@ public class MouseMovement : MonoBehaviour
                 currentWeapon.transform.localRotation = Quaternion.identity; // Reset rotation
             }
         }
+
+        if (other.CompareTag("cageCollider"))  // If colliding with the cage
+        {
+            StartCoroutine(AnimateSliderValue(cageSlider.value, cheeseCount));
+        }
+    }
+
+    private IEnumerator AnimateSliderValue(float startValue, float targetValue)
+    {
+        float elapsedTime = 0;
+        while (elapsedTime < sliderSpeed)
+        {
+            cageSlider.value = Mathf.Lerp(startValue, targetValue, elapsedTime / sliderSpeed);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        cageSlider.value = targetValue; // Ensure it reaches the exact target value
     }
 
     public void UseBtn()

@@ -8,6 +8,7 @@ TagManager:
   - Home
   - Gift
   - explosion
+  - cageCollider
   layers:
   - Default
   - TransparentFX
