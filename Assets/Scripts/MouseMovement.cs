@@ -17,8 +17,11 @@ public class MouseMovement : MonoBehaviour
     public GameObject useBtn;
 
     public GameObject[] weaponPrefabs; // Assign Mine, Bomb, Dynamite, Soccer Boot, Wheel in the Inspector
-    private GameObject currentWeapon; // Store the currently spawned weapon
-    public float throwForce = 1.0f; // Adjust the throw force as needed
+
+    
+    public GameObject currentWeapon; // Store the currently spawned weapon
+    
+    private float throwForce = 1.0f; // Adjust the throw force as needed
 
     public FixedJoystick joystick;
     public float SpeedMove = 5f;
@@ -35,9 +38,16 @@ public class MouseMovement : MonoBehaviour
     public GameObject cheesePopUpPanel;
     public GameObject giftPopUpPanel;
     public GameObject Cam;
+    public Vector3 camOffset;
 
     public Slider cageSlider;   // Reference to the UI Slider
+    public GameObject cageTxt;
     public float sliderSpeed = 0.5f; // Speed of slider movement
+    public GameObject cagePrefab;
+
+    public GameObject cageCol;
+    public GameObject cageconvertPE;
+
 
     //TO BE DONE: In this prototype the player has to gather multple items to enable/spawn gift box.
     private void OnEnable()
@@ -66,10 +76,11 @@ public class MouseMovement : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("CWWW:"+currentWeapon);
         Vector3 moveDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical).normalized;
         cheesePopUpPanel.transform.position = this.transform.position + new Vector3(0,1,1.5f);
         giftPopUpPanel.transform.position = this.transform.position + new Vector3(0,1,1.5f);
-        //Cam.transform.position = this.transform.position + new Vector3(0,20,-5.5f);
+        Cam.transform.position = this.transform.position + camOffset; //Vector3(0,20,-5.5f)
         if (moveDirection.magnitude > 0.1f) // Ensure movement input is present
         {
             // Move the player
@@ -104,38 +115,65 @@ public class MouseMovement : MonoBehaviour
             Destroy(other.gameObject);  // Remove the cheese
             cheeseCount++;
             AudioManager.instance.PlaySFX("PickCheese4");
-            if (cheeseCount > maxCheese)
+            if (cheeseCount >= maxCheese)
             {
                 SpawnGift();
-                cheeseCount = 0; // Reset cheese count
+               // cheeseCount = 0; // Reset cheese count
             }
         }
 
-        if (other.CompareTag("Gift")) 
+        if (other.CompareTag("Gift"))
         {
+            Debug.Log("Gift collision detected");
             Destroy(other.gameObject); // Destroy the gift
             useBtn.SetActive(true); // Enable the Use button
             AudioManager.instance.PlaySFX("PickGift");
             giftPopUpPanel.SetActive(true);
             StartCoroutine(DeactiveCheesePopUp(1.0f));
 
-            // Check if this object has at least one child
+            // Check if player has children (should be a hand or weapon holder)
             if (transform.childCount > 0 && weaponPrefabs.Length > 0)
             {
                 Transform targetChild = transform.GetChild(2); // Get the first child
+                Debug.Log("Target child for weapon: " + targetChild.name);
 
                 int randomIndex = Random.Range(0, weaponPrefabs.Length);
-                currentWeapon = Instantiate(weaponPrefabs[randomIndex], targetChild.position, Quaternion.identity);
-                currentWeapon.transform.SetParent(targetChild); // Set as a child of the first child
-                currentWeapon.transform.localPosition = Vector3.zero; // Keep centered in the child
-                currentWeapon.transform.localRotation = Quaternion.identity; // Reset rotation
+                GameObject newWeapon = Instantiate(weaponPrefabs[randomIndex], targetChild.position, Quaternion.identity);
+                newWeapon.transform.SetParent(targetChild); // Set as a child of the first child
+                newWeapon.transform.localPosition = Vector3.zero; // Keep centered in the child
+                newWeapon.transform.localRotation = Quaternion.identity; // Reset rotation
+
+                currentWeapon = newWeapon;
+                Debug.Log("Assigned currentWeapon: " + currentWeapon.name);
+            }
+            else
+            {
+                Debug.LogWarning("No child found or weaponPrefabs is empty!");
             }
         }
+
 
         if (other.CompareTag("cageCollider"))  // If colliding with the cage
         {
             StartCoroutine(AnimateSliderValue(cageSlider.value, cheeseCount));
+            Debug.Log(cheeseCount);
+            if (cheeseCount >= 4) 
+            {
+                Debug.Log("Cage Spawned");
+                cageCol = other.gameObject;
+                Instantiate(cageconvertPE, other.transform.position, Quaternion.identity);
+                StartCoroutine(DeactiveCageSlider(1.0f));
+            }
         }
+    }
+
+    
+    IEnumerator DeactiveCageSlider(float del) 
+    {
+        yield return new WaitForSeconds(del);
+                Instantiate(cagePrefab, cageCol.transform.position , Quaternion.Euler(-80.0f,0.0f,0.0f));
+                cageTxt.gameObject.SetActive(false);
+                cageSlider.gameObject.SetActive(false);
     }
 
     private IEnumerator AnimateSliderValue(float startValue, float targetValue)
@@ -152,32 +190,37 @@ public class MouseMovement : MonoBehaviour
 
     public void UseBtn()
     {
+        Debug.Log("UseBtn Pressed, currentWeapon: " + currentWeapon);
+
         if (currentWeapon != null)
         {
-            // Detach from any parent
+            Debug.Log("Throwing weapon: " + currentWeapon.name);
             currentWeapon.transform.SetParent(null);
 
-            // Add Rigidbody if not already present
             Rigidbody rb = currentWeapon.GetComponent<Rigidbody>();
-            Debug.Log("Weapom Name:"+rb.gameObject.name);
             if (rb == null)
             {
-                rb = currentWeapon.AddComponent<Rigidbody>(); // Add Rigidbody dynamically
+                rb = currentWeapon.AddComponent<Rigidbody>(); // Add Rigidbody if missing
+                rb.isKinematic = false;
+                rb.useGravity = true;
             }
 
-            // Apply force to throw it forward
-            if (rb.gameObject.name != "water_mine(Clone)") 
+            if (rb.gameObject.name != "water_mine(Clone)")
             {
                 rb.linearVelocity = transform.forward * throwForce;
+                Debug.Log(rb.name);
             }
+
             hasthrown = true;
             StartCoroutine(thrownfalse(5.0f));
             catRB.isKinematic = false;
-            // Clear reference
-            currentWeapon = null;
 
-            // Hide the button since we used the weapon
+            currentWeapon = null;
             useBtn.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("Weapon is still NULL!");
         }
     }
 
@@ -196,6 +239,7 @@ public class MouseMovement : MonoBehaviour
     {
         Vector3 randomPosition = GetRandomPointOnNavMesh();
         Instantiate(giftPrefab, randomPosition, Quaternion.identity);
+        giftPrefab.SetActive(true);
     }
 
     Vector3 GetRandomPointOnNavMesh()

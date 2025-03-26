@@ -152,6 +152,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 3
   radius: 5
-  force: 700000
   mouse: {fileID: 0}
   explosionEffect: {fileID: 0}

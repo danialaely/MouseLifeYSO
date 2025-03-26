@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3634a003248f2a642bce53d7d022c3e6
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 181244
+  packageName: Cat Puss Animated
+  packageVersion: 1.0
+  assetPath: Assets/GamePropsFactory/CatPussAnimated/ReadMe/AnimationFrames.txt
+  uploadId: 396227

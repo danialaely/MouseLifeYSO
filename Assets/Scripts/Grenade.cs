@@ -5,7 +5,7 @@ public class Grenade : MonoBehaviour
 {
     public float delay = 3f;
     public float radius = 5f;
-    public float force = 700000f;
+    private float force = 700f;
 
     float countdown;
     bool hasExploded = false;
@@ -20,7 +20,8 @@ public class Grenade : MonoBehaviour
     {
         countdown = delay;
         mouse = FindFirstObjectByType<MouseMovement>();
-        explosionEffect = Resources.Load<GameObject>("Prefabs/ExplosionEffect Variant");
+        //explosionEffect = Resources.Load<GameObject>("Prefabs/ExplosionEffect Variant");
+        explosionEffect = Resources.Load<GameObject>("Prefabs/CFXR Explosion 1 + Text");
     }
 
     // Update is called once per frame

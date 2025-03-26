@@ -12,7 +12,7 @@ public class CameraMov : MonoBehaviour
 
     public Transform playerTarget;
     private Vector3 originalPosition; // To store the original position of the camera
-
+    //Previous Camera rotation = 79.54 if script is enabled
     private void Start()
     {
     }

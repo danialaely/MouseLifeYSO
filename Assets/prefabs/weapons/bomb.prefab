@@ -111,7 +111,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -152,6 +152,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 3
   radius: 5
-  force: 700000
   mouse: {fileID: 0}
   explosionEffect: {fileID: 0}

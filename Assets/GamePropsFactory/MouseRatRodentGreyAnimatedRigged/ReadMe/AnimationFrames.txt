@@ -1,0 +1,63 @@
+
+Note:
+
+1. Remember to playback the animations at 30 fps by changing the frame rate in time slider preferences in Maya and accordingly in other programs.
+   The FBX contained in this pack is Unity3d tested and set at 30 fps.
+
+2. Textures will automatically get applied to the model if the texture file is placed in the same directory as the animation file.
+   Textures at different resolutions are included in the package and named accordingly.
+
+3. The lighting is baked in the texture.
+
+4. The entire model is rigged including the face(Mouth, Eyes, Ears).
+
+Different animations have the following ranges:
+
+Total Range: 20-1088
+
+1. Jump 	          ------- 20-61
+
+2. Leap right             ------- 62-84
+
+3. Leap left		  ------- 84-106
+
+4. Skidding		  ------- 106-155
+
+5. Roll			  ------- 155-183
+
+6. Crash & death	  ------- 183-225
+
+7. Whirl jump		  ------- 225-286
+
+8. Waving in air	  ------- 288-345
+
+9. Backwards run	  ------- 345-378
+
+10. Dizzy		  ------- 378-434
+
+11. Double Roll		  ------- 434-463
+
+12. Looking behind	  ------- 465-506
+
+13. Skidding 2		  ------- 506-555
+
+14. Whirl		  ------- 555-586
+
+15. Power up		  ------- 588-607
+
+16. Run		  	  ------- 610-630
+
+17. Idle		  ------- 632-776
+
+18. Gum bubble		  ------- 776-859
+
+19. Fall jump		  ------- 866-882
+
+20. Gliding		  ------- 882-960
+
+21. Idle & waving	  ------- 962-1088
+
+
+Please checkout our other exciting and moderately priced models on the store.
+
+Thanks for considering our product!
