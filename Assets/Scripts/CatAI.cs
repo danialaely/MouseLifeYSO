@@ -16,6 +16,7 @@ public class CatAI : MonoBehaviour
 
     public GameObject retryPanel;
     public GameObject BoomParticleEffect;
+    public GameObject HittingWallPE;
 
     private bool isChasing = false;
 
@@ -33,7 +34,7 @@ public class CatAI : MonoBehaviour
         BoomParticleEffect.SetActive(false);
 
         rb = GetComponent<Rigidbody>();
-
+        //rb.linearVelocity = Vector3.zero;
         // Get the 4th child (index 3) and its Light component
         spotLight = transform.GetChild(3).GetComponent<Light>();
 
@@ -129,6 +130,10 @@ public class CatAI : MonoBehaviour
             //AudioManager.instance.PlaySFX(AudioManager.instance.levelFailedSFX);
             BoomParticleEffect.SetActive(true);
             StartCoroutine(ActiveRetryPanel(1.2f));
+        }
+        if (collision.gameObject.CompareTag("Wall")) 
+        {
+           // Instantiate(HittingWallPE, this.transform.position, Quaternion.identity);
         }
     }
 

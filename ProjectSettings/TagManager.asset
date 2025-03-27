@@ -9,6 +9,8 @@ TagManager:
   - Gift
   - explosion
   - cageCollider
+  - FxTemporaire
+  - Wall
   layers:
   - Default
   - TransparentFX

@@ -115,7 +115,7 @@ public class MouseMovement : MonoBehaviour
             Destroy(other.gameObject);  // Remove the cheese
             cheeseCount++;
             AudioManager.instance.PlaySFX("PickCheese4");
-            if (cheeseCount >= maxCheese)
+            if (cheeseCount == maxCheese)
             {
                 SpawnGift();
                // cheeseCount = 0; // Reset cheese count
@@ -162,6 +162,7 @@ public class MouseMovement : MonoBehaviour
                 Debug.Log("Cage Spawned");
                 cageCol = other.gameObject;
                 Instantiate(cageconvertPE, other.transform.position, Quaternion.identity);
+                AudioManager.instance.PlaySFX("Cage2");
                 StartCoroutine(DeactiveCageSlider(1.0f));
             }
         }
@@ -207,7 +208,7 @@ public class MouseMovement : MonoBehaviour
 
             if (rb.gameObject.name != "water_mine(Clone)")
             {
-                rb.linearVelocity = transform.forward * throwForce;
+              //  rb.linearVelocity = transform.forward * throwForce;
                 Debug.Log(rb.name);
             }
 
@@ -250,8 +251,8 @@ public class MouseMovement : MonoBehaviour
 
         for (int i = 0; i < 10; i++) // Try 10 times to find a valid point
         {
-            float randomX = Random.Range(-5f, 5f); // Adjust based on your scene
-            float randomZ = Random.Range(-5f, 5f);
+            float randomX = Random.Range(-10f, 10f); // Adjust based on your scene
+            float randomZ = Random.Range(-10f, 10f);
             Vector3 randomPoint = new Vector3(randomX, 1.0f, randomZ); // Y is slightly above ground
 
             if (NavMesh.SamplePosition(randomPoint, out hit, 2.0f, NavMesh.AllAreas))
