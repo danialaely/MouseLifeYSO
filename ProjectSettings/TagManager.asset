@@ -11,6 +11,7 @@ TagManager:
   - cageCollider
   - FxTemporaire
   - Wall
+  - Bullet
   layers:
   - Default
   - TransparentFX

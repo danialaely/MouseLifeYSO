@@ -23,7 +23,7 @@ public class CatAI : MonoBehaviour
     private Light spotLight;   // Reference to the spotlight
     private Color originalColor; // Store the original colo
     //private float lastDistance = 0f;
-
+    Animator catAnimator;
     private Rigidbody rb;
     void Start()
     {
@@ -34,6 +34,7 @@ public class CatAI : MonoBehaviour
         BoomParticleEffect.SetActive(false);
 
         rb = GetComponent<Rigidbody>();
+        catAnimator = GetComponent<Animator>();
         //rb.linearVelocity = Vector3.zero;
         // Get the 4th child (index 3) and its Light component
         spotLight = transform.GetChild(3).GetComponent<Light>();
@@ -135,6 +136,17 @@ public class CatAI : MonoBehaviour
         {
            // Instantiate(HittingWallPE, this.transform.position, Quaternion.identity);
         }
+        if (collision.gameObject.CompareTag("Bullet")) 
+        {
+            catAnimator.SetBool("isBomb",true);
+            StartCoroutine(BackToRunning(2.0f));
+        }
+    }
+
+    IEnumerator BackToRunning(float del) 
+    {
+        yield return new WaitForSeconds(del);
+        catAnimator.SetBool("isBomb",false);
     }
 
     IEnumerator ActiveRetryPanel(float del) 
