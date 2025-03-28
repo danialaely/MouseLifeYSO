@@ -12,6 +12,8 @@ TagManager:
   - FxTemporaire
   - Wall
   - Bullet
+  - Effects
+  - SoundSource
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - SoundLayer
   - 
   - 
   - 
