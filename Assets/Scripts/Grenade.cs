@@ -32,10 +32,10 @@ public class Grenade : MonoBehaviour
         if (mouse.thrown()) 
         {
         countdown -= Time.deltaTime;
-        if (countdown <= 0 && !hasExploded && this.gameObject.name != "banana(Clone)") 
+        if (countdown <= 0 && !hasExploded && this.gameObject.name != "banana(Clone)" && this.gameObject.name != "Pistol_3(Clone)") 
         {
             Explode();
-        hasExploded = true;
+            hasExploded = true;
         }
         }
     }
@@ -102,7 +102,11 @@ public class Grenade : MonoBehaviour
                 AudioManager.instance.PlaySFX("Banana2");
                 Slip();
             }
-            else 
+            else if (this.gameObject.name == "Pistol(Clone)") 
+            {
+                Debug.Log("Shoot");
+            }
+            else
             {
                 Explode();
                 hasExploded = true;

@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using Unity.AI.Navigation;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MouseMovement : MonoBehaviour
 {
@@ -47,7 +48,9 @@ public class MouseMovement : MonoBehaviour
 
     public GameObject cageCol;
     public GameObject cageconvertPE;
-
+    GameObject newWeapon;
+    public GameObject bulletPrefab;
+    GameObject bullet;
 
     //TO BE DONE: In this prototype the player has to gather multple items to enable/spawn gift box.
     private void OnEnable()
@@ -77,6 +80,14 @@ public class MouseMovement : MonoBehaviour
     void Update()
     {
         Debug.Log("CWWW:"+currentWeapon);
+
+        if (bulletPrefab != null)
+        {
+            //Rigidbody bulletrb = bulletPrefab.GetComponent<Rigidbody>();
+            //bulletrb.linearVelocity = transform.forward * 100;
+           // Debug.Log("is it even moving?");
+           // bulletPrefab.transform.position += transform.forward * Time.deltaTime * 50;
+        }
         Vector3 moveDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical).normalized;
         cheesePopUpPanel.transform.position = this.transform.position + new Vector3(0,1,1.5f);
         giftPopUpPanel.transform.position = this.transform.position + new Vector3(0,1,1.5f);
@@ -100,6 +111,7 @@ public class MouseMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        
       //  Vector3 moveVector = new Vector3(moveDirection.x, 0, moveDirection.y) * speed; // Convert to 3D
        // rb.linearVelocity = moveVector; // Apply velocity for movement
       // transform.position += moveVector;
@@ -138,10 +150,33 @@ public class MouseMovement : MonoBehaviour
                 Debug.Log("Target child for weapon: " + targetChild.name);
 
                 int randomIndex = Random.Range(0, weaponPrefabs.Length);
-                GameObject newWeapon = Instantiate(weaponPrefabs[randomIndex], targetChild.position, Quaternion.identity);
-                newWeapon.transform.SetParent(targetChild); // Set as a child of the first child
-                newWeapon.transform.localPosition = Vector3.zero; // Keep centered in the child
-                newWeapon.transform.localRotation = Quaternion.identity; // Reset rotation
+
+                // Instantiate weapon normally if it's NOT pistol_3
+                if (randomIndex != 3)
+                {
+                    Debug.Log("Random Index: " + randomIndex);
+                    newWeapon = Instantiate(weaponPrefabs[randomIndex], targetChild.position, Quaternion.identity);
+                }
+                else
+                {
+                    // Special handling for pistol_3 (index 3)
+                    Debug.Log("Pistol index: " + randomIndex);
+                    newWeapon = Instantiate(weaponPrefabs[randomIndex], Vector3.zero, Quaternion.identity);
+                    newWeapon.transform.SetParent(targetChild); // Set as a child first
+
+                    newWeapon.transform.localPosition = new Vector3(1, 1, -5); // Position offset
+                    newWeapon.transform.localRotation = Quaternion.Euler(-90.0f, 90.0f, 0.0f); // Correct rotation
+                }
+
+                // Parent all weapons to targetChild
+                newWeapon.transform.SetParent(targetChild);
+
+                // If it's NOT pistol_3, reset position and rotation
+                if (randomIndex != 3)
+                {
+                    newWeapon.transform.localPosition = Vector3.zero;
+                    newWeapon.transform.localRotation = Quaternion.identity;
+                }
 
                 currentWeapon = newWeapon;
                 Debug.Log("Assigned currentWeapon: " + currentWeapon.name);
@@ -193,7 +228,7 @@ public class MouseMovement : MonoBehaviour
     {
         Debug.Log("UseBtn Pressed, currentWeapon: " + currentWeapon);
 
-        if (currentWeapon != null)
+        if (currentWeapon != null && currentWeapon.name != "Pistol_3(Clone)")
         {
             Debug.Log("Throwing weapon: " + currentWeapon.name);
             currentWeapon.transform.SetParent(null);
@@ -208,7 +243,7 @@ public class MouseMovement : MonoBehaviour
 
             if (rb.gameObject.name != "water_mine(Clone)")
             {
-              //  rb.linearVelocity = transform.forward * throwForce;
+                //  rb.linearVelocity = transform.forward * throwForce;
                 Debug.Log(rb.name);
             }
 
@@ -219,10 +254,34 @@ public class MouseMovement : MonoBehaviour
             currentWeapon = null;
             useBtn.SetActive(false);
         }
+        else if (currentWeapon != null && currentWeapon.name == "Pistol_3(Clone)") 
+        {
+            Transform bulletSpawnPoint = currentWeapon.transform.GetChild(0);
+            Debug.Log("Pistol hai Pistol");
+            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+            bullet.transform.SetParent(bulletSpawnPoint);
+            AudioManager.instance.PlaySFX("Bullet2");
+           // currentWeapon = null;
+            useBtn.SetActive(false);
+            StartCoroutine(DeactiveGun(2.0f));
+
+            bullet.transform.localPosition = Vector3.zero;
+            bullet.transform.localRotation = Quaternion.identity;
+            //hasthrown = true;
+            // bulletPrefab.transform.SetParent(null);
+
+        }
         else
         {
             Debug.LogError("Weapon is still NULL!");
         }
+    }
+
+    IEnumerator DeactiveGun(float del) 
+    {
+        yield return new WaitForSeconds(del);
+        Destroy(currentWeapon.gameObject);
+        currentWeapon = null;
     }
 
     public bool thrown() 
@@ -271,4 +330,8 @@ public class MouseMovement : MonoBehaviour
         giftPopUpPanel.SetActive(false);
     }
 
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }

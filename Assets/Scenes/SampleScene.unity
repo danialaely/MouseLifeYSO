@@ -733,6 +733,7 @@ MonoBehaviour:
   - {fileID: 555189751494242947, guid: 7093fb46755862e48a9fadc0f2527c5e, type: 3}
   - {fileID: 1199728781915932170, guid: b6edfd2b5590fac48b1ea6aac201a7fe, type: 3}
   - {fileID: 7415069322882024312, guid: 62854b0fa4e8a974badf84173c590fdb, type: 3}
+  - {fileID: 9141661214742953279, guid: 3a47821fbfa4779418b4e01958c3247a, type: 3}
   currentWeapon: {fileID: 0}
   joystick: {fileID: 1594342749}
   SpeedMove: 5
@@ -753,6 +754,7 @@ MonoBehaviour:
   cagePrefab: {fileID: 9050397187837690591, guid: ae77b554df99c784289e2034cdb9bac7, type: 3}
   cageCol: {fileID: 1082781138}
   cageconvertPE: {fileID: 130950576801574071, guid: 3aea0e148730e074eae87298a8e8ebdb, type: 3}
+  bulletPrefab: {fileID: 4852891095142546773, guid: 7f0e7bc4b8e179c47aec848828d2767d, type: 3}
 --- !u!4 &125532969 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1865022591899706479, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
@@ -1791,6 +1793,10 @@ PrefabInstance:
       value: Yellow_BigDesk
       objectReference: {fileID: 0}
     - target: {fileID: 2943541836656745270, guid: b1647c7b2840be444a410b8f98255884, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2943541836656745270, guid: b1647c7b2840be444a410b8f98255884, type: 3}
       propertyPath: m_TagString
       value: Wall
       objectReference: {fileID: 0}
@@ -2429,7 +2435,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 341477348}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 125532967}
+        m_TargetAssemblyTypeName: MouseMovement, Assembly-CSharp
+        m_MethodName: Restart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &341477348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3908,6 +3926,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
   - mName: Explosion2
     clip: {fileID: 8300000, guid: 7e26c9daf4c32483b9c2790e662d3f1b, type: 3}
+  - mName: Bullet2
+    clip: {fileID: 8300000, guid: 35fbad8cdde724f11ba6481f1e64af71, type: 3}
   musicSource: {fileID: 1455699655}
   sfxSource: {fileID: 1676768801}
   continuedFromGame: 0
@@ -6219,7 +6239,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &920789883
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6657,7 +6677,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2840153, y: 0, z: 0, w: 0.95881975}
-  m_LocalPosition: {x: 0.09, y: 20.64, z: -3.48}
+  m_LocalPosition: {x: 0.09, y: 20.64, z: -23.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9508,7 +9528,7 @@ Transform:
   m_GameObject: {fileID: 1374763772}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 0.48, z: -0.68}
+  m_LocalPosition: {x: 0.06, y: 0.48, z: -0.68}
   m_LocalScale: {x: 2.53, y: 1, z: 4.61}
   m_ConstrainProportionsScale: 0
   m_Children: []
