@@ -60,7 +60,7 @@ public class Grenade : MonoBehaviour
                 //this.gameObject.SetActive(false);
                 catRB = rb;
                 rb.AddExplosionForce(force, transform.position, radius);
-                StartCoroutine(activeCatkinematic(2.0f));
+               // StartCoroutine(activeCatkinematic(2.0f));
             }
             
             

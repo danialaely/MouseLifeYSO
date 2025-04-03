@@ -207,9 +207,10 @@ public class MouseMovement : MonoBehaviour
     IEnumerator DeactiveCageSlider(float del) 
     {
         yield return new WaitForSeconds(del);
-                Instantiate(cagePrefab, cageCol.transform.position , Quaternion.Euler(-80.0f,0.0f,0.0f));
-                cageTxt.gameObject.SetActive(false);
-                cageSlider.gameObject.SetActive(false);
+        Instantiate(cagePrefab, cageCol.transform.position , Quaternion.Euler(-80.0f,0.0f,0.0f));
+        cageTxt.gameObject.SetActive(false);
+        cageCol.gameObject.SetActive(false);
+        cageSlider.gameObject.SetActive(false);
     }
 
     private IEnumerator AnimateSliderValue(float startValue, float targetValue)
@@ -227,6 +228,9 @@ public class MouseMovement : MonoBehaviour
     public void UseBtn()
     {
         Debug.Log("UseBtn Pressed, currentWeapon: " + currentWeapon);
+        catRB.isKinematic = false;
+        catRB.useGravity = true;
+        StartCoroutine(ActiveKinem(4.0f));
 
         if (currentWeapon != null && currentWeapon.name != "Pistol_3(Clone)")
         {
@@ -249,7 +253,7 @@ public class MouseMovement : MonoBehaviour
 
             hasthrown = true;
             StartCoroutine(thrownfalse(5.0f));
-            catRB.isKinematic = false;
+            //catRB.isKinematic = false;
 
             currentWeapon = null;
             useBtn.SetActive(false);
@@ -275,6 +279,13 @@ public class MouseMovement : MonoBehaviour
         {
             Debug.LogError("Weapon is still NULL!");
         }
+    }
+
+    IEnumerator ActiveKinem(float del) 
+    {
+        yield return new WaitForSeconds(del);
+        catRB.isKinematic = true;
+        catRB.useGravity = false;
     }
 
     IEnumerator DeactiveGun(float del) 
