@@ -9,8 +9,8 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager instance;
 
-    public Sound[] musicsounds, sfxSounds;
-    public AudioSource musicSource, sfxSource;
+    public Sound[] musicsounds, sfxSounds, creakingsounds;
+    public AudioSource musicSource, sfxSource, creakingSource;
 
     public bool continuedFromGame;
 
@@ -62,6 +62,28 @@ public class AudioManager : MonoBehaviour
         else
         {
             sfxSource.PlayOneShot(s.clip);
+        }
+    }
+
+    public void StopSFX()
+    {
+        if (sfxSource != null)
+        {
+            sfxSource.Stop();
+        }
+    }
+
+    public void PlayCreaking(string name)
+    {
+        Sound s = Array.Find(creakingsounds, x => x.mName == name);
+
+        if (s == null)
+        {
+            Debug.Log("Sfx Not Found");
+        }
+        else
+        {
+            creakingSource.PlayOneShot(s.clip);
         }
     }
 

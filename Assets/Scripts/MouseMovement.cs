@@ -201,6 +201,12 @@ public class MouseMovement : MonoBehaviour
                 StartCoroutine(DeactiveCageSlider(1.0f));
             }
         }
+
+        if (other.CompareTag("CrackCollider")) 
+        {
+            Debug.Log("Creaking Sound");
+            AudioManager.instance.PlayCreaking("Creaking");
+        }
     }
 
     

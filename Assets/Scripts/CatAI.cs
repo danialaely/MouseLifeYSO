@@ -30,6 +30,12 @@ public class CatAI : MonoBehaviour
     public LayerMask soundLayer; // Layer for sound-emitting objects
     public Animator mouseAnim;
 
+    public GameObject questionMarkPanel;
+
+    private float lingerTime = 2.0f; // Time to linger after the sound stops
+    private float lingerTimer = 0.0f;
+    private Vector3 lastSoundPosition;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -52,44 +58,61 @@ public class CatAI : MonoBehaviour
         rb.isKinematic = true;
         rb.useGravity = false;
         Debug.Log("Kinematic enabled, Gravity disabled.");
+        questionMarkPanel.SetActive(false);
        // mouseAnim = mouse.GetComponent<Animator>();
     }
 
     void Update()
     {
+        questionMarkPanel.transform.position = this.transform.position + new Vector3(0, 3, 1.5f);
+
+        if (CanSeeMouse())
+        {
+            isChasing = true;
+            ChaseMouse();
+            ChangeSpotlightColor(Color.red); // Set light to red
+            questionMarkPanel.SetActive(false);
+            lingerTimer = 0.0f; // Reset linger timer when seeing the mouse
+            return;
+        }
+
         if (CanHearSound(out Vector3 soundPosition))
         {
             Debug.Log("Heard Sound");
             isChasing = true;
+            lastSoundPosition = soundPosition;
+            lingerTimer = lingerTime; // Reset linger timer when hearing sound
             ChaseSound(soundPosition);
-            //ChangeSpotlightColor(Color.yellow); // Set light to yellow for sound
+            questionMarkPanel.SetActive(true);
+            return;
         }
-        else if (CanSeeMouse())
-        {
-            isChasing = true;  // Start chasing
-            ChaseMouse();
-            ChangeSpotlightColor(Color.red); // Set light to red
-           // mouseAnim.SetBool("isChased",true);
-        }
-        else
-        {
-            if (isChasing) // If the agent was chasing but lost sight or hearing
-            {
-                isChasing = false; // Stop chasing
-                FindNearestPatrolPoint(); // Reassign a patrol target
-            }
 
-            if (!agent.pathPending && agent.remainingDistance <= 0.5f)
-            {
-                GoToNextPatrolPoint();
-            }
-            ChangeSpotlightColor(originalColor); // Revert light to original color
-           // mouseAnim.SetBool("isChased",false);
-            Debug.Log("isChased False");
+        // Linger after sound stops
+        if (lingerTimer > 0)
+        {
+            lingerTimer -= Time.deltaTime;
+            isChasing = true;
+            ChaseSound(lastSoundPosition);
+            questionMarkPanel.SetActive(true);
+            return;
         }
+
+        // If not chasing anymore
+        if (isChasing)
+        {
+            isChasing = false;
+            FindNearestPatrolPoint();
+        }
+
+        if (!agent.pathPending && agent.remainingDistance <= 0.5f)
+        {
+            GoToNextPatrolPoint();
+        }
+        ChangeSpotlightColor(originalColor);
+        questionMarkPanel.SetActive(false);
 
         // Rotate the cat in the direction it's moving
-        if (agent.velocity.magnitude > 0.1f) // Only rotate if moving
+        if (agent.velocity.magnitude > 0.1f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(agent.velocity.normalized);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
@@ -178,15 +201,17 @@ public class CatAI : MonoBehaviour
                     Debug.DrawRay(transform.position, directionToMouse * hit.distance, Color.green);
 
                     // Check if the raycast hit the mouse and not an obstacle
-                    if (hit.collider.name == "src")
+                    if (hit.collider.name == "MouseNew")
                     {
                         Debug.Log("Can See Mouse");
-                        return true;
                     }
                     else
                     {
                         Debug.Log("Obstacle detected: " + hit.collider.name);
                     }
+                       // AudioManager.instance.PlaySFX("Chase");
+                       // StartCoroutine(StopSfXChase(1.0f));
+                        return true;
                 }
                 else
                 {
@@ -205,6 +230,12 @@ public class CatAI : MonoBehaviour
         agent.destination = mouse.position;
     }
 
+    IEnumerator StopSfXChase(float del) 
+    {
+        yield return new WaitForSeconds(del);
+        AudioManager.instance.StopSFX();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -213,6 +244,7 @@ public class CatAI : MonoBehaviour
             mouseAnim.SetBool("isCaught", true);
             //AudioManager.instance.PlaySFX(AudioManager.instance.levelFailedSFX);
             BoomParticleEffect.SetActive(true);
+            AudioManager.instance.PlaySFX("LevelFailed");
             StartCoroutine(ActiveRetryPanel(1.2f));
         }
         if (collision.gameObject.CompareTag("Wall")) 
