@@ -51,6 +51,7 @@ public class MouseMovement : MonoBehaviour
     GameObject newWeapon;
     public GameObject bulletPrefab;
     GameObject bullet;
+    public ParticleSystem cheeseEffect;
 
     //TO BE DONE: In this prototype the player has to gather multple items to enable/spawn gift box.
     private void OnEnable()
@@ -127,6 +128,8 @@ public class MouseMovement : MonoBehaviour
             Destroy(other.gameObject);  // Remove the cheese
             cheeseCount++;
             AudioManager.instance.PlaySFX("PickCheese4");
+            PlayCheeseEffect();
+
             if (cheeseCount == maxCheese)
             {
                 SpawnGift();
@@ -209,7 +212,28 @@ public class MouseMovement : MonoBehaviour
         }
     }
 
-    
+    public void PlayCheeseEffect()
+    {
+        if (cheeseEffect != null)
+        {
+            cheeseEffect.Play();
+            // Stop the effect after 1 second
+            Invoke(nameof(StopCheeseEffect), 0.5f);
+        }
+        else
+        {
+            Debug.LogWarning("Particle effect not assigned.");
+        }
+    }
+
+    private void StopCheeseEffect()
+    {
+        if (cheeseEffect.isPlaying)
+        {
+            cheeseEffect.Stop();
+        }
+    }
+
     IEnumerator DeactiveCageSlider(float del) 
     {
         yield return new WaitForSeconds(del);
