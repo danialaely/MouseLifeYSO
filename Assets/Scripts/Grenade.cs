@@ -57,6 +57,12 @@ public class Grenade : MonoBehaviour
                 Debug.Log("Applied force");
                 catanim = rb.gameObject.GetComponent<Animator>();
                 catanim.SetBool("isDynamite", true);
+
+               CatAI catScript =  rb.gameObject.GetComponent<CatAI>();
+                int newCatHealth = catScript.catHealth -= 1;
+                catScript.SetCatHealth(newCatHealth);
+                Debug.Log("Cat's Health:"+newCatHealth);
+
                 //this.gameObject.SetActive(false);
                 catRB = rb;
                 rb.AddExplosionForce(force, transform.position, radius);

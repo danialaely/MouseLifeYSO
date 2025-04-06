@@ -31,7 +31,10 @@ public class MouseMovement : MonoBehaviour
     public bool hasthrown = false;
 
     public int cheeseCount = 0;
+    public int giftCheeseInterval = 4;  // Number of cheese required to spawn the gift
     public int maxCheese = 4;  // Number of cheese required to spawn the gift
+    private bool cageSpawned = false;
+
     public GameObject giftPrefab;  // Assign the gift prefab in Inspector
     public NavMeshSurface navMeshSurface; // Assign the baked NavMesh surface in Inspector
     public Rigidbody catRB;
@@ -74,7 +77,8 @@ public class MouseMovement : MonoBehaviour
 
         if (cageSlider != null) 
         {
-            cageSlider.maxValue = maxCheese; // Set slider max value
+            cageSlider.maxValue = maxCheese * 3; // Or just set to 12 manually
+            cageSlider.value = 0;
         }
     }
 
@@ -130,15 +134,23 @@ public class MouseMovement : MonoBehaviour
             AudioManager.instance.PlaySFX("PickCheese4");
             PlayCheeseEffect();
 
-            if (cheeseCount == maxCheese)
+            Debug.Log("Cheese Collected: " + cheeseCount);
+
+            // Spawn gift on reaching milestones: 4, 8, 12, 16...
+            if (cheeseCount % maxCheese == 0)
             {
                 SpawnGift();
-               // cheeseCount = 0; // Reset cheese count
             }
         }
 
         if (other.CompareTag("Gift"))
         {
+            Transform targetChild = transform.GetChild(2); // Get the first child
+            Debug.Log("Target child for weapon: " + targetChild.name);
+
+            if (targetChild.childCount == 0) 
+            { 
+
             Debug.Log("Gift collision detected");
             Destroy(other.gameObject); // Destroy the gift
             useBtn.SetActive(true); // Enable the Use button
@@ -149,8 +161,6 @@ public class MouseMovement : MonoBehaviour
             // Check if player has children (should be a hand or weapon holder)
             if (transform.childCount > 0 && weaponPrefabs.Length > 0)
             {
-                Transform targetChild = transform.GetChild(2); // Get the first child
-                Debug.Log("Target child for weapon: " + targetChild.name);
 
                 int randomIndex = Random.Range(0, weaponPrefabs.Length);
 
@@ -188,20 +198,29 @@ public class MouseMovement : MonoBehaviour
             {
                 Debug.LogWarning("No child found or weaponPrefabs is empty!");
             }
+            }
         }
 
 
         if (other.CompareTag("cageCollider"))  // If colliding with the cage
         {
+            // Animate slider to current cheese count
             StartCoroutine(AnimateSliderValue(cageSlider.value, cheeseCount));
-            Debug.Log(cheeseCount);
-            if (cheeseCount >= 4) 
+            Debug.Log("Cheese Count at Cage Collider: " + cheeseCount);
+
+            // Spawn cage only if cheeseCount >= 12 and not already spawned
+            if (cheeseCount >= 12 && !cageSpawned)
             {
-                Debug.Log("Cage Spawned");
+                Debug.Log("Spawning Cage...");
                 cageCol = other.gameObject;
+
+                Instantiate(cagePrefab, other.transform.position, Quaternion.identity);
                 Instantiate(cageconvertPE, other.transform.position, Quaternion.identity);
+
                 AudioManager.instance.PlaySFX("Cage2");
                 StartCoroutine(DeactiveCageSlider(1.0f));
+
+                cageSpawned = true;
             }
         }
 

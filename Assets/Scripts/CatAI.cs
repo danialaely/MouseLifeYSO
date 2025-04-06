@@ -36,6 +36,14 @@ public class CatAI : MonoBehaviour
     private float lingerTimer = 0.0f;
     private Vector3 lastSoundPosition;
 
+    public float detectionRadius = 5f;
+    public float lockDistance = 0.5f;
+    private Transform cageTarget;
+    private bool isBeingAttracted = false;
+    private bool isLocked = false;
+
+    public int catHealth;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -59,7 +67,34 @@ public class CatAI : MonoBehaviour
         rb.useGravity = false;
         Debug.Log("Kinematic enabled, Gravity disabled.");
         questionMarkPanel.SetActive(false);
+
+        catHealth = 3;
        // mouseAnim = mouse.GetComponent<Animator>();
+    }
+
+    public int GetCatHealth() 
+    {
+        return catHealth;
+    }
+
+    public void SetCatHealth(int nh) 
+    {
+        catHealth = nh;
+    }
+
+    private void OnEnable()
+    {
+        Cage.OnCageSpawned += SetCageReference;
+    }
+
+    private void OnDisable()
+    {
+        Cage.OnCageSpawned -= SetCageReference;
+    }
+
+    void SetCageReference(Transform cage)
+    {
+        cageTarget = cage;
     }
 
     void Update()
@@ -117,6 +152,36 @@ public class CatAI : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(agent.velocity.normalized);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
+
+        if (isLocked || cageTarget == null) return;
+
+        float distance = Vector3.Distance(transform.position, cageTarget.position);
+
+        if (distance <= detectionRadius && !isBeingAttracted)
+        {
+            isBeingAttracted = true;
+            agent.SetDestination(cageTarget.position);
+        }
+
+        if (isBeingAttracted)
+        {
+            agent.SetDestination(cageTarget.position); // constantly updates in case cage moves
+
+            if (distance <= lockDistance)
+            {
+                LockInCage();
+            }
+        }
+
+    }
+
+    void LockInCage()
+    {
+        isLocked = true;
+        isBeingAttracted = false;
+        agent.isStopped = true;
+        // Optional: play particle, animation, disable movement, etc.
+        Debug.Log("Cat is locked in the cage!");
     }
 
     void GoToNextPatrolPoint()
