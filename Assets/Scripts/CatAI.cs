@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CatAI : MonoBehaviour
 {
@@ -36,13 +37,15 @@ public class CatAI : MonoBehaviour
     private float lingerTimer = 0.0f;
     private Vector3 lastSoundPosition;
 
-    public float detectionRadius = 5f;
+    public float detectionRadius = 1.0f;
     public float lockDistance = 0.5f;
     private Transform cageTarget;
     private bool isBeingAttracted = false;
     private bool isLocked = false;
 
     public int catHealth;
+    public Slider catHealthSlider;
+    public GameObject levelCompletedPanel;
 
     void Start()
     {
@@ -69,6 +72,7 @@ public class CatAI : MonoBehaviour
         questionMarkPanel.SetActive(false);
 
         catHealth = 3;
+        catHealthSlider.value = catHealth;
        // mouseAnim = mouse.GetComponent<Animator>();
     }
 
@@ -100,6 +104,7 @@ public class CatAI : MonoBehaviour
     void Update()
     {
         questionMarkPanel.transform.position = this.transform.position + new Vector3(0, 3, 1.5f);
+        catHealthSlider.transform.position = this.transform.position + new Vector3(0, 3, 1.5f);
 
         if (CanSeeMouse())
         {
@@ -160,7 +165,9 @@ public class CatAI : MonoBehaviour
         if (distance <= detectionRadius && !isBeingAttracted)
         {
             isBeingAttracted = true;
-            agent.SetDestination(cageTarget.position);
+            agent.SetDestination(cageTarget.position); //Level Completed Panel;
+            //levelCompletedPanel.SetActive(true);
+            StartCoroutine(ActiveLevelCompletePanel(1.0f));
         }
 
         if (isBeingAttracted)
@@ -173,6 +180,12 @@ public class CatAI : MonoBehaviour
             }
         }
 
+    }
+
+    IEnumerator ActiveLevelCompletePanel(float del) 
+    {
+        yield return new WaitForSeconds(del);
+        levelCompletedPanel.SetActive(true);
     }
 
     void LockInCage()

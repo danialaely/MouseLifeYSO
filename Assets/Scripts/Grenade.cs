@@ -61,6 +61,7 @@ public class Grenade : MonoBehaviour
                CatAI catScript =  rb.gameObject.GetComponent<CatAI>();
                 int newCatHealth = catScript.catHealth -= 1;
                 catScript.SetCatHealth(newCatHealth);
+                catScript.catHealthSlider.value = newCatHealth;
                 Debug.Log("Cat's Health:"+newCatHealth);
 
                 //this.gameObject.SetActive(false);
