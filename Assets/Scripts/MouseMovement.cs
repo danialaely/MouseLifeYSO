@@ -22,7 +22,7 @@ public class MouseMovement : MonoBehaviour
     
     public GameObject currentWeapon; // Store the currently spawned weapon
     
-    private float throwForce = 1.0f; // Adjust the throw force as needed
+   // private float throwForce = 1.0f; // Adjust the throw force as needed
 
     public FixedJoystick joystick;
     public float SpeedMove = 5f;
@@ -55,6 +55,7 @@ public class MouseMovement : MonoBehaviour
     public GameObject bulletPrefab;
     GameObject bullet;
     public ParticleSystem cheeseEffect;
+    public GameObject CreakingAudio;
 
     //TO BE DONE: In this prototype the player has to gather multple items to enable/spawn gift box.
     private void OnEnable()
@@ -65,6 +66,15 @@ public class MouseMovement : MonoBehaviour
     private void OnDisable()
     {
         playerControls.Disable();
+    }
+
+    private void Awake()
+    {
+        if (CreakingAudio == null)
+        {
+            Debug.Log("is this working?");
+            CreakingAudio = GameObject.FindGameObjectWithTag("SoundSource");
+        }
     }
 
     void Start()
@@ -80,11 +90,13 @@ public class MouseMovement : MonoBehaviour
             cageSlider.maxValue = maxCheese * 3; // Or just set to 12 manually
             cageSlider.value = 0;
         }
+        
     }
 
     void Update()
     {
         Debug.Log("CWWW:"+currentWeapon);
+        CreakingAudio.transform.position = transform.position;
 
         if (bulletPrefab != null)
         {
