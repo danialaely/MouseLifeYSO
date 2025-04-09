@@ -6,6 +6,7 @@ using Unity.AI.Navigation;
 using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class MouseMovement : MonoBehaviour
 {
@@ -56,6 +57,8 @@ public class MouseMovement : MonoBehaviour
     GameObject bullet;
     public ParticleSystem cheeseEffect;
     public GameObject CreakingAudio;
+    public GameObject sliderPrefab;
+    public Transform uiCanvas3d; // Drag your Canvas here in the inspector
 
     //TO BE DONE: In this prototype the player has to gather multple items to enable/spawn gift box.
     private void OnEnable()
@@ -160,56 +163,56 @@ public class MouseMovement : MonoBehaviour
             Transform targetChild = transform.GetChild(2); // Get the first child
             Debug.Log("Target child for weapon: " + targetChild.name);
 
-            if (targetChild.childCount == 0) 
-            { 
-
-            Debug.Log("Gift collision detected");
-            Destroy(other.gameObject); // Destroy the gift
-            useBtn.SetActive(true); // Enable the Use button
-            AudioManager.instance.PlaySFX("PickGift");
-            giftPopUpPanel.SetActive(true);
-            StartCoroutine(DeactiveCheesePopUp(1.0f));
-
-            // Check if player has children (should be a hand or weapon holder)
-            if (transform.childCount > 0 && weaponPrefabs.Length > 0)
+            if (targetChild.childCount == 0)
             {
 
-                int randomIndex = Random.Range(0, weaponPrefabs.Length);
+                Debug.Log("Gift collision detected");
+                Destroy(other.gameObject); // Destroy the gift
+                useBtn.SetActive(true); // Enable the Use button
+                AudioManager.instance.PlaySFX("PickGift");
+                giftPopUpPanel.SetActive(true);
+                StartCoroutine(DeactiveCheesePopUp(1.0f));
 
-                // Instantiate weapon normally if it's NOT pistol_3
-                if (randomIndex != 3)
+                // Check if player has children (should be a hand or weapon holder)
+                if (transform.childCount > 0 && weaponPrefabs.Length > 0)
                 {
-                    Debug.Log("Random Index: " + randomIndex);
-                    newWeapon = Instantiate(weaponPrefabs[randomIndex], targetChild.position, Quaternion.identity);
+
+                    int randomIndex = Random.Range(0, weaponPrefabs.Length);
+
+                    // Instantiate weapon normally if it's NOT pistol_3
+                    if (randomIndex != 3)
+                    {
+                        Debug.Log("Random Index: " + randomIndex);
+                        newWeapon = Instantiate(weaponPrefabs[randomIndex], targetChild.position, Quaternion.identity);
+                    }
+                    else
+                    {
+                        // Special handling for pistol_3 (index 3)
+                        Debug.Log("Pistol index: " + randomIndex);
+                        newWeapon = Instantiate(weaponPrefabs[randomIndex], Vector3.zero, Quaternion.identity);
+                        newWeapon.transform.SetParent(targetChild); // Set as a child first
+
+                        newWeapon.transform.localPosition = new Vector3(1, 1, -5); // Position offset
+                        newWeapon.transform.localRotation = Quaternion.Euler(-90.0f, 90.0f, 0.0f); // Correct rotation
+                    }
+
+                    // Parent all weapons to targetChild
+                    newWeapon.transform.SetParent(targetChild);
+
+                    // If it's NOT pistol_3, reset position and rotation
+                    if (randomIndex != 3)
+                    {
+                        newWeapon.transform.localPosition = Vector3.zero;
+                        newWeapon.transform.localRotation = Quaternion.identity;
+                    }
+
+                    currentWeapon = newWeapon;
+                    Debug.Log("Assigned currentWeapon: " + currentWeapon.name);
                 }
                 else
                 {
-                    // Special handling for pistol_3 (index 3)
-                    Debug.Log("Pistol index: " + randomIndex);
-                    newWeapon = Instantiate(weaponPrefabs[randomIndex], Vector3.zero, Quaternion.identity);
-                    newWeapon.transform.SetParent(targetChild); // Set as a child first
-
-                    newWeapon.transform.localPosition = new Vector3(1, 1, -5); // Position offset
-                    newWeapon.transform.localRotation = Quaternion.Euler(-90.0f, 90.0f, 0.0f); // Correct rotation
+                    Debug.LogWarning("No child found or weaponPrefabs is empty!");
                 }
-
-                // Parent all weapons to targetChild
-                newWeapon.transform.SetParent(targetChild);
-
-                // If it's NOT pistol_3, reset position and rotation
-                if (randomIndex != 3)
-                {
-                    newWeapon.transform.localPosition = Vector3.zero;
-                    newWeapon.transform.localRotation = Quaternion.identity;
-                }
-
-                currentWeapon = newWeapon;
-                Debug.Log("Assigned currentWeapon: " + currentWeapon.name);
-            }
-            else
-            {
-                Debug.LogWarning("No child found or weaponPrefabs is empty!");
-            }
             }
         }
 
@@ -236,12 +239,29 @@ public class MouseMovement : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("CrackCollider")) 
+        if (other.CompareTag("CrackCollider"))
         {
             Debug.Log("Creaking Sound");
             AudioManager.instance.PlayCreaking("Creaking");
         }
+
+        if (other.CompareTag("mouseTrap"))
+        {
+            Animator trapAnim = other.GetComponent<Animator>();
+            AudioManager.instance.PlaySFX("mouseTrap");
+            trapAnim.SetBool("mouseTrapped", true);
+
+            //Destroy(other.gameObject);
+            // Instantiate the slider and make it a child of the canvas (for organization)
+            GameObject sliderInstance = Instantiate(sliderPrefab, other.transform.position, Quaternion.identity, uiCanvas3d);
+
+            // Optional: make the slider face the camera
+            //sliderInstance.transform.LookAt(Camera.main.transform);
+            sliderInstance.transform.Rotate(90, 0, 0); // flip if it looks backward
+        }
     }
+
+    //IEnumerator DeactiveSlider() { }
 
     public void PlayCheeseEffect()
     {

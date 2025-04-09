@@ -15,6 +15,7 @@ TagManager:
   - Effects
   - SoundSource
   - CrackCollider
+  - mouseTrap
   layers:
   - Default
   - TransparentFX
