@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class SliderAutoFill : MonoBehaviour
 {
     public Slider slider;         // Assign in inspector or via GetComponent
-    public float fillDuration = 2f;
+    public float fillDuration = 4f;
 
     private void OnEnable()
     {

@@ -60,6 +60,10 @@ public class MouseMovement : MonoBehaviour
     public GameObject sliderPrefab;
     public Transform uiCanvas3d; // Drag your Canvas here in the inspector
 
+    public bool mousetrapped;
+    GameObject sliderInstance;
+    GameObject mTrap;
+
     //TO BE DONE: In this prototype the player has to gather multple items to enable/spawn gift box.
     private void OnEnable()
     {
@@ -87,6 +91,7 @@ public class MouseMovement : MonoBehaviour
         mouseAnim = GetComponent<Animator>();
         cheesePopUpPanel.SetActive(false);
         giftPopUpPanel.SetActive(false);
+        mousetrapped = false;
 
         if (cageSlider != null) 
         {
@@ -108,11 +113,11 @@ public class MouseMovement : MonoBehaviour
            // Debug.Log("is it even moving?");
            // bulletPrefab.transform.position += transform.forward * Time.deltaTime * 50;
         }
-        Vector3 moveDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical).normalized;
+        Vector3 moveDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical).normalized; //Disable if mouse step on mouseTrap.
         cheesePopUpPanel.transform.position = this.transform.position + new Vector3(0,1,1.5f);
         giftPopUpPanel.transform.position = this.transform.position + new Vector3(0,1,1.5f);
         Cam.transform.position = this.transform.position + camOffset; //Vector3(0,20,-5.5f)
-        if (moveDirection.magnitude > 0.1f) // Ensure movement input is present
+        if (moveDirection.magnitude > 0.1f && !mousetrapped) // Ensure movement input is present
         {
             // Move the player
             transform.position += moveDirection * SpeedMove * Time.deltaTime;
@@ -247,20 +252,30 @@ public class MouseMovement : MonoBehaviour
 
         if (other.CompareTag("mouseTrap"))
         {
+            //mousetrapped = true;
             Animator trapAnim = other.GetComponent<Animator>();
             AudioManager.instance.PlaySFX("mouseTrap");
             trapAnim.SetBool("mouseTrapped", true);
-
+            StartCoroutine(mouseTrap(4.0f));
             //Destroy(other.gameObject);
             // Instantiate the slider and make it a child of the canvas (for organization)
-            GameObject sliderInstance = Instantiate(sliderPrefab, other.transform.position, Quaternion.identity, uiCanvas3d);
-
+            sliderInstance = Instantiate(sliderPrefab, other.transform.position, Quaternion.identity, uiCanvas3d);
+            mTrap = other.gameObject;
             // Optional: make the slider face the camera
             //sliderInstance.transform.LookAt(Camera.main.transform);
             sliderInstance.transform.Rotate(90, 0, 0); // flip if it looks backward
         }
     }
 
+    IEnumerator mouseTrap(float del) 
+    {
+        yield return new WaitForSeconds(0.1f);
+        mousetrapped = true;
+        yield return new WaitForSeconds(del);
+        mousetrapped = false;
+        Destroy(sliderInstance);
+        Destroy(mTrap);
+    }
     //IEnumerator DeactiveSlider() { }
 
     public void PlayCheeseEffect()

@@ -47,6 +47,10 @@ public class CatAI : MonoBehaviour
     public Slider catHealthSlider;
     public GameObject levelCompletedPanel;
 
+    public GameObject mouseTrapPrefab;     // Assign in Inspector
+    //public Transform trapParent;           // Optional: for hierarchy organization
+    private bool isPatrolling = true;      // Toggle based on cat behavior
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -73,7 +77,8 @@ public class CatAI : MonoBehaviour
 
         catHealth = 3;
         catHealthSlider.value = catHealth;
-       // mouseAnim = mouse.GetComponent<Animator>();
+        StartCoroutine(DropMouseTrapRoutine());
+        // mouseAnim = mouse.GetComponent<Animator>();
     }
 
     public int GetCatHealth() 
@@ -306,6 +311,24 @@ public class CatAI : MonoBehaviour
         isChasing = true;
         agent.speed = chaseSpeed;
         agent.destination = mouse.position;
+    }
+
+    private IEnumerator DropMouseTrapRoutine()
+    {
+        while (isPatrolling)
+        {
+            float waitTime = Random.Range(5f, 10f);
+            yield return new WaitForSeconds(waitTime);
+
+            if (isPatrolling) // Check again in case patrol stopped during wait
+            {
+                //Vector3 trapPos = transform.position;
+                //trapPos.y = 0.1f; // Optional: adjust height if needed
+                Debug.Log("CatPos:"+this.transform.position);
+                //Instantiate(mouseTrapPrefab, trapPos, Quaternion.identity, trapParent);
+                Instantiate(mouseTrapPrefab, this.transform.position, Quaternion.identity);
+            }
+        }
     }
 
     IEnumerator StopSfXChase(float del) 
