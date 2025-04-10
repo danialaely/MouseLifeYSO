@@ -8657,6 +8657,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Confetti_blast_multicolor
       objectReference: {fileID: 0}
+    - target: {fileID: 4938095755617958529, guid: 2e79f16be10fbd14f8d5ef191f8db4aa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11586,8 +11590,8 @@ MonoBehaviour:
   - {fileID: 2057786035}
   mouse: {fileID: 19505919}
   sightRange: 5
-  chaseSpeed: 5.5
-  patrolSpeed: 3
+  chaseSpeed: 6
+  patrolSpeed: 3.5
   retryPanel: {fileID: 169428316}
   BoomParticleEffect: {fileID: 1531178227}
   HittingWallPE: {fileID: 5286328772216621839, guid: 41b57333fef1c834d8da0f4387d82975, type: 3}
