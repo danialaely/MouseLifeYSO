@@ -360,6 +360,7 @@ public class MouseMovement : MonoBehaviour
             Debug.Log("Pistol hai Pistol");
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
             bullet.transform.SetParent(bulletSpawnPoint);
+            //bullet.transform.SetParent(null);
             AudioManager.instance.PlaySFX("Bullet2");
            // currentWeapon = null;
             useBtn.SetActive(false);

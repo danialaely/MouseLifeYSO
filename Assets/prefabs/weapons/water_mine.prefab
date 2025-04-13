@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4651569973974426930}
   - component: {fileID: 6547049436386251518}
   - component: {fileID: 7135968298797519866}
-  - component: {fileID: 2220036634746136587}
   - component: {fileID: -2523346448715577623}
+  - component: {fileID: 8381239196246291133}
   m_Layer: 0
   m_Name: water_mine
   m_TagString: Untagged
@@ -116,28 +116,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &2220036634746136587
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1199728781915932170}
-  m_Material: {fileID: 13400000, guid: 37f21d359d99e734fbe9fe66454222ae, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6181558343672447829, guid: 53c7a326c307dad48b8997a405dd0f67, type: 3}
 --- !u!114 &-2523346448715577623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,3 +132,24 @@ MonoBehaviour:
   radius: 5
   mouse: {fileID: 0}
   explosionEffect: {fileID: 0}
+--- !u!65 &8381239196246291133
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199728781915932170}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.42, y: 0.4749751, z: 0.43}
+  m_Center: {x: 0, y: 0.23748755, z: -0.0000014454126}

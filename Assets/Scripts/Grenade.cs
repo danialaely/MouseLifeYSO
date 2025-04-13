@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Grenade : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class Grenade : MonoBehaviour
     Rigidbody catRB;
     private Animator catanim;
     private bool isSlipping = false;
+    private NavMeshObstacle obstacle;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,6 +26,8 @@ public class Grenade : MonoBehaviour
         mouse = FindFirstObjectByType<MouseMovement>();
         //explosionEffect = Resources.Load<GameObject>("Prefabs/ExplosionEffect Variant");
         explosionEffect = Resources.Load<GameObject>("Prefabs/CFXR Explosion 1 + Text");
+        obstacle = GetComponent<NavMeshObstacle>();
+        EnableObstacle();
     }
 
     // Update is called once per frame
@@ -99,6 +103,9 @@ public class Grenade : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("takraya bhai takraya");
+        Debug.Log("Weapon Name:"+this.gameObject.name);
+        Debug.Log("Collided obj Name:"+collision.gameObject.name);
         if (collision.gameObject.name == "CatNew") 
         {
             if (this.gameObject.name == "banana(Clone)")
@@ -108,6 +115,7 @@ public class Grenade : MonoBehaviour
                 catRB = collision.gameObject.GetComponent<Rigidbody>();
                 AudioManager.instance.PlaySFX("Banana2");
                 Slip();
+                Destroy(this.gameObject);
             }
             else if (this.gameObject.name == "Pistol(Clone)") 
             {
@@ -127,6 +135,7 @@ public class Grenade : MonoBehaviour
         if (!isSlipping)
         {
             StartCoroutine(SlipCoroutine());
+            DisableObstacle();
         }
     }
 
@@ -151,4 +160,13 @@ public class Grenade : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    public void EnableObstacle()
+    {
+        obstacle.enabled = true;
+    }
+
+    public void DisableObstacle()
+    {
+        obstacle.enabled = false;
+    }
 }

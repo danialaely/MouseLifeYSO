@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 9182162643507644560}
   - component: {fileID: 6181526109661153047}
   - component: {fileID: -1144530942084557225}
-  - component: {fileID: 7476215950771103898}
   - component: {fileID: 4799482995778144964}
+  - component: {fileID: 7344670483477257267}
   m_Layer: 0
   m_Name: banana
   m_TagString: Untagged
@@ -116,28 +116,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &7476215950771103898
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7415069322882024312}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -3229963728398979078, guid: c9178f576e3d51b41a3ff41747e98890, type: 3}
 --- !u!114 &4799482995778144964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,3 +132,24 @@ MonoBehaviour:
   radius: 5
   mouse: {fileID: 0}
   explosionEffect: {fileID: 0}
+--- !u!65 &7344670483477257267
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7415069322882024312}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.459881, y: 1.2532403, z: 1.5653441}
+  m_Center: {x: 0.000020742415, y: 0.6266202, z: -0.0000015497207}

@@ -124,6 +124,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CFXR Fire Trail (no smoke) Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4451878303824963382, guid: 819a6128dcef2bd47a9c595b4171d3db, type: 3}
+      propertyPath: m_TagString
+      value: Bullet
+      objectReference: {fileID: 0}
     - target: {fileID: 4451878303824963385, guid: 819a6128dcef2bd47a9c595b4171d3db, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -232,7 +236,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

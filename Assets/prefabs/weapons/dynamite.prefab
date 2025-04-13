@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4840049517339113960}
   - component: {fileID: 8031310838323745585}
   - component: {fileID: 5062388873465796034}
-  - component: {fileID: 2123627634447793424}
   - component: {fileID: 7290524223198145329}
+  - component: {fileID: 4839933493171090721}
   m_Layer: 0
   m_Name: dynamite
   m_TagString: Untagged
@@ -116,28 +116,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &2123627634447793424
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 555189751494242947}
-  m_Material: {fileID: 13400000, guid: 37f21d359d99e734fbe9fe66454222ae, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6411623747838446336, guid: c8a18a5b0fb2cf54f891b9b70dfe16a5, type: 3}
 --- !u!114 &7290524223198145329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,3 +132,24 @@ MonoBehaviour:
   radius: 5
   mouse: {fileID: 0}
   explosionEffect: {fileID: 0}
+--- !u!65 &4839933493171090721
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555189751494242947}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6700511, y: 0.27661863, z: 0.3121274}
+  m_Center: {x: 0.03243789, y: 0.13616468, z: 0.018145546}
