@@ -81,12 +81,12 @@ public class CatAI : MonoBehaviour
         // mouseAnim = mouse.GetComponent<Animator>();
     }
 
-    public int GetCatHealth() 
+    public int GetCatHealth()
     {
         return catHealth;
     }
 
-    public void SetCatHealth(int nh) 
+    public void SetCatHealth(int nh)
     {
         catHealth = nh;
     }
@@ -187,7 +187,7 @@ public class CatAI : MonoBehaviour
 
     }
 
-    IEnumerator ActiveLevelCompletePanel(float del) 
+    IEnumerator ActiveLevelCompletePanel(float del)
     {
         yield return new WaitForSeconds(del);
         levelCompletedPanel.SetActive(true);
@@ -254,13 +254,13 @@ public class CatAI : MonoBehaviour
             if (Vector3.Dot(transform.forward, directionToMouse) > 0.5f) // Check if Mouse is in front
             {
                 ChangeSpotlightColor(Color.red);
-               // mouseAnim.SetBool("isChased", true);
+                // mouseAnim.SetBool("isChased", true);
             }
         }
-        else 
+        else
         {
             ChangeSpotlightColor(Color.yellow);
-           // mouseAnim.SetBool("isChased", false);
+            // mouseAnim.SetBool("isChased", false);
         }
     }
 
@@ -292,9 +292,9 @@ public class CatAI : MonoBehaviour
                     {
                         Debug.Log("Obstacle detected: " + hit.collider.name);
                     }
-                       // AudioManager.instance.PlaySFX("Chase");
-                       // StartCoroutine(StopSfXChase(1.0f));
-                        return true;
+                    // AudioManager.instance.PlaySFX("Chase");
+                    // StartCoroutine(StopSfXChase(1.0f));
+                    return true;
                 }
                 else
                 {
@@ -324,14 +324,14 @@ public class CatAI : MonoBehaviour
             {
                 //Vector3 trapPos = transform.position;
                 //trapPos.y = 0.1f; // Optional: adjust height if needed
-                Debug.Log("CatPos:"+this.transform.position);
+                Debug.Log("CatPos:" + this.transform.position);
                 //Instantiate(mouseTrapPrefab, trapPos, Quaternion.identity, trapParent);
                 Instantiate(mouseTrapPrefab, this.transform.position, Quaternion.identity);
             }
         }
     }
 
-    IEnumerator StopSfXChase(float del) 
+    IEnumerator StopSfXChase(float del)
     {
         yield return new WaitForSeconds(del);
         AudioManager.instance.StopSFX();
@@ -348,24 +348,24 @@ public class CatAI : MonoBehaviour
             AudioManager.instance.PlaySFX("LevelFailed");
             StartCoroutine(ActiveRetryPanel(1.2f));
         }
-        if (collision.gameObject.CompareTag("Wall")) 
+        if (collision.gameObject.CompareTag("Wall"))
         {
-           // Instantiate(HittingWallPE, this.transform.position, Quaternion.identity);
+            // Instantiate(HittingWallPE, this.transform.position, Quaternion.identity);
         }
-        if (collision.gameObject.CompareTag("Bullet")) 
+        if (collision.gameObject.CompareTag("Bullet"))
         {
-            catAnimator.SetBool("isBomb",true);
+            catAnimator.SetBool("isBomb", true);
             StartCoroutine(BackToRunning(2.0f));
         }
     }
 
-    IEnumerator BackToRunning(float del) 
+    IEnumerator BackToRunning(float del)
     {
         yield return new WaitForSeconds(del);
-        catAnimator.SetBool("isBomb",false);
+        catAnimator.SetBool("isBomb", false);
     }
 
-    IEnumerator ActiveRetryPanel(float del) 
+    IEnumerator ActiveRetryPanel(float del)
     {
         yield return new WaitForSeconds(del);
         retryPanel.SetActive(true);
@@ -394,4 +394,10 @@ public class CatAI : MonoBehaviour
         currentPatrolIndex = closestIndex;
         agent.destination = patrolPoints[currentPatrolIndex].position;
     }
+
+void OnDrawGizmosSelected()
+{
+    // Draw detection radius
+    Gizmos.color = Color.cyan;
+    Gizmos.DrawWireSphere(transform.position, detectionRadius);}
 }

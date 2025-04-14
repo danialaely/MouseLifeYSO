@@ -1246,7 +1246,7 @@ MonoBehaviour:
   - {fileID: 9141661214742953279, guid: 3a47821fbfa4779418b4e01958c3247a, type: 3}
   currentWeapon: {fileID: 0}
   joystick: {fileID: 1594342749}
-  SpeedMove: 7
+  SpeedMove: 5
   rotationSpeed: 10
   hasthrown: 0
   cheeseCount: 0
@@ -11601,7 +11601,7 @@ MonoBehaviour:
     m_Bits: 64
   mouseAnim: {fileID: 125532971}
   questionMarkPanel: {fileID: 700583312}
-  detectionRadius: 5
+  detectionRadius: 1.2
   lockDistance: 0.5
   catHealth: 0
   catHealthSlider: {fileID: 1050210704}

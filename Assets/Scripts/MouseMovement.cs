@@ -229,12 +229,12 @@ public class MouseMovement : MonoBehaviour
             Debug.Log("Cheese Count at Cage Collider: " + cheeseCount);
 
             // Spawn cage only if cheeseCount >= 12 and not already spawned
-            if (cheeseCount >= 12 && !cageSpawned)
+            if (cheeseCount == 12 && !cageSpawned)
             {
                 Debug.Log("Spawning Cage...");
                 cageCol = other.gameObject;
 
-                Instantiate(cagePrefab, other.transform.position, Quaternion.identity);
+                //Instantiate(cagePrefab, other.transform.position, Quaternion.identity);
                 Instantiate(cageconvertPE, other.transform.position, Quaternion.identity);
 
                 AudioManager.instance.PlaySFX("Cage2");

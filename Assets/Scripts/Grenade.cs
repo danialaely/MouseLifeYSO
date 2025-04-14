@@ -17,7 +17,7 @@ public class Grenade : MonoBehaviour
     Rigidbody catRB;
     private Animator catanim;
     private bool isSlipping = false;
-    private NavMeshObstacle obstacle;
+    public NavMeshObstacle obstacle;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,8 +26,9 @@ public class Grenade : MonoBehaviour
         mouse = FindFirstObjectByType<MouseMovement>();
         //explosionEffect = Resources.Load<GameObject>("Prefabs/ExplosionEffect Variant");
         explosionEffect = Resources.Load<GameObject>("Prefabs/CFXR Explosion 1 + Text");
-        obstacle = GetComponent<NavMeshObstacle>();
-        EnableObstacle();
+        //obstacle = GetComponent<NavMeshObstacle>();
+         EnableObstacle();
+        //DisableObstacle();
     }
 
     // Update is called once per frame

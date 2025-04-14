@@ -132,6 +132,7 @@ MonoBehaviour:
   radius: 5
   mouse: {fileID: 0}
   explosionEffect: {fileID: 0}
+  obstacle: {fileID: 4331455516723573285, guid: ae77b554df99c784289e2034cdb9bac7, type: 3}
 --- !u!65 &7344670483477257267
 BoxCollider:
   m_ObjectHideFlags: 0
