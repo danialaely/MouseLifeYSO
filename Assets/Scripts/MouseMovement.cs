@@ -20,10 +20,10 @@ public class MouseMovement : MonoBehaviour
 
     public GameObject[] weaponPrefabs; // Assign Mine, Bomb, Dynamite, Soccer Boot, Wheel in the Inspector
 
-    
+
     public GameObject currentWeapon; // Store the currently spawned weapon
-    
-   // private float throwForce = 1.0f; // Adjust the throw force as needed
+
+    // private float throwForce = 1.0f; // Adjust the throw force as needed
 
     public FixedJoystick joystick;
     public float SpeedMove = 5f;
@@ -93,29 +93,29 @@ public class MouseMovement : MonoBehaviour
         giftPopUpPanel.SetActive(false);
         mousetrapped = false;
 
-        if (cageSlider != null) 
+        if (cageSlider != null)
         {
             cageSlider.maxValue = maxCheese * 3; // Or just set to 12 manually
             cageSlider.value = 0;
         }
-        
+
     }
 
     void Update()
     {
-        Debug.Log("CWWW:"+currentWeapon);
+        Debug.Log("CWWW:" + currentWeapon);
         CreakingAudio.transform.position = transform.position;
 
         if (bulletPrefab != null)
         {
             //Rigidbody bulletrb = bulletPrefab.GetComponent<Rigidbody>();
             //bulletrb.linearVelocity = transform.forward * 100;
-           // Debug.Log("is it even moving?");
-           // bulletPrefab.transform.position += transform.forward * Time.deltaTime * 50;
+            // Debug.Log("is it even moving?");
+            // bulletPrefab.transform.position += transform.forward * Time.deltaTime * 50;
         }
         Vector3 moveDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical).normalized; //Disable if mouse step on mouseTrap.
-        cheesePopUpPanel.transform.position = this.transform.position + new Vector3(0,1,1.5f);
-        giftPopUpPanel.transform.position = this.transform.position + new Vector3(0,1,1.5f);
+        cheesePopUpPanel.transform.position = this.transform.position + new Vector3(0, 1, 1.5f);
+        giftPopUpPanel.transform.position = this.transform.position + new Vector3(0, 1, 1.5f);
         Cam.transform.position = this.transform.position + camOffset; //Vector3(0,20,-5.5f)
         if (moveDirection.magnitude > 0.1f && !mousetrapped) // Ensure movement input is present
         {
@@ -126,20 +126,20 @@ public class MouseMovement : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up) * Quaternion.Euler(0, 0, 0);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
-        else 
+        else
         {
             mouseAnim.SetBool("isWalking", false);
         }
 
-       
+
     }
 
     void FixedUpdate()
     {
-        
-      //  Vector3 moveVector = new Vector3(moveDirection.x, 0, moveDirection.y) * speed; // Convert to 3D
-       // rb.linearVelocity = moveVector; // Apply velocity for movement
-      // transform.position += moveVector;
+
+        //  Vector3 moveVector = new Vector3(moveDirection.x, 0, moveDirection.y) * speed; // Convert to 3D
+        // rb.linearVelocity = moveVector; // Apply velocity for movement
+        // transform.position += moveVector;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -267,6 +267,13 @@ public class MouseMovement : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet")) 
+        {
+            Debug.Log("Got Hit By Bullet");
+        }
+    }
     IEnumerator mouseTrap(float del) 
     {
         yield return new WaitForSeconds(0.1f);
