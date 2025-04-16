@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ShooterCat : MonoBehaviour
 {
+    public Transform[] waypoints;
     public Transform mouseTarget; // Assign the mouse object
     public float sightRange = 10f;
-    public float fieldOfView = 60f; // how wide the cat's vision cone is
+    public float fieldOfView = 90f; // how wide the cat's vision cone is
+
     public float rotationSpeed = 2f;
     public GameObject bulletPrefab;
     public Transform shootPoint; // where bullets are fired from
@@ -12,10 +15,19 @@ public class ShooterCat : MonoBehaviour
 
     private float lastShootTime;
 
+    private int currentWaypointIndex = 0;
+    private NavMeshAgent agent;
+
+    private Animator shootercatAnim;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        agent = GetComponent<NavMeshAgent>();
+        shootercatAnim = GetComponent<Animator>();
+        if (waypoints.Length > 0)
+            agent.SetDestination(waypoints[currentWaypointIndex].position);
     }
 
     // Update is called once per frame
@@ -27,12 +39,14 @@ public class ShooterCat : MonoBehaviour
             lookDir.y = 0f;
             Quaternion lookRotation = Quaternion.LookRotation(lookDir);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-
+            shootercatAnim.SetBool("SeeMouse",true);
             ShootMouse();
         }
         else
         {
-            LookAround();
+            shootercatAnim.SetBool("SeeMouse",false);
+            //LookAround();
+            Patrol();
         }
     }
 
@@ -91,4 +105,14 @@ public class ShooterCat : MonoBehaviour
         Gizmos.DrawRay(transform.position, rightBoundary * sightRange);
     }
 
+    void Patrol()
+    {
+        agent.isStopped = false;
+
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+        {
+            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
+            agent.SetDestination(waypoints[currentWaypointIndex].position);
+        }
+    }
 }

@@ -8124,7 +8124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5616720542410276573, guid: ff540c3436b22b04ca9b4cc9233f9d1d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.184
+      value: -0.295
       objectReference: {fileID: 0}
     - target: {fileID: 5616720542410276573, guid: ff540c3436b22b04ca9b4cc9233f9d1d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8172,8 +8172,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5616720542420046133, guid: ff540c3436b22b04ca9b4cc9233f9d1d, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5616720542420046133, guid: ff540c3436b22b04ca9b4cc9233f9d1d, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 5d5af51ca7352504b9abfcee0184a69e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -8247,7 +8251,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1168863623}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.11
   m_Speed: 3.5
@@ -8295,6 +8299,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225e3ebe80eb6474c8eb92405e8632fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints:
+  - {fileID: 774571368}
+  - {fileID: 1762362614}
   mouseTarget: {fileID: 19505919}
   sightRange: 10
   fieldOfView: 60
@@ -8302,6 +8309,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4852891095142546773, guid: 7f0e7bc4b8e179c47aec848828d2767d, type: 3}
   shootPoint: {fileID: 838345536}
   shootCooldown: 1.5
+  shootercatAnim: {fileID: 0}
 --- !u!1 &1169999272
 GameObject:
   m_ObjectHideFlags: 0
@@ -12078,8 +12086,8 @@ MonoBehaviour:
   - {fileID: 2057786035}
   mouse: {fileID: 19505919}
   sightRange: 5
-  chaseSpeed: 9
-  patrolSpeed: 5
+  chaseSpeed: 7
+  patrolSpeed: 3.5
   retryPanel: {fileID: 169428316}
   BoomParticleEffect: {fileID: 1531178227}
   HittingWallPE: {fileID: 5286328772216621839, guid: 41b57333fef1c834d8da0f4387d82975, type: 3}

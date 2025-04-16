@@ -155,7 +155,7 @@ public class Grenade : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    IEnumerator DeactiveBanana(float del) 
+    IEnumerator DeactiveWeapon(float del) 
     {
         yield return new WaitForSeconds(del);
         Destroy(this.gameObject);
