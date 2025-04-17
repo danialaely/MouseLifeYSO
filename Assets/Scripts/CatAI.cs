@@ -51,6 +51,9 @@ public class CatAI : MonoBehaviour
     //public Transform trapParent;           // Optional: for hierarchy organization
     private bool isPatrolling = true;      // Toggle based on cat behavior
 
+    [SerializeField] float fieldOfView = 60f; // degrees
+
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -272,8 +275,9 @@ public class CatAI : MonoBehaviour
             Debug.Log("Distance: " + distance);
             Vector3 directionToMouse = (mouse.position - transform.position).normalized;
 
+            float angle = Vector3.Angle(transform.forward, directionToMouse);
             // Check if the mouse is in front of the cat
-            if (Vector3.Dot(transform.forward, directionToMouse) > 0.5f)
+            if (angle < fieldOfView / 2f)
             {
                 Debug.Log("Mouse is in front");
                 RaycastHit hit;
@@ -399,5 +403,28 @@ void OnDrawGizmosSelected()
 {
     // Draw detection radius
     Gizmos.color = Color.cyan;
-    Gizmos.DrawWireSphere(transform.position, detectionRadius);}
+    Gizmos.DrawWireSphere(transform.position, detectionRadius);
+
+        // Color for sight range
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, sightRange);
+
+        // Field of View (visual cone)
+        float halfFOV = fieldOfView / 2f;
+        Quaternion leftRayRotation = Quaternion.Euler(0, -halfFOV, 0);
+        Quaternion rightRayRotation = Quaternion.Euler(0, halfFOV, 0);
+
+        Vector3 leftRayDirection = leftRayRotation * transform.forward;
+        Vector3 rightRayDirection = rightRayRotation * transform.forward;
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(transform.position, leftRayDirection * sightRange);
+        Gizmos.DrawRay(transform.position, rightRayDirection * sightRange);
+
+        // Optional: draw a line to the mouse
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, mouse.position);
+
+    }
+
 }

@@ -6182,10 +6182,10 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 5
+  m_Intensity: 4
   m_Range: 5
-  m_SpotAngle: 52.9
-  m_InnerSpotAngle: 21.80208
+  m_SpotAngle: 77
+  m_InnerSpotAngle: 6
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -8168,7 +8168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5616720542410695421, guid: ff540c3436b22b04ca9b4cc9233f9d1d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5616720542420046133, guid: ff540c3436b22b04ca9b4cc9233f9d1d, type: 3}
       propertyPath: m_Enabled
@@ -8239,8 +8239,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -8303,13 +8303,12 @@ MonoBehaviour:
   - {fileID: 774571368}
   - {fileID: 1762362614}
   mouseTarget: {fileID: 19505919}
-  sightRange: 10
+  sightRange: 7
   fieldOfView: 60
   rotationSpeed: 20
   bulletPrefab: {fileID: 4852891095142546773, guid: 7f0e7bc4b8e179c47aec848828d2767d, type: 3}
   shootPoint: {fileID: 838345536}
   shootCooldown: 1.5
-  shootercatAnim: {fileID: 0}
 --- !u!1 &1169999272
 GameObject:
   m_ObjectHideFlags: 0
@@ -12103,6 +12102,7 @@ MonoBehaviour:
   catHealthSlider: {fileID: 1050210704}
   levelCompletedPanel: {fileID: 1908766772}
   mouseTrapPrefab: {fileID: 9014622756369358456, guid: bd7f6d326bb498b4eb7a66ecd6bca6a6, type: 3}
+  fieldOfView: 90
 --- !u!195 &1638951405
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -15800,8 +15800,8 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 3.8
-  m_Range: 14.19
+  m_Intensity: 5
+  m_Range: 5
   m_SpotAngle: 52.9
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
