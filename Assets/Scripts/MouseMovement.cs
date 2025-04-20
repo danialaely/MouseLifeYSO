@@ -225,11 +225,13 @@ public class MouseMovement : MonoBehaviour
         if (other.CompareTag("cageCollider"))  // If colliding with the cage
         {
             // Animate slider to current cheese count
-            StartCoroutine(AnimateSliderValue(cageSlider.value, cheeseCount));
+            //StartCoroutine(AnimateSliderValue(cageSlider.value, cheeseCount));
             Debug.Log("Cheese Count at Cage Collider: " + cheeseCount);
-
+            Instantiate(cageconvertPE, other.transform.position, Quaternion.identity);
+            AudioManager.instance.PlaySFX("Cage2");
+            Destroy(other.gameObject);
             // Spawn cage only if cheeseCount >= 12 and not already spawned
-            if (cheeseCount == 12 && !cageSpawned)
+            /*if (cheeseCount == 12 && !cageSpawned)
             {
                 Debug.Log("Spawning Cage...");
                 cageCol = other.gameObject;
@@ -241,7 +243,7 @@ public class MouseMovement : MonoBehaviour
                 StartCoroutine(DeactiveCageSlider(1.0f));
 
                 cageSpawned = true;
-            }
+            }*/
         }
 
         if (other.CompareTag("CrackCollider"))
