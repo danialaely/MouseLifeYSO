@@ -15,6 +15,7 @@ public class MouseMovement : MonoBehaviour
     private Vector2 moveDirection;
     public InputAction playerControls;
     private Animator mouseAnim;
+    public Animator cagemouseAnim;
 
     public GameObject useBtn;
 
@@ -63,6 +64,8 @@ public class MouseMovement : MonoBehaviour
     public bool mousetrapped;
     GameObject sliderInstance;
     GameObject mTrap;
+    public GameObject saveObj;
+    public GameObject cageObj;
 
     //TO BE DONE: In this prototype the player has to gather multple items to enable/spawn gift box.
     private void OnEnable()
@@ -92,6 +95,7 @@ public class MouseMovement : MonoBehaviour
         cheesePopUpPanel.SetActive(false);
         giftPopUpPanel.SetActive(false);
         mousetrapped = false;
+        cagemouseAnim.enabled = false;
 
         if (cageSlider != null)
         {
@@ -122,6 +126,7 @@ public class MouseMovement : MonoBehaviour
             // Move the player
             transform.position += moveDirection * SpeedMove * Time.deltaTime;
             mouseAnim.SetBool("isWalking", true);
+            //cagemouseAnim.SetBool("isRunning",true);
             // Adjust rotation to face movement direction (with 90-degree correction if needed)
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up) * Quaternion.Euler(0, 0, 0);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
@@ -129,6 +134,7 @@ public class MouseMovement : MonoBehaviour
         else
         {
             mouseAnim.SetBool("isWalking", false);
+            //cagemouseAnim.SetBool("isRunning", false);
         }
 
 
@@ -146,6 +152,7 @@ public class MouseMovement : MonoBehaviour
     {
         if (other.CompareTag("Cheese"))
         {
+            Debug.Log("Name of hidden Cheese item:"+other.gameObject.name);
             cheesePopUpPanel.SetActive(true);
             StartCoroutine(DeactiveCheesePopUp(1.0f));
 
@@ -229,7 +236,23 @@ public class MouseMovement : MonoBehaviour
             Debug.Log("Cheese Count at Cage Collider: " + cheeseCount);
             Instantiate(cageconvertPE, other.transform.position, Quaternion.identity);
             AudioManager.instance.PlaySFX("Cage2");
+
+            // Enable hostage mouse to follow player
+            GameObject hostageMouse = GameObject.FindGameObjectWithTag("HostageMouse");
+            if (hostageMouse != null)
+            {
+                FollowPlayerMouse follower = hostageMouse.GetComponent<FollowPlayerMouse>();
+                if (follower != null)
+                {
+                    cagemouseAnim.enabled = true;
+                    follower.playerMouse = this.transform;
+                    follower.shouldFollow = true;
+                }
+            }
+
             Destroy(other.gameObject);
+            Destroy(saveObj);
+            Destroy(cageObj);
             // Spawn cage only if cheeseCount >= 12 and not already spawned
             /*if (cheeseCount == 12 && !cageSpawned)
             {

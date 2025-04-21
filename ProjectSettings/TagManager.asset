@@ -16,6 +16,8 @@ TagManager:
   - SoundSource
   - CrackCollider
   - mouseTrap
+  - HostageMouse
+  - EndWall
   layers:
   - Default
   - TransparentFX
