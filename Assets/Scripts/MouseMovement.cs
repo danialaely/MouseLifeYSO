@@ -66,6 +66,7 @@ public class MouseMovement : MonoBehaviour
     GameObject mTrap;
     public GameObject saveObj;
     public GameObject cageObj;
+    public ParticleSystem mHouseEffect;
 
     //TO BE DONE: In this prototype the player has to gather multple items to enable/spawn gift box.
     private void OnEnable()
@@ -236,6 +237,8 @@ public class MouseMovement : MonoBehaviour
             Debug.Log("Cheese Count at Cage Collider: " + cheeseCount);
             Instantiate(cageconvertPE, other.transform.position, Quaternion.identity);
             AudioManager.instance.PlaySFX("Cage2");
+            mHouseEffect.gameObject.SetActive(true);
+            mHouseEffect.Play();
 
             // Enable hostage mouse to follow player
             GameObject hostageMouse = GameObject.FindGameObjectWithTag("HostageMouse");

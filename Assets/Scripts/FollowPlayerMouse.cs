@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,6 +10,8 @@ public class FollowPlayerMouse : MonoBehaviour
     public float stopDistance = 1.5f; // Distance at which the mouse stops running
     private NavMeshAgent agent;
     private Animator animator;
+    public ParticleSystem confetti;
+    public GameObject levelCompletedPanel;
 
     void Start()
     {
@@ -30,10 +33,12 @@ public class FollowPlayerMouse : MonoBehaviour
             if (distanceToPlayer > stopDistance)
             {
                 animator.SetBool("isRunning", true);
+                agent.isStopped = false;
             }
             else
             {
                 animator.SetBool("isRunning", false);
+                agent.isStopped = true;
             }
 
             // Smoothly rotate toward the player
@@ -48,6 +53,7 @@ public class FollowPlayerMouse : MonoBehaviour
         else
         {
             animator.SetBool("isRunning", false); // Stop animation if not following
+            agent.isStopped = true;
         }
     }
 
@@ -56,6 +62,16 @@ public class FollowPlayerMouse : MonoBehaviour
         if (other.gameObject.tag == "EndWall") 
         {
             Debug.Log("Win");
+            confetti.gameObject.SetActive(true);
+            confetti.Play();
+            StartCoroutine(levelComp(1.0f));
+            AudioManager.instance.PlaySFX("LevelCompleted");
         }
+    }
+
+    IEnumerator levelComp(float del) 
+    {
+        yield return new WaitForSeconds(del);
+        levelCompletedPanel.SetActive(true);
     }
 }
