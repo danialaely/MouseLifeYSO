@@ -18,6 +18,7 @@ TagManager:
   - mouseTrap
   - HostageMouse
   - EndWall
+  - Cat
   layers:
   - Default
   - TransparentFX

@@ -9,6 +9,7 @@ public class CatAI : MonoBehaviour
 {
     public Transform[] patrolPoints; // Assign Waypoint1 and Waypoint2 in Inspector
     public Transform mouse; // Assign Mouse in Inspector
+    public Transform hostageMouse; // Assign Hostage Mouse in Inspector
     public float sightRange = 5f; // Cat's vision range
     public float chaseSpeed = 5f; // Speed when chasing Mouse
     public float patrolSpeed = 2f; // Speed when patrolling
@@ -135,6 +136,17 @@ public class CatAI : MonoBehaviour
             return;
         }
 
+       /* if (CanSeeHMouse())
+        {
+            Debug.Log("Can See H Mouse");
+            isChasing = true;
+            ChaseHMouse();
+            ChangeSpotlightColor(Color.red); // Set light to red
+            questionMarkPanel.SetActive(false);
+            lingerTimer = 0.0f; // Reset linger timer when seeing the mouse
+            return;
+        }*/
+
         // Linger after sound stops
         if (lingerTimer > 0)
         {
@@ -166,7 +178,7 @@ public class CatAI : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
 
-        if (isLocked || cageTarget == null) return;
+      /*  if (isLocked || cageTarget == null) return;
 
         float distance = Vector3.Distance(transform.position, cageTarget.position);
 
@@ -186,7 +198,7 @@ public class CatAI : MonoBehaviour
             {
                 LockInCage();
             }
-        }
+        }*/
 
     }
 
@@ -250,6 +262,7 @@ public class CatAI : MonoBehaviour
         Debug.Log("Chasing the sound!");
 
         float distance = Vector3.Distance(transform.position, mouse.position);
+
         if (distance < sightRange)
         {
             //Debug.Log("Distance:" + distance);
@@ -270,6 +283,8 @@ public class CatAI : MonoBehaviour
     bool CanSeeMouse()
     {
         float distance = Vector3.Distance(transform.position, mouse.position);
+       // float distance2 = Vector3.Distance(transform.position, hostageMouse.position);
+
         if (distance < sightRange)
         {
             Debug.Log("Distance: " + distance);
@@ -309,12 +324,63 @@ public class CatAI : MonoBehaviour
         return false;
     }
 
+    bool CanSeeHMouse()
+    {
+        //float distance = Vector3.Distance(transform.position, mouse.position);
+         float distance2 = Vector3.Distance(transform.position, hostageMouse.position);
+
+        if (distance2 < sightRange)
+        {
+            Debug.Log("Distance: " + distance2);
+            Vector3 directionToMouse = (hostageMouse.position - transform.position).normalized;
+
+            float angle = Vector3.Angle(transform.forward, directionToMouse);
+            // Check if the mouse is in front of the cat
+            if (angle < fieldOfView / 2f)
+            {
+                Debug.Log("Mouse is in front");
+                RaycastHit hit;
+
+                // Perform the raycast to detect obstacles between the cat and the mouse
+                if (Physics.Raycast(transform.position, directionToMouse, out hit, sightRange))
+                {
+                    Debug.DrawRay(transform.position, directionToMouse * hit.distance, Color.green);
+
+                    // Check if the raycast hit the mouse and not an obstacle
+                    if (hit.collider.name == "MouseNew")
+                    {
+                        Debug.Log("Can See Hostage Mouse");
+                    }
+                    else
+                    {
+                        Debug.Log("Obstacle detected: " + hit.collider.name);
+                    }
+                    // AudioManager.instance.PlaySFX("Chase");
+                    // StartCoroutine(StopSfXChase(1.0f));
+                    return true;
+                }
+                else
+                {
+                    Debug.DrawRay(transform.position, directionToMouse * sightRange, Color.red);
+                }
+            }
+        }
+        return false;
+    }
+
 
     void ChaseMouse()
     {
         isChasing = true;
         agent.speed = chaseSpeed;
         agent.destination = mouse.position;
+    }
+
+    void ChaseHMouse()
+    {
+        isChasing = true;
+        agent.speed = chaseSpeed;
+        agent.destination = hostageMouse.position;
     }
 
     private IEnumerator DropMouseTrapRoutine()
