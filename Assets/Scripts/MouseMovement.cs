@@ -477,4 +477,21 @@ public class MouseMovement : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    public void NextLvlBtn() 
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = currentSceneIndex + 1;
+
+        // Optional: Check if the next scene exists
+        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+        {
+            SceneManager.LoadScene(nextSceneIndex);
+        }
+        else
+        {
+            Debug.Log("No more levels! Looping back to first level or show GameComplete screen.");
+            SceneManager.LoadScene(0); // Or load a "GameComplete" scene
+        }
+    }
 }
