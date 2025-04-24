@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class FollowPlayerMouse : MonoBehaviour
 {
@@ -12,12 +13,15 @@ public class FollowPlayerMouse : MonoBehaviour
     private Animator animator;
     public ParticleSystem confetti;
     public GameObject levelCompletedPanel;
+    private CatAI[] allCats;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         agent.updateRotation = false; // We'll handle rotation manually
+
+        allCats = FindObjectsOfType<CatAI>();
     }
 
     void Update()
@@ -66,6 +70,19 @@ public class FollowPlayerMouse : MonoBehaviour
             confetti.Play();
             StartCoroutine(levelComp(1.0f));
             AudioManager.instance.PlaySFX("LevelCompleted");
+
+            // Loop through and stop their agents
+            if (allCats != null) 
+            {
+            foreach (CatAI cat in allCats)
+            {
+                NavMeshAgent agent = cat.GetComponent<NavMeshAgent>();
+                if (agent != null)
+                {
+                    agent.isStopped = true;
+                }
+            }
+            }
         }
     }
 

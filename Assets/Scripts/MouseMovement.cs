@@ -68,6 +68,8 @@ public class MouseMovement : MonoBehaviour
     public GameObject cageObj;
     public ParticleSystem mHouseEffect;
 
+    public Transform[] giftSpawnPositions;
+
     //TO BE DONE: In this prototype the player has to gather multple items to enable/spawn gift box.
     private void OnEnable()
     {
@@ -440,9 +442,29 @@ public class MouseMovement : MonoBehaviour
 
     void SpawnGift()
     {
-        Vector3 randomPosition = GetRandomPointOnNavMesh();
-        Instantiate(giftPrefab, randomPosition, Quaternion.identity);
-        giftPrefab.SetActive(true);
+        if (giftSpawnPositions == null || giftSpawnPositions.Length == 0)
+        {
+            Debug.LogWarning("No gift spawn positions assigned!");
+            return;
+        }
+
+        // Find the closest spawn position to the player
+        Transform closestSpawn = giftSpawnPositions[0];
+        float closestDistance = Vector3.Distance(transform.position, closestSpawn.position);
+
+        for (int i = 1; i < giftSpawnPositions.Length; i++)
+        {
+            float distance = Vector3.Distance(transform.position, giftSpawnPositions[i].position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestSpawn = giftSpawnPositions[i];
+            }
+        }
+
+        // Instantiate the gift at the closest spawn point
+        GameObject gift = Instantiate(giftPrefab, closestSpawn.position, Quaternion.identity);
+        gift.SetActive(true);
     }
 
     Vector3 GetRandomPointOnNavMesh()

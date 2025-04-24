@@ -54,6 +54,8 @@ public class CatAI : MonoBehaviour
 
     [SerializeField] float fieldOfView = 60f; // degrees
 
+    //private CatAI[] allCats;
+    private FollowPlayerMouse hMouse;
 
     void Start()
     {
@@ -83,6 +85,7 @@ public class CatAI : MonoBehaviour
         catHealthSlider.value = catHealth;
         StartCoroutine(DropMouseTrapRoutine());
         // mouseAnim = mouse.GetComponent<Animator>();
+        hMouse = FindFirstObjectByType<FollowPlayerMouse>();
     }
 
     public int GetCatHealth()
@@ -411,6 +414,8 @@ public class CatAI : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            NavMeshAgent mouseAgent = hMouse.GetComponent<NavMeshAgent>();
+            mouseAgent.isStopped = true;
             Debug.Log("Level Failed!");
             mouseAnim.SetBool("isCaught", true);
             //AudioManager.instance.PlaySFX(AudioManager.instance.levelFailedSFX);
