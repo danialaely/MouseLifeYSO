@@ -57,7 +57,7 @@ public class Grenade : MonoBehaviour
         {
             Debug.Log("Got Colliders");
             rb = nearbyObjects.GetComponent<Rigidbody>();
-            if (rb != null && rb.gameObject.name == "CatNew") 
+            if (rb != null && rb.gameObject.tag == "Cat") 
             {
                 Debug.Log("Applied force");
                 catanim = rb.gameObject.GetComponent<Animator>();
@@ -107,7 +107,7 @@ public class Grenade : MonoBehaviour
         Debug.Log("takraya bhai takraya");
         Debug.Log("Weapon Name:"+this.gameObject.name);
         Debug.Log("Collided obj Name:"+collision.gameObject.name);
-        if (collision.gameObject.name == "CatNew") 
+        if (collision.gameObject.tag == "Cat") 
         {
             if (this.gameObject.name == "banana(Clone)")
             {
