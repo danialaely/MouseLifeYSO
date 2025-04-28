@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
+using Unity.VisualScripting;
 
 public class FollowPlayerMouse : MonoBehaviour
 {
@@ -14,7 +15,8 @@ public class FollowPlayerMouse : MonoBehaviour
     public ParticleSystem confetti;
     public GameObject levelCompletedPanel;
     private CatAI[] allCats;
-
+    public GameObject innerPortal;
+    public GameObject wall;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -22,6 +24,7 @@ public class FollowPlayerMouse : MonoBehaviour
         agent.updateRotation = false; // We'll handle rotation manually
 
         allCats = FindObjectsOfType<CatAI>();
+        //innerPortal = GameObject.FindGameObjectWithTag("inPortal");
     }
 
     void Update()
@@ -84,9 +87,30 @@ public class FollowPlayerMouse : MonoBehaviour
             }
             }
         }
+
+        if (other.CompareTag("portal"))
+        {
+            //+ new Vector3(0, 0, -3)
+            transform.position = innerPortal.transform.position + new Vector3(0, 0, -3);
+          //  wall.GetComponent<NavMeshObstacle>().enabled = false;
+        }
     }
 
-    IEnumerator levelComp(float del) 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("portal"))
+        {
+           //StartCoroutine(wallObs(0.3f));
+        }
+    }
+
+    IEnumerator wallObs(float del) 
+    {
+        yield return new WaitForSeconds(del);
+        wall.GetComponent<NavMeshObstacle>().enabled = true;
+    }
+
+        IEnumerator levelComp(float del) 
     {
         yield return new WaitForSeconds(del);
         levelCompletedPanel.SetActive(true);

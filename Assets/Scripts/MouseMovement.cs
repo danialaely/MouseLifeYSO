@@ -70,6 +70,11 @@ public class MouseMovement : MonoBehaviour
 
     public Transform[] giftSpawnPositions;
 
+    public GameObject innerPortal;
+    public GameObject wallToRotate;
+    public GameObject portalPrefab;
+    public bool wallrotation;
+
     //TO BE DONE: In this prototype the player has to gather multple items to enable/spawn gift box.
     private void OnEnable()
     {
@@ -99,10 +104,11 @@ public class MouseMovement : MonoBehaviour
         giftPopUpPanel.SetActive(false);
         mousetrapped = false;
         cagemouseAnim.enabled = false;
+        wallrotation = false;
 
         if (cageSlider != null)
         {
-            cageSlider.maxValue = maxCheese * 3; // Or just set to 12 manually
+            cageSlider.maxValue = maxCheese + 1; // Or just set to 12 manually
             cageSlider.value = 0;
         }
 
@@ -274,6 +280,27 @@ public class MouseMovement : MonoBehaviour
             }*/
         }
 
+        if (other.CompareTag("SliderCol")) 
+        {
+            Debug.Log("Cheese Count at Cage Collider: " + cheeseCount);
+            StartCoroutine(AnimateSliderValue(cageSlider.value, cheeseCount));
+            //Instantiate(cageconvertPE, other.transform.position, Quaternion.identity);
+
+            if (cheeseCount >= 5 && !cageSpawned)
+            {
+                Debug.Log("Spawning Portal...");
+                cageCol = other.gameObject;
+
+                //Instantiate(cagePrefab, other.transform.position, Quaternion.identity);
+                //Instantiate(cageconvertPE, other.transform.position, Quaternion.identity);
+
+                //AudioManager.instance.PlaySFX("Cage2");
+                StartCoroutine(DeactiveCageSlider(1.0f));
+
+                cageSpawned = true;
+            }
+        }
+
         if (other.CompareTag("CrackCollider"))
         {
             Debug.Log("Creaking Sound");
@@ -295,6 +322,56 @@ public class MouseMovement : MonoBehaviour
             //sliderInstance.transform.LookAt(Camera.main.transform);
             sliderInstance.transform.Rotate(90, 0, 0); // flip if it looks backward
         }
+
+        if (other.CompareTag("portal")) 
+        {
+            // transform.position = innerPortal.transform.position + new Vector3(0,0,-3);
+            StartCoroutine(Teleport(0.3f));
+            wallToRotate.transform.GetChild(0).GetComponent<NavMeshObstacle>().enabled = false;
+        }
+
+        if (other.CompareTag("inPortal"))
+        {
+             transform.position = portalPrefab.transform.position + new Vector3(0,0,-3);
+            //StartCoroutine(Teleport(0.3f));
+            //wallToRotate.transform.GetChild(0).GetComponent<NavMeshObstacle>().enabled = false;
+        }
+
+        if (other.CompareTag("rotatorBtn"))
+        {
+            other.transform.position += new Vector3(0, -0.3f, 0);
+           
+
+            if (!wallrotation)
+            {
+                wallToRotate.transform.rotation = Quaternion.Euler(0, 90, 0);
+                wallrotation = true;
+            }
+            else 
+            {
+                wallToRotate.transform.rotation = Quaternion.Euler(0, 0, 0);
+                wallrotation = false;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("rotatorBtn"))
+        {
+            other.transform.position += new Vector3(0, 0.3f, 0);
+        }
+
+        if (other.CompareTag("portal"))
+        {
+            wallToRotate.transform.GetChild(0).GetComponent<NavMeshObstacle>().enabled = true;
+        }
+    }
+
+    IEnumerator Teleport(float del) 
+    {
+        yield return new WaitForSeconds(del);
+        transform.position = innerPortal.transform.position + new Vector3(0, 0, -3);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -340,7 +417,7 @@ public class MouseMovement : MonoBehaviour
     IEnumerator DeactiveCageSlider(float del) 
     {
         yield return new WaitForSeconds(del);
-        Instantiate(cagePrefab, cageCol.transform.position , Quaternion.Euler(-80.0f,0.0f,0.0f));
+        Instantiate(portalPrefab, cageCol.transform.position , Quaternion.Euler(0.0f,0.0f,0.0f));
         cageTxt.gameObject.SetActive(false);
         cageCol.gameObject.SetActive(false);
         cageSlider.gameObject.SetActive(false);
