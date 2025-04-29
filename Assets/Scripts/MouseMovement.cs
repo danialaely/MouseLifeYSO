@@ -327,7 +327,7 @@ public class MouseMovement : MonoBehaviour
         {
             // transform.position = innerPortal.transform.position + new Vector3(0,0,-3);
             StartCoroutine(Teleport(0.3f));
-            wallToRotate.transform.GetChild(0).GetComponent<NavMeshObstacle>().enabled = false;
+            //wallToRotate.transform.GetChild(0).GetComponent<NavMeshObstacle>().enabled = false;
         }
 
         if (other.CompareTag("inPortal"))
@@ -364,7 +364,7 @@ public class MouseMovement : MonoBehaviour
 
         if (other.CompareTag("portal"))
         {
-            wallToRotate.transform.GetChild(0).GetComponent<NavMeshObstacle>().enabled = true;
+            //wallToRotate.transform.GetChild(0).GetComponent<NavMeshObstacle>().enabled = true;
         }
     }
 

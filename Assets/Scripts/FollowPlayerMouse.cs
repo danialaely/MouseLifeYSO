@@ -24,6 +24,7 @@ public class FollowPlayerMouse : MonoBehaviour
         agent.updateRotation = false; // We'll handle rotation manually
 
         allCats = FindObjectsOfType<CatAI>();
+        wall.GetComponent<NavMeshObstacle>().enabled = false;
         //innerPortal = GameObject.FindGameObjectWithTag("inPortal");
     }
 
@@ -100,7 +101,7 @@ public class FollowPlayerMouse : MonoBehaviour
     {
         if (other.CompareTag("portal"))
         {
-           //StartCoroutine(wallObs(0.3f));
+           StartCoroutine(wallObs(0.3f));
         }
     }
 
