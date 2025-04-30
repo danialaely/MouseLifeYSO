@@ -75,6 +75,9 @@ public class MouseMovement : MonoBehaviour
     public GameObject portalPrefab;
     public bool wallrotation;
 
+    private Vector2 startTouchPosition, currentTouchPosition;
+    private bool isDragging = false;
+
     //TO BE DONE: In this prototype the player has to gather multple items to enable/spawn gift box.
     private void OnEnable()
     {
@@ -148,6 +151,7 @@ public class MouseMovement : MonoBehaviour
 
 
     }
+
 
     void FixedUpdate()
     {
