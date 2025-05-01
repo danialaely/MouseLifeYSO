@@ -9,7 +9,7 @@ public class DragToStart : MonoBehaviour
 
     private void Start()
     {
-        Time.timeScale = 0.0f;
+        //Time.timeScale = 0.0f;
     }
 
     public void OnDrag(BaseEventData data)

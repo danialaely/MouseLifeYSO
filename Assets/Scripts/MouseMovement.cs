@@ -75,8 +75,10 @@ public class MouseMovement : MonoBehaviour
     public GameObject portalPrefab;
     public bool wallrotation;
 
-    private Vector2 startTouchPosition, currentTouchPosition;
+    private Vector3 dragStartPosition;
     private bool isDragging = false;
+    private Vector3 lastMousePosition;
+
 
     //TO BE DONE: In this prototype the player has to gather multple items to enable/spawn gift box.
     private void OnEnable()
@@ -129,10 +131,11 @@ public class MouseMovement : MonoBehaviour
             // Debug.Log("is it even moving?");
             // bulletPrefab.transform.position += transform.forward * Time.deltaTime * 50;
         }
-        Vector3 moveDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical).normalized; //Disable if mouse step on mouseTrap.
         cheesePopUpPanel.transform.position = this.transform.position + new Vector3(0, 1, 1.5f);
         giftPopUpPanel.transform.position = this.transform.position + new Vector3(0, 1, 1.5f);
         Cam.transform.position = this.transform.position + camOffset; //Vector3(0,20,-5.5f)
+
+        Vector3 moveDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical).normalized; //Disable if mouse step on mouseTrap.
         if (moveDirection.magnitude > 0.1f && !mousetrapped) // Ensure movement input is present
         {
             // Move the player
@@ -149,7 +152,6 @@ public class MouseMovement : MonoBehaviour
             //cagemouseAnim.SetBool("isRunning", false);
         }
 
-
     }
 
 
@@ -165,7 +167,7 @@ public class MouseMovement : MonoBehaviour
     {
         if (other.CompareTag("Cheese"))
         {
-            Debug.Log("Name of hidden Cheese item:"+other.gameObject.name);
+            Debug.Log("Name of hidden Cheese item:" + other.gameObject.name);
             cheesePopUpPanel.SetActive(true);
             StartCoroutine(DeactiveCheesePopUp(1.0f));
 
@@ -284,7 +286,7 @@ public class MouseMovement : MonoBehaviour
             }*/
         }
 
-        if (other.CompareTag("SliderCol")) 
+        if (other.CompareTag("SliderCol"))
         {
             Debug.Log("Cheese Count at Cage Collider: " + cheeseCount);
             StartCoroutine(AnimateSliderValue(cageSlider.value, cheeseCount));
@@ -327,7 +329,7 @@ public class MouseMovement : MonoBehaviour
             sliderInstance.transform.Rotate(90, 0, 0); // flip if it looks backward
         }
 
-        if (other.CompareTag("portal")) 
+        if (other.CompareTag("portal"))
         {
             // transform.position = innerPortal.transform.position + new Vector3(0,0,-3);
             StartCoroutine(Teleport(0.3f));
@@ -336,7 +338,7 @@ public class MouseMovement : MonoBehaviour
 
         if (other.CompareTag("inPortal"))
         {
-             transform.position = portalPrefab.transform.position + new Vector3(0,0,-3);
+            transform.position = portalPrefab.transform.position + new Vector3(0, 0, -3);
             //StartCoroutine(Teleport(0.3f));
             //wallToRotate.transform.GetChild(0).GetComponent<NavMeshObstacle>().enabled = false;
         }
@@ -344,14 +346,14 @@ public class MouseMovement : MonoBehaviour
         if (other.CompareTag("rotatorBtn"))
         {
             other.transform.position += new Vector3(0, -0.3f, 0);
-           
+
 
             if (!wallrotation)
             {
                 wallToRotate.transform.rotation = Quaternion.Euler(0, 90, 0);
                 wallrotation = true;
             }
-            else 
+            else
             {
                 wallToRotate.transform.rotation = Quaternion.Euler(0, 0, 0);
                 wallrotation = false;
@@ -372,7 +374,7 @@ public class MouseMovement : MonoBehaviour
         }
     }
 
-    IEnumerator Teleport(float del) 
+    IEnumerator Teleport(float del)
     {
         yield return new WaitForSeconds(del);
         transform.position = innerPortal.transform.position + new Vector3(0, 0, -3);
@@ -380,12 +382,12 @@ public class MouseMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Bullet")) 
+        if (collision.gameObject.CompareTag("Bullet"))
         {
             Debug.Log("Got Hit By Bullet");
         }
     }
-    IEnumerator mouseTrap(float del) 
+    IEnumerator mouseTrap(float del)
     {
         yield return new WaitForSeconds(0.1f);
         mousetrapped = true;
@@ -418,10 +420,10 @@ public class MouseMovement : MonoBehaviour
         }
     }
 
-    IEnumerator DeactiveCageSlider(float del) 
+    IEnumerator DeactiveCageSlider(float del)
     {
         yield return new WaitForSeconds(del);
-        Instantiate(portalPrefab, cageCol.transform.position , Quaternion.Euler(0.0f,0.0f,0.0f));
+        Instantiate(portalPrefab, cageCol.transform.position, Quaternion.Euler(0.0f, 0.0f, 0.0f));
         cageTxt.gameObject.SetActive(false);
         cageCol.gameObject.SetActive(false);
         cageSlider.gameObject.SetActive(false);
@@ -472,7 +474,7 @@ public class MouseMovement : MonoBehaviour
             currentWeapon = null;
             useBtn.SetActive(false);
         }
-        else if (currentWeapon != null && currentWeapon.name == "Pistol_3(Clone)") 
+        else if (currentWeapon != null && currentWeapon.name == "Pistol_3(Clone)")
         {
             Transform bulletSpawnPoint = currentWeapon.transform.GetChild(0);
             Debug.Log("Pistol hai Pistol");
@@ -480,7 +482,7 @@ public class MouseMovement : MonoBehaviour
             bullet.transform.SetParent(bulletSpawnPoint);
             //bullet.transform.SetParent(null);
             AudioManager.instance.PlaySFX("Bullet2");
-           // currentWeapon = null;
+            // currentWeapon = null;
             useBtn.SetActive(false);
             StartCoroutine(DeactiveGun(2.0f));
 
@@ -496,26 +498,26 @@ public class MouseMovement : MonoBehaviour
         }
     }
 
-    IEnumerator ActiveKinem(float del) 
+    IEnumerator ActiveKinem(float del)
     {
         yield return new WaitForSeconds(del);
         catRB.isKinematic = true;
         catRB.useGravity = false;
     }
 
-    IEnumerator DeactiveGun(float del) 
+    IEnumerator DeactiveGun(float del)
     {
         yield return new WaitForSeconds(del);
         Destroy(currentWeapon.gameObject);
         currentWeapon = null;
     }
 
-    public bool thrown() 
+    public bool thrown()
     {
         return hasthrown;
     }
 
-    IEnumerator thrownfalse(float del) 
+    IEnumerator thrownfalse(float del)
     {
         yield return new WaitForSeconds(del);
         hasthrown = false;
@@ -569,7 +571,7 @@ public class MouseMovement : MonoBehaviour
         return randomPosition; // Return default position if no valid point found
     }
 
-    IEnumerator DeactiveCheesePopUp(float del) 
+    IEnumerator DeactiveCheesePopUp(float del)
     {
         yield return new WaitForSeconds(del);
         cheesePopUpPanel.SetActive(false);
@@ -581,7 +583,7 @@ public class MouseMovement : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void NextLvlBtn() 
+    public void NextLvlBtn()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         int nextSceneIndex = currentSceneIndex + 1;

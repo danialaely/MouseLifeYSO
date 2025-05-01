@@ -1137,7 +1137,7 @@ MonoBehaviour:
   confetti: {fileID: 138550970}
   levelCompletedPanel: {fileID: 1908766772}
   innerPortal: {fileID: 0}
-  wall: {fileID: 0}
+  wall: {fileID: 212705797}
 --- !u!195 &10796918
 NavMeshAgent:
   m_ObjectHideFlags: 0
