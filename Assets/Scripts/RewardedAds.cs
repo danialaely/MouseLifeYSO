@@ -60,6 +60,14 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
         {
             Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
+            if (this.gameObject.name == "rewardBtn") 
+            {
+                Debug.Log("You have gained 1.5 Boost");
+            }
+            else if (this.gameObject.name == "rewardBtn2")
+            {
+                Debug.Log("You have gained 50 Gems");
+            }
         }
     }
 

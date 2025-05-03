@@ -7,6 +7,8 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
+using UnityEngine.InputSystem.EnhancedTouch;
+using ETouch = UnityEngine.InputSystem.EnhancedTouch;
 
 public class MouseMovement : MonoBehaviour
 {
@@ -26,7 +28,12 @@ public class MouseMovement : MonoBehaviour
 
     // private float throwForce = 1.0f; // Adjust the throw force as needed
 
-    public FixedJoystick joystick;
+    public FloatingJoystick joystick;
+    [SerializeField] Vector2 JoystickSize = new Vector2(300,300);
+    private Finger MovementFinger;
+    private Vector2 MovementAmount;
+    public RectTransform knob;
+
     public float SpeedMove = 5f;
     public float rotationSpeed = 10f;
 
@@ -75,20 +82,104 @@ public class MouseMovement : MonoBehaviour
     public GameObject portalPrefab;
     public bool wallrotation;
 
-    private Vector3 dragStartPosition;
-    private bool isDragging = false;
-    private Vector3 lastMousePosition;
-
 
     //TO BE DONE: In this prototype the player has to gather multple items to enable/spawn gift box.
     private void OnEnable()
     {
         playerControls.Enable();
+        EnhancedTouchSupport.Enable();
+        ETouch.Touch.onFingerDown += HandleFingerDown;
+        ETouch.Touch.onFingerUp += HandleLoseFinger;
+        ETouch.Touch.onFingerMove += HandleFingerMove;
+    }
+
+    private void HandleFingerDown(Finger TouchedFinger) 
+    {
+        if (MovementFinger == null && TouchedFinger.screenPosition.x <= Screen.width /2f) 
+        {
+            MovementFinger = TouchedFinger;
+            MovementAmount = Vector2.zero;
+            joystick.gameObject.SetActive(true);
+            RectTransform rt = joystick.GetComponent<RectTransform>();
+            if (rt != null)
+            {
+                rt.sizeDelta = JoystickSize;
+                Vector2 anchoredPos;
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    rt.parent as RectTransform,
+                    ClampStartPosition(TouchedFinger.screenPosition),
+                    null,  // No camera needed for Screen Space - Overlay
+                    out anchoredPos
+                );
+                Vector2 offset = new Vector2(1000f, 1500f); // Move joystick 50px right and 50px up
+                anchoredPos += offset;
+
+                rt.anchoredPosition = anchoredPos;
+            }
+
+        }
+    }
+
+    private Vector2 ClampStartPosition(Vector2 startPosition) 
+    {
+        if (startPosition.x < JoystickSize.x / 2) 
+        {
+            startPosition.x = JoystickSize.x / 2;
+        }
+
+        if (startPosition.x < JoystickSize.y / 2)
+        {
+            startPosition.x = JoystickSize.y / 2;
+        }
+        else if (startPosition.y > Screen.height - JoystickSize.y / 2) 
+        {
+            startPosition.y = Screen.height - JoystickSize.y / 2;
+        }
+
+        return startPosition;
+    }
+
+    private void HandleLoseFinger(Finger LostFinger)
+    {
+        if (LostFinger == MovementFinger) 
+    {
+        MovementFinger = null;
+        MovementAmount = Vector2.zero;
+
+        // Reset knob to center
+        knob.anchoredPosition = Vector2.zero;
+
+        joystick.gameObject.SetActive(false);
+    }
+    }
+    
+    private void HandleFingerMove(Finger MovedFinger)
+    {
+        Vector2 knobPosition;
+        float maxMovement = JoystickSize.x / 2f;
+        ETouch.Touch currentTouch = MovedFinger.currentTouch;
+        RectTransform rt = joystick.GetComponent<RectTransform>();
+
+        if (Vector2.Distance(currentTouch.screenPosition,rt.anchoredPosition) > maxMovement) 
+        {
+            knobPosition = (currentTouch.screenPosition - rt.anchoredPosition).normalized*maxMovement;
+        }
+        else
+        {
+            knobPosition = currentTouch.screenPosition - rt.anchoredPosition;
+        }
+
+        knob.anchoredPosition = knobPosition;
+        MovementAmount = knobPosition / maxMovement;
     }
 
     private void OnDisable()
     {
         playerControls.Disable();
+        ETouch.Touch.onFingerDown -= HandleFingerDown;
+        ETouch.Touch.onFingerUp -= HandleLoseFinger;
+        ETouch.Touch.onFingerMove -= HandleFingerMove;
+        EnhancedTouchSupport.Disable();
     }
 
     private void Awake()
@@ -131,25 +222,31 @@ public class MouseMovement : MonoBehaviour
             // Debug.Log("is it even moving?");
             // bulletPrefab.transform.position += transform.forward * Time.deltaTime * 50;
         }
-        cheesePopUpPanel.transform.position = this.transform.position + new Vector3(0, 1, 1.5f);
+
+
+            cheesePopUpPanel.transform.position = this.transform.position + new Vector3(0, 1, 1.5f);
         giftPopUpPanel.transform.position = this.transform.position + new Vector3(0, 1, 1.5f);
         Cam.transform.position = this.transform.position + camOffset; //Vector3(0,20,-5.5f)
 
-        Vector3 moveDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical).normalized; //Disable if mouse step on mouseTrap.
-        if (moveDirection.magnitude > 0.1f && !mousetrapped) // Ensure movement input is present
+        //Vector3 scaledMovement = speed*Time.deltaTime*new Vector3(MovementAmount.x,0, MovementAmount.y);
+        //this.transform.LookAt(this.transform.position + scaledMovement, Vector3.up);
+
+        // Joystick movement (based on FloatingJoystick)
+        Vector3 moveDirection = new Vector3(MovementAmount.x, 0, MovementAmount.y).normalized;
+
+        //Vector3 moveDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical).normalized;
+
+        if (moveDirection.magnitude > 0.1f && !mousetrapped)
         {
-            // Move the player
             transform.position += moveDirection * SpeedMove * Time.deltaTime;
             mouseAnim.SetBool("isWalking", true);
-            //cagemouseAnim.SetBool("isRunning",true);
-            // Adjust rotation to face movement direction (with 90-degree correction if needed)
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up) * Quaternion.Euler(0, 0, 0);
+
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
         else
         {
             mouseAnim.SetBool("isWalking", false);
-            //cagemouseAnim.SetBool("isRunning", false);
         }
 
     }
