@@ -30,7 +30,7 @@ public class MouseMovement : MonoBehaviour
 
     public FloatingJoystick joystick;
     [SerializeField] Vector2 JoystickSize = new Vector2(300,300);
-    private Finger MovementFinger;
+    private int? MovementFingerId = null;
     private Vector2 MovementAmount;
     public RectTransform knob;
 
@@ -95,11 +95,12 @@ public class MouseMovement : MonoBehaviour
 
     private void HandleFingerDown(Finger TouchedFinger) 
     {
-        if (MovementFinger == null && TouchedFinger.screenPosition.x <= Screen.width /2f) 
-        {
-            MovementFinger = TouchedFinger;
+        
+          if (MovementFingerId == null && TouchedFinger.screenPosition.x <= Screen.width / 2f)
+        {  MovementFingerId = TouchedFinger.index;
             MovementAmount = Vector2.zero;
             joystick.gameObject.SetActive(true);
+
             RectTransform rt = joystick.GetComponent<RectTransform>();
             if (rt != null)
             {
@@ -108,15 +109,14 @@ public class MouseMovement : MonoBehaviour
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(
                     rt.parent as RectTransform,
                     ClampStartPosition(TouchedFinger.screenPosition),
-                    null,  // No camera needed for Screen Space - Overlay
+                    null,
                     out anchoredPos
                 );
-                Vector2 offset = new Vector2(1000f, 1500f); // Move joystick 50px right and 50px up
-                anchoredPos += offset;
 
+                Vector2 offset = new Vector2(1000f, 1500f); // optional offset
+                anchoredPos += offset;
                 rt.anchoredPosition = anchoredPos;
             }
-
         }
     }
 
@@ -141,28 +141,30 @@ public class MouseMovement : MonoBehaviour
 
     private void HandleLoseFinger(Finger LostFinger)
     {
-        if (LostFinger == MovementFinger) 
-    {
-        MovementFinger = null;
-        MovementAmount = Vector2.zero;
+        if (LostFinger.index == MovementFingerId)
+        {
+            MovementFingerId = null;
+            MovementAmount = Vector2.zero;
 
-        // Reset knob to center
-        knob.anchoredPosition = Vector2.zero;
+            knob.anchoredPosition = Vector2.zero;
+            joystick.gameObject.SetActive(false);
+        }
 
-        joystick.gameObject.SetActive(false);
     }
-    }
-    
+
     private void HandleFingerMove(Finger MovedFinger)
     {
+        if (MovedFinger.index != MovementFingerId)
+            return;
+
         Vector2 knobPosition;
         float maxMovement = JoystickSize.x / 2f;
         ETouch.Touch currentTouch = MovedFinger.currentTouch;
         RectTransform rt = joystick.GetComponent<RectTransform>();
 
-        if (Vector2.Distance(currentTouch.screenPosition,rt.anchoredPosition) > maxMovement) 
+        if (Vector2.Distance(currentTouch.screenPosition, rt.anchoredPosition) > maxMovement)
         {
-            knobPosition = (currentTouch.screenPosition - rt.anchoredPosition).normalized*maxMovement;
+            knobPosition = (currentTouch.screenPosition - rt.anchoredPosition).normalized * maxMovement;
         }
         else
         {
@@ -171,6 +173,7 @@ public class MouseMovement : MonoBehaviour
 
         knob.anchoredPosition = knobPosition;
         MovementAmount = knobPosition / maxMovement;
+
     }
 
     private void OnDisable()
