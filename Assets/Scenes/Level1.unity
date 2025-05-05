@@ -2871,7 +2871,7 @@ GameObject:
   - component: {fileID: 169428319}
   - component: {fileID: 169428318}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: LvlFailedPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5639,7 +5639,7 @@ GameObject:
   - component: {fileID: 631240681}
   - component: {fileID: 631240680}
   m_Layer: 5
-  m_Name: Image
+  m_Name: InfinitySign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
