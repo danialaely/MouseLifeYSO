@@ -8168,8 +8168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 776d82f82b81f834bb0f3f7b61673c48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _androidGameId: 
-  _iOSGameId: 
+  _androidGameId: 5846357
+  _iOSGameId: 5846356
   _testMode: 1
   _rewardedAds: {fileID: 1404302254}
   _rewardedAds2: {fileID: 429112165}
@@ -14691,6 +14691,8 @@ GameObject:
   - component: {fileID: 1536303442}
   - component: {fileID: 1536303444}
   - component: {fileID: 1536303443}
+  - component: {fileID: 1536303445}
+  - component: {fileID: 1536303446}
   m_Layer: 5
   m_Name: StartPanel
   m_TagString: Untagged
@@ -14761,6 +14763,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1536303441}
   m_CullTransparentMesh: 1
+--- !u!114 &1536303445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536303441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 5
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1536303446}
+          m_TargetAssemblyTypeName: DragToStart, Assembly-CSharp
+          m_MethodName: OnDrag
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1536303446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536303441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 263326cb895874a408089d798f3f0415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameplayUI: {fileID: 457393931}
+  startPanel: {fileID: 1536303441}
 --- !u!1 &1565847046
 GameObject:
   m_ObjectHideFlags: 0
