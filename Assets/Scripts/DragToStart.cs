@@ -22,6 +22,10 @@ public class DragToStart : MonoBehaviour
             gameStarted = true;
             StartGame();
         }
+        else 
+        {
+            Debug.Log("Nahi chal raha ukhar le kuch= GameStarted:"+gameStarted);
+        }
     }
 
     private void Update()

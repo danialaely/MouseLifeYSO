@@ -2181,8 +2181,6 @@ MonoBehaviour:
   - {fileID: 7415069322882024312, guid: 62854b0fa4e8a974badf84173c590fdb, type: 3}
   - {fileID: 9141661214742953279, guid: 3a47821fbfa4779418b4e01958c3247a, type: 3}
   currentWeapon: {fileID: 0}
-  joystick: {fileID: 410119753}
-  JoystickSize: {x: 300, y: 300}
   knob: {fileID: 2012529607}
   SpeedMove: 5
   rotationSpeed: 10
@@ -2221,6 +2219,8 @@ MonoBehaviour:
   wallToRotate: {fileID: 683005666}
   portalPrefab: {fileID: 908447600324970397, guid: a85e4198cad5e1843ac83fc4370610b2, type: 3}
   wallrotation: 0
+  JoystickSize: {x: 300, y: 300}
+  Joystick: {fileID: 410119753}
 --- !u!4 &125532969 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1865022591899706479, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
@@ -5203,16 +5203,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 410119748}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a47f546fc70ec8428172694e78e4288, type: 3}
+  m_Script: {fileID: 11500000, guid: ba21c7da1e1e41a48a94c5efe57a30af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handleRange: 1
-  deadZone: 0
-  axisOptions: 0
-  snapX: 0
-  snapY: 0
-  background: {fileID: 410119749}
-  handle: {fileID: 2012529607}
+  RectTransform: {fileID: 0}
+  Knob: {fileID: 2012529607}
 --- !u!1 &447326082
 GameObject:
   m_ObjectHideFlags: 0
@@ -10299,9 +10294,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1427488846}
+  - {fileID: 1644491234}
   - {fileID: 169428317}
   - {fileID: 1908766773}
-  - {fileID: 1644491234}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

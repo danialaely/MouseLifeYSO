@@ -56,6 +56,7 @@ public class CatAI : MonoBehaviour
 
     //private CatAI[] allCats;
     private FollowPlayerMouse hMouse;
+    [SerializeField] GameObject dummyJoystick;
 
     void Start()
     {
@@ -421,6 +422,7 @@ public class CatAI : MonoBehaviour
             //AudioManager.instance.PlaySFX(AudioManager.instance.levelFailedSFX);
             BoomParticleEffect.SetActive(true);
             AudioManager.instance.PlaySFX("LevelFailed");
+            collision.gameObject.GetComponent<MouseMovement>().dummyJoystick.SetActive(false);
             StartCoroutine(ActiveRetryPanel(1.2f));
         }
         if (collision.gameObject.CompareTag("Wall"))
@@ -444,6 +446,7 @@ public class CatAI : MonoBehaviour
     {
         yield return new WaitForSeconds(del);
         retryPanel.SetActive(true);
+        dummyJoystick.SetActive(false);
     }
 
     public void PlayAgain()

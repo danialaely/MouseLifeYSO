@@ -28,10 +28,6 @@ public class MouseMovement : MonoBehaviour
 
     // private float throwForce = 1.0f; // Adjust the throw force as needed
 
-    public FloatingJoystick joystick;
-    [SerializeField] Vector2 JoystickSize = new Vector2(300,300);
-    private int? MovementFingerId = null;
-    private Vector2 MovementAmount;
     public RectTransform knob;
 
     public float SpeedMove = 5f;
@@ -83,106 +79,104 @@ public class MouseMovement : MonoBehaviour
     public bool wallrotation;
 
 
-    //TO BE DONE: In this prototype the player has to gather multple items to enable/spawn gift box.
+    [SerializeField]
+    private Vector2 JoystickSize = new Vector2(300, 300);
+    [SerializeField]
+    private CustomJoystick Joystick;
+    
+    public GameObject dummyJoystick;
+    //[SerializeField]
+    //private NavMeshAgent Player;
+
+    private Finger MovementFinger;
+    private Vector2 MovementAmount;
+
     private void OnEnable()
     {
-        playerControls.Enable();
-        EnhancedTouchSupport.Enable();
+        EnhancedTouchSupport.Enable(); // starting with Unity 2022 this does not work! You need to attach a TouchSimulation.cs script to your player
         ETouch.Touch.onFingerDown += HandleFingerDown;
         ETouch.Touch.onFingerUp += HandleLoseFinger;
         ETouch.Touch.onFingerMove += HandleFingerMove;
     }
 
-    private void HandleFingerDown(Finger TouchedFinger) 
+    private void OnDisable()
     {
-        
-          if (MovementFingerId == null && TouchedFinger.screenPosition.x <= Screen.width / 2f)
-        {  MovementFingerId = TouchedFinger.index;
-            MovementAmount = Vector2.zero;
-            joystick.gameObject.SetActive(true);
-
-            RectTransform rt = joystick.GetComponent<RectTransform>();
-            if (rt != null)
-            {
-                rt.sizeDelta = JoystickSize;
-                Vector2 anchoredPos;
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    rt.parent as RectTransform,
-                    ClampStartPosition(TouchedFinger.screenPosition),
-                    null,
-                    out anchoredPos
-                );
-
-                Vector2 offset = new Vector2(1000f, 1500f); // optional offset
-                anchoredPos += offset;
-                rt.anchoredPosition = anchoredPos;
-            }
-        }
-    }
-
-    private Vector2 ClampStartPosition(Vector2 startPosition) 
-    {
-        if (startPosition.x < JoystickSize.x / 2) 
-        {
-            startPosition.x = JoystickSize.x / 2;
-        }
-
-        if (startPosition.x < JoystickSize.y / 2)
-        {
-            startPosition.x = JoystickSize.y / 2;
-        }
-        else if (startPosition.y > Screen.height - JoystickSize.y / 2) 
-        {
-            startPosition.y = Screen.height - JoystickSize.y / 2;
-        }
-
-        return startPosition;
-    }
-
-    private void HandleLoseFinger(Finger LostFinger)
-    {
-        if (LostFinger.index == MovementFingerId)
-        {
-            MovementFingerId = null;
-            MovementAmount = Vector2.zero;
-
-            knob.anchoredPosition = Vector2.zero;
-            joystick.gameObject.SetActive(false);
-        }
-
+        ETouch.Touch.onFingerDown -= HandleFingerDown;
+        ETouch.Touch.onFingerUp -= HandleLoseFinger;
+        ETouch.Touch.onFingerMove -= HandleFingerMove;
+        EnhancedTouchSupport.Disable(); // You need to attach a TouchSimulation.cs script to your player
     }
 
     private void HandleFingerMove(Finger MovedFinger)
     {
-        if (MovedFinger.index != MovementFingerId)
-            return;
-
-        Vector2 knobPosition;
-        float maxMovement = JoystickSize.x / 2f;
-        ETouch.Touch currentTouch = MovedFinger.currentTouch;
-        RectTransform rt = joystick.GetComponent<RectTransform>();
-
-        if (Vector2.Distance(currentTouch.screenPosition, rt.anchoredPosition) > maxMovement)
+        if (MovedFinger == MovementFinger)
         {
-            knobPosition = (currentTouch.screenPosition - rt.anchoredPosition).normalized * maxMovement;
-        }
-        else
-        {
-            knobPosition = currentTouch.screenPosition - rt.anchoredPosition;
-        }
+            Vector2 knobPosition;
+            float maxMovement = JoystickSize.x / 2f;
+            ETouch.Touch currentTouch = MovedFinger.currentTouch;
 
-        knob.anchoredPosition = knobPosition;
-        MovementAmount = knobPosition / maxMovement;
+            if (Vector2.Distance(
+                    currentTouch.screenPosition,
+                    Joystick.RectTransform.anchoredPosition
+                ) > maxMovement)
+            {
+                knobPosition = (
+                    currentTouch.screenPosition - Joystick.RectTransform.anchoredPosition
+                    ).normalized
+                    * maxMovement;
+            }
+            else
+            {
+                knobPosition = currentTouch.screenPosition - Joystick.RectTransform.anchoredPosition;
+            }
 
+            Joystick.Knob.anchoredPosition = knobPosition;
+            MovementAmount = knobPosition / maxMovement;
+        }
     }
 
-    private void OnDisable()
+    private void HandleLoseFinger(Finger LostFinger)
     {
-        playerControls.Disable();
-        ETouch.Touch.onFingerDown -= HandleFingerDown;
-        ETouch.Touch.onFingerUp -= HandleLoseFinger;
-        ETouch.Touch.onFingerMove -= HandleFingerMove;
-        EnhancedTouchSupport.Disable();
+        if (LostFinger == MovementFinger)
+        {
+            MovementFinger = null;
+            Joystick.Knob.anchoredPosition = Vector2.zero;
+            Joystick.gameObject.SetActive(false);
+            dummyJoystick.SetActive(true);
+            MovementAmount = Vector2.zero;
+        }
+    }
+
+    private void HandleFingerDown(Finger TouchedFinger)
+    {
+        if (MovementFinger == null && TouchedFinger.screenPosition.x <= Screen.width / 2f)
+        {
+            MovementFinger = TouchedFinger;
+            MovementAmount = Vector2.zero;
+            Joystick.gameObject.SetActive(true);
+            dummyJoystick.SetActive(false);
+            Joystick.RectTransform.sizeDelta = JoystickSize;
+            Joystick.RectTransform.anchoredPosition = ClampStartPosition(TouchedFinger.screenPosition);
+        }
+    }
+
+    private Vector2 ClampStartPosition(Vector2 StartPosition)
+    {
+        if (StartPosition.x < JoystickSize.x / 2)
+        {
+            StartPosition.x = JoystickSize.x / 2;
+        }
+
+        if (StartPosition.y < JoystickSize.y / 2)
+        {
+            StartPosition.y = JoystickSize.y / 2;
+        }
+        else if (StartPosition.y > Screen.height - JoystickSize.y / 2)
+        {
+            StartPosition.y = Screen.height - JoystickSize.y / 2;
+        }
+
+        return StartPosition;
     }
 
     private void Awake()
@@ -253,7 +247,6 @@ public class MouseMovement : MonoBehaviour
         }
 
     }
-
 
     void FixedUpdate()
     {
