@@ -2194,7 +2194,7 @@ MonoBehaviour:
   cheesePopUpPanel: {fileID: 1709014346}
   giftPopUpPanel: {fileID: 692899306}
   Cam: {fileID: 963194225}
-  camOffset: {x: 0, y: 14.2, z: -12.2}
+  camOffset: {x: 0, y: 14.2, z: -15.5}
   cageSlider: {fileID: 1459215382}
   cageTxt: {fileID: 127023774}
   sliderSpeed: 0.5
