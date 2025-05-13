@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4839933493171090721}
   m_Layer: 0
   m_Name: dynamite
-  m_TagString: Untagged
+  m_TagString: Dynamite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,6 +132,7 @@ MonoBehaviour:
   radius: 5
   mouse: {fileID: 0}
   explosionEffect: {fileID: 0}
+  obstacle: {fileID: 0}
 --- !u!65 &4839933493171090721
 BoxCollider:
   m_ObjectHideFlags: 0

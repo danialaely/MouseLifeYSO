@@ -107,9 +107,9 @@ public class Grenade : MonoBehaviour
         Debug.Log("takraya bhai takraya");
         Debug.Log("Weapon Name:"+this.gameObject.name);
         Debug.Log("Collided obj Name:"+collision.gameObject.name);
-        if (collision.gameObject.tag == "Cat") 
+        if (collision.gameObject.CompareTag("Cat")) 
         {
-            if (this.gameObject.name == "banana(Clone)")
+            if (this.gameObject.CompareTag("banana"))
             {
                 Debug.Log("Slip");
                 catanim = collision.gameObject.GetComponent<Animator>();
@@ -118,7 +118,7 @@ public class Grenade : MonoBehaviour
                 Slip();
                 Destroy(this.gameObject);
             }
-            else if (this.gameObject.name == "Pistol(Clone)") 
+            else if (this.gameObject.CompareTag("Pistol")) 
             {
                 Debug.Log("Shoot");
             }

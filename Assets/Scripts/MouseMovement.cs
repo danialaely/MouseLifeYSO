@@ -80,7 +80,7 @@ public class MouseMovement : MonoBehaviour
 
 
     [SerializeField]
-    private Vector2 JoystickSize = new Vector2(300, 300);
+    private Vector2 JoystickSize = new Vector2(225, 225);
     [SerializeField]
     private CustomJoystick Joystick;
     
@@ -115,15 +115,9 @@ public class MouseMovement : MonoBehaviour
             float maxMovement = JoystickSize.x / 2f;
             ETouch.Touch currentTouch = MovedFinger.currentTouch;
 
-            if (Vector2.Distance(
-                    currentTouch.screenPosition,
-                    Joystick.RectTransform.anchoredPosition
-                ) > maxMovement)
+            if (Vector2.Distance(currentTouch.screenPosition,Joystick.RectTransform.anchoredPosition) > maxMovement)
             {
-                knobPosition = (
-                    currentTouch.screenPosition - Joystick.RectTransform.anchoredPosition
-                    ).normalized
-                    * maxMovement;
+                knobPosition = (currentTouch.screenPosition - Joystick.RectTransform.anchoredPosition).normalized * maxMovement;
             }
             else
             {

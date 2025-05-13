@@ -160,6 +160,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pistol_3
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: eaa889e7509ddb7499a9874bf67d337a, type: 3}
+      propertyPath: m_TagString
+      value: Pistol
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -222,3 +226,4 @@ MonoBehaviour:
   radius: 5
   mouse: {fileID: 0}
   explosionEffect: {fileID: 0}
+  obstacle: {fileID: 0}
