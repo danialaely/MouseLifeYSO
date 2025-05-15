@@ -57,6 +57,7 @@ public class CatAI : MonoBehaviour
     //private CatAI[] allCats;
     private FollowPlayerMouse hMouse;
     [SerializeField] GameObject dummyJoystick;
+    public GameObject touchCanvas;
 
     void Start()
     {
@@ -418,6 +419,7 @@ public class CatAI : MonoBehaviour
             NavMeshAgent mouseAgent = hMouse.GetComponent<NavMeshAgent>();
             mouseAgent.isStopped = true;
             Debug.Log("Level Failed!");
+            touchCanvas.SetActive(false);
             mouseAnim.SetBool("isCaught", true);
             //AudioManager.instance.PlaySFX(AudioManager.instance.levelFailedSFX);
             BoomParticleEffect.SetActive(true);
@@ -445,13 +447,15 @@ public class CatAI : MonoBehaviour
     IEnumerator ActiveRetryPanel(float del)
     {
         yield return new WaitForSeconds(del);
-        retryPanel.SetActive(true);
+        //retryPanel.SetActive(true);
+        UIManager.Instance.ShowLevelFailed();
         dummyJoystick.SetActive(false);
     }
 
     public void PlayAgain()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Reloads the current scene
+        UIManager.Instance.ShowInitialPanel();
     }
 
     void FindNearestPatrolPoint()

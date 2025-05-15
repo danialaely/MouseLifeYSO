@@ -13,7 +13,14 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
 
     void Awake()
     {
-        //InitializeAds();
+        // Prevent duplicates and persist this object
+        if (FindObjectsOfType<AdsInitializer>().Length > 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -24,28 +31,35 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     public void InitializeAds()
     {
 #if UNITY_IOS
-            _gameId = _iOSGameId;
+        _gameId = _iOSGameId;
 #elif UNITY_ANDROID
-            _gameId = _androidGameId;
+        _gameId = _androidGameId;
 #elif UNITY_EDITOR
-            _gameId = _androidGameId; //Only for testing the functionality in the Editor
+        _gameId = _androidGameId; // For testing in Editor
 #endif
+
         if (!Advertisement.isInitialized && Advertisement.isSupported)
         {
             Advertisement.Initialize(_gameId, _testMode, this);
         }
+        else if (Advertisement.isInitialized)
+        {
+            // Ads may already be initialized when switching scenes
+            OnInitializationComplete();
+        }
     }
-
 
     public void OnInitializationComplete()
     {
         Debug.Log("Unity Ads initialization complete.");
-        _rewardedAds.LoadAd();
-        _rewardedAds2.LoadAd();
+
+        // Pre-load your rewarded ads
+        _rewardedAds?.LoadAd();
+        _rewardedAds2?.LoadAd();
     }
 
     public void OnInitializationFailed(UnityAdsInitializationError error, string message)
     {
-        Debug.Log($"Unity Ads Initialization Failed: {error.ToString()} - {message}");
+        Debug.Log($"Unity Ads Initialization Failed: {error} - {message}");
     }
 }

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
 
@@ -59,8 +59,9 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
         if (adUnitId.Equals(_adUnitId) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
             Debug.Log("Unity Ads Rewarded Ad Completed");
-            // Grant a reward.
-            if (this.gameObject.name == "rewardBtn") 
+
+            // Grant the reward
+            if (this.gameObject.name == "rewardBtn")
             {
                 Debug.Log("You have gained 1.5 Boost");
             }
@@ -68,6 +69,10 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
             {
                 Debug.Log("You have gained 50 Gems");
             }
+
+            // 🟢 Load a new ad so the button can be used again
+            // 🕒 Delay loading the next ad
+            Invoke(nameof(LoadAd), 10f); // Delay 10 seconds
         }
     }
 

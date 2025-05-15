@@ -5,7 +5,6 @@ public class DragToStart : MonoBehaviour
 {
     public GameObject gameplayUI;
     public GameObject startPanel;
-    private bool gameStarted = false;
 
     private void Start()
     {
@@ -14,12 +13,15 @@ public class DragToStart : MonoBehaviour
 
     public void OnDrag(BaseEventData data)
     {
+        bool gameStarted = UIManager.Instance.GetGameState();
         if (!gameStarted)
         {
             Debug.Log("Game Started by Dragging");
-            gameplayUI.SetActive(true);
-            startPanel.SetActive(false);
-            gameStarted = true;
+            //gameplayUI.SetActive(true);
+            //startPanel.SetActive(false);
+            UIManager.Instance.whenDragged();
+            //gameStarted = true;
+            
             StartGame();
         }
         else 

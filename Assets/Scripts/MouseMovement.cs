@@ -282,7 +282,8 @@ public class MouseMovement : MonoBehaviour
 
                 Debug.Log("Gift collision detected");
                 Destroy(other.gameObject); // Destroy the gift
-                useBtn.SetActive(true); // Enable the Use button
+                //useBtn.SetActive(true); // Enable the Use button
+                UIManager.Instance.ActiveWeaponBtn();
                 AudioManager.instance.PlaySFX("PickGift");
                 giftPopUpPanel.SetActive(true);
                 StartCoroutine(DeactiveCheesePopUp(1.0f));
@@ -559,7 +560,8 @@ public class MouseMovement : MonoBehaviour
             //catRB.isKinematic = false;
 
             currentWeapon = null;
-            useBtn.SetActive(false);
+            //useBtn.SetActive(false);
+            UIManager.Instance.DeactiveWeaponBtn();
         }
         else if (currentWeapon != null && currentWeapon.name == "Pistol_3(Clone)")
         {
@@ -665,25 +667,5 @@ public class MouseMovement : MonoBehaviour
         giftPopUpPanel.SetActive(false);
     }
 
-    public void Restart()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    public void NextLvlBtn()
-    {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        int nextSceneIndex = currentSceneIndex + 1;
-
-        // Optional: Check if the next scene exists
-        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
-        {
-            SceneManager.LoadScene(nextSceneIndex);
-        }
-        else
-        {
-            Debug.Log("No more levels! Looping back to first level or show GameComplete screen.");
-            SceneManager.LoadScene(0); // Or load a "GameComplete" scene
-        }
-    }
+    
 }

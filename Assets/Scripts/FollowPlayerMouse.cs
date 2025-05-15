@@ -17,6 +17,7 @@ public class FollowPlayerMouse : MonoBehaviour
     private CatAI[] allCats;
     public GameObject innerPortal;
     public GameObject wall;
+    public GameObject touchCanvas;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -74,6 +75,7 @@ public class FollowPlayerMouse : MonoBehaviour
             confetti.Play();
             StartCoroutine(levelComp(1.0f));
             AudioManager.instance.PlaySFX("LevelCompleted");
+            touchCanvas.SetActive(false);
             playerMouse.gameObject.GetComponent<MouseMovement>().dummyJoystick.SetActive(false);
             // Loop through and stop their agents
             if (allCats != null) 
@@ -114,6 +116,7 @@ public class FollowPlayerMouse : MonoBehaviour
         IEnumerator levelComp(float del) 
     {
         yield return new WaitForSeconds(del);
-        levelCompletedPanel.SetActive(true);
+        //levelCompletedPanel.SetActive(true);
+        UIManager.Instance.ShowLevelCompleted();
     }
 }
