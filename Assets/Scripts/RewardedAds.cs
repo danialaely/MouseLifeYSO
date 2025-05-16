@@ -59,11 +59,17 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
         if (adUnitId.Equals(_adUnitId) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
             Debug.Log("Unity Ads Rewarded Ad Completed");
+            GameObject mouse = GameObject.FindGameObjectWithTag("Player");
+            MouseMovement mm = mouse.GetComponent<MouseMovement>();
 
             // Grant the reward
             if (this.gameObject.name == "rewardBtn")
             {
                 Debug.Log("You have gained 1.5 Boost");
+                if (mouse != null)
+                {
+                    mm.SpeedMove = 7.5f;
+                }
             }
             else if (this.gameObject.name == "rewardBtn2")
             {

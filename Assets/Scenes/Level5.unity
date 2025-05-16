@@ -1076,6 +1076,7 @@ MonoBehaviour:
   levelCompletedPanel: {fileID: 1908766772}
   innerPortal: {fileID: 0}
   wall: {fileID: 0}
+  touchCanvas: {fileID: 864211861}
 --- !u!195 &10796918
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -8126,55 +8127,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &880389148
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 880389149}
-  - component: {fileID: 880389150}
-  m_Layer: 0
-  m_Name: Ads
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &880389149
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 880389148}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 720, y: 1544, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &880389150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 880389148}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 776d82f82b81f834bb0f3f7b61673c48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _androidGameId: 5846357
-  _iOSGameId: 5846356
-  _testMode: 1
-  _rewardedAds: {fileID: 1404302254}
-  _rewardedAds2: {fileID: 429112165}
 --- !u!1 &918926793
 GameObject:
   m_ObjectHideFlags: 0
@@ -9128,6 +9080,7 @@ MonoBehaviour:
   mouseTrapPrefab: {fileID: 9014622756369358456, guid: bd7f6d326bb498b4eb7a66ecd6bca6a6, type: 3}
   fieldOfView: 90
   dummyJoystick: {fileID: 0}
+  touchCanvas: {fileID: 0}
 --- !u!65 &1034321612
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9167,7 +9120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1047081551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15172,6 +15125,7 @@ MonoBehaviour:
   mouseTrapPrefab: {fileID: 9014622756369358456, guid: bd7f6d326bb498b4eb7a66ecd6bca6a6, type: 3}
   fieldOfView: 90
   dummyJoystick: {fileID: 0}
+  touchCanvas: {fileID: 864211861}
 --- !u!195 &1638951405
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -19879,4 +19833,3 @@ SceneRoots:
   - {fileID: 1209040705}
   - {fileID: 1477561679}
   - {fileID: 1285917190}
-  - {fileID: 880389149}

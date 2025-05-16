@@ -79,7 +79,7 @@ public class MouseMovement : MonoBehaviour
     public bool wallrotation;
 
 
-    [SerializeField]
+    //[SerializeField]
     private Vector2 JoystickSize = new Vector2(225, 225);
     [SerializeField]
     private CustomJoystick Joystick;
@@ -143,7 +143,7 @@ public class MouseMovement : MonoBehaviour
 
     private void HandleFingerDown(Finger TouchedFinger)
     {
-        if (MovementFinger == null && TouchedFinger.screenPosition.x <= Screen.width / 2f)
+        if (MovementFinger == null)
         {
             MovementFinger = TouchedFinger;
             MovementAmount = Vector2.zero;
@@ -153,6 +153,7 @@ public class MouseMovement : MonoBehaviour
             Joystick.RectTransform.anchoredPosition = ClampStartPosition(TouchedFinger.screenPosition);
         }
     }
+
 
     private Vector2 ClampStartPosition(Vector2 StartPosition)
     {
