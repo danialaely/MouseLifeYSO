@@ -2220,7 +2220,6 @@ MonoBehaviour:
   wallToRotate: {fileID: 683005666}
   portalPrefab: {fileID: 908447600324970397, guid: a85e4198cad5e1843ac83fc4370610b2, type: 3}
   wallrotation: 0
-  JoystickSize: {x: 300, y: 300}
   Joystick: {fileID: 1529920741}
   dummyJoystick: {fileID: 1303001540}
 --- !u!4 &125532969 stripped
@@ -10684,7 +10683,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1047081551
 MonoBehaviour:
   m_ObjectHideFlags: 0

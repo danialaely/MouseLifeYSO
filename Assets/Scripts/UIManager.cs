@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,6 +14,10 @@ public class UIManager : MonoBehaviour
     public GameObject levelFailedPanel;
     public GameObject shopPanel;
     public GameObject currencyPanel;
+
+    [Header("Texts")]
+    public TMP_Text lvlTxt;
+    public TMP_Text lvlTxt2;
 
     private bool gameStarted = false;
    // public Button useButton;
@@ -86,7 +91,10 @@ public class UIManager : MonoBehaviour
         // Optional: Check if the next scene exists
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
+            int lvlnumber = nextSceneIndex + 1;
             SceneManager.LoadScene(nextSceneIndex);
+            lvlTxt.text = "Level" + lvlnumber;
+            lvlTxt2.text = "Level" + lvlnumber;
             UIManager.Instance.ShowInitialPanel();
             gameplayPanel.SetActive(false);
             startPanel.SetActive(true);
