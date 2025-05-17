@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     public GameObject gameplayPanel;
     public GameObject levelCompletedPanel;
     public GameObject levelFailedPanel;
-    public GameObject shopPanel;
+    public GameObject storePanel;
     public GameObject currencyPanel;
 
     [Header("Texts")]
@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
     private bool gameStarted = false;
    // public Button useButton;
     public GameObject useButton;
-    
+    bool activeTouchCanvas = false;
 
     void Awake()
     {
@@ -35,6 +35,13 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject); // Avoid duplicates on scene load
         }
+    }
+
+    private void Start()
+    {
+        GameObject mouse = GameObject.FindGameObjectWithTag("HostageMouse");
+        //Debug.Log("Hello:" + mouse);
+        mouse.GetComponent<FollowPlayerMouse>().touchCanvas.SetActive(false);
     }
 
     public void ShowInitialPanel() //Call in start
@@ -62,6 +69,14 @@ public class UIManager : MonoBehaviour
         gameplayPanel.SetActive(true);
         startPanel.SetActive(false);
         setGameState(true);
+
+        if (!activeTouchCanvas) 
+        {
+            GameObject mouse = GameObject.FindGameObjectWithTag("HostageMouse");
+            //Debug.Log("Hello:" + mouse);
+            mouse.GetComponent<FollowPlayerMouse>().touchCanvas.SetActive(true);
+            activeTouchCanvas = true;
+        }
     }
 
     public bool GetGameState() 
@@ -81,6 +96,7 @@ public class UIManager : MonoBehaviour
         gameplayPanel.SetActive(false);
         startPanel.SetActive(true);
         setGameState(false);
+        activeTouchCanvas = false;
     }
 
     public void NextLvlBtn()
@@ -98,6 +114,9 @@ public class UIManager : MonoBehaviour
             UIManager.Instance.ShowInitialPanel();
             gameplayPanel.SetActive(false);
             startPanel.SetActive(true);
+            DeactiveWeaponBtn();
+            
+            activeTouchCanvas = false;
         }
         else
         {
@@ -119,6 +138,7 @@ public class UIManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        
     }
 
     void AssignMouseToButton()
@@ -140,5 +160,17 @@ public class UIManager : MonoBehaviour
             Debug.LogWarning("Mouse not found in scene!");
         }
     }
+
+    public void ActiveStorePanel() 
+    {
+        storePanel.SetActive(true);
+    }
+
+    public void DectivateStorePanel()
+    {
+        storePanel.SetActive(false);
+    }
+
+    public void ActiveCharacterPanel() { }
     // Add more methods for showing/hiding other panels
 }

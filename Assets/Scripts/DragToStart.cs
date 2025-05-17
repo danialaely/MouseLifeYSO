@@ -22,7 +22,7 @@ public class DragToStart : MonoBehaviour
             UIManager.Instance.whenDragged();
             //gameStarted = true;
             
-            StartGame();
+            //StartGame();
         }
         else 
         {

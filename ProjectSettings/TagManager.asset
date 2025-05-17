@@ -26,6 +26,7 @@ TagManager:
   - banana
   - Pistol
   - Dynamite
+  - touchCanvas
   layers:
   - Default
   - TransparentFX
