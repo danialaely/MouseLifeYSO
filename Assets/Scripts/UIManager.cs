@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,6 +24,19 @@ public class UIManager : MonoBehaviour
    // public Button useButton;
     public GameObject useButton;
     bool activeTouchCanvas = false;
+    public RectTransform itemPages; // Assign ItemPages here via Inspector
+    public float scrollDuration = 0.3f; // How long the scroll takes (in seconds)
+
+    public Button[] pageButtons; // Assign your 3 buttons in the Inspector
+    public Color selectedColor = Color.white;
+    public Color normalColor = Color.gray;
+
+    private Vector2[] positions = new Vector2[]
+    {
+        new Vector2(0f, 0f),
+        new Vector2(-830f, 0f),
+        new Vector2(-1660f, 0f)
+    };
 
     void Awake()
     {
@@ -169,6 +183,49 @@ public class UIManager : MonoBehaviour
     public void DectivateStorePanel()
     {
         storePanel.SetActive(false);
+    }
+
+    public void BtnOne()
+    {
+        HighlightButton(0);
+        StartCoroutine(ScrollToPosition(positions[0]));
+    }
+
+    public void BtnTwo()
+    {
+        HighlightButton(1);
+        StartCoroutine(ScrollToPosition(positions[1]));
+    }
+
+    public void BtnThree()
+    {
+        HighlightButton(2);
+        StartCoroutine(ScrollToPosition(positions[2]));
+    }
+
+    private IEnumerator ScrollToPosition(Vector2 target)
+    {
+        Vector2 start = itemPages.anchoredPosition;
+        float elapsed = 0f;
+
+        while (elapsed < scrollDuration)
+        {
+            itemPages.anchoredPosition = Vector2.Lerp(start, target, elapsed / scrollDuration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Snap to exact position at the end
+        itemPages.anchoredPosition = target;
+    }
+
+    private void HighlightButton(int index)
+    {
+        for (int i = 0; i < pageButtons.Length; i++)
+        {
+            Image btnImage = pageButtons[i].GetComponent<Image>();
+            btnImage.color = (i == index) ? selectedColor : normalColor;
+        }
     }
 
     public void ActiveCharacterPanel() { }
