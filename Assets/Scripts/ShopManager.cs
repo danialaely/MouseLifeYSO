@@ -17,7 +17,7 @@ public class ShopManager : MonoBehaviour
 
     void Start()
     {
-        LoadPlayerDataFromPlayFab();
+       // LoadPlayerDataFromPlayFab();
         SetupShopItems();
     }
 
