@@ -185,6 +185,16 @@ public class UIManager : MonoBehaviour
         storePanel.SetActive(false);
     }
 
+    public void ActiveCurrencyPanel()
+    {
+       currencyPanel.SetActive(true);
+    }
+
+    public void DeactiveCurrencyPanel()
+    {
+        currencyPanel.SetActive(false);
+    }
+
     public void BtnOne()
     {
         HighlightButton(0);
