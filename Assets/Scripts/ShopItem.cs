@@ -1,8 +1,12 @@
-// File: ShopItem.cs
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum CurrencyType { Gems, Cheese }
+public enum CurrencyType
+{
+    Gems,
+    Cheese
+}
+
 
 [System.Serializable]
 public class ShopItem
@@ -12,9 +16,13 @@ public class ShopItem
     public bool isUnlocked;
     public bool isSelected;
     public int unlockLevel;
+
     public int gemCost;
     public int cheeseCost;
     public CurrencyType currencyType;
 
-    public Button itemButton; // reference to UI button (or Toggle)
+    public Toggle toggleUI; // for skins
+    public Button buttonUI; // for weapons
+
+    public GameObject buyPanel; // Assigned from the inspector
 }
