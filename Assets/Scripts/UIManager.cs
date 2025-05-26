@@ -31,6 +31,8 @@ public class UIManager : MonoBehaviour
     public Color selectedColor = Color.white;
     public Color normalColor = Color.gray;
 
+   // public ShopManager shopManager;
+
     private Vector2[] positions = new Vector2[]
     {
         new Vector2(0f, 0f),
@@ -122,6 +124,9 @@ public class UIManager : MonoBehaviour
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
             int lvlnumber = nextSceneIndex + 1;
+            ShopManager.Instance.setLevel(lvlnumber);
+            ShopManager.Instance.SetupShopItems();
+
             SceneManager.LoadScene(nextSceneIndex);
             lvlTxt.text = "Level" + lvlnumber;
             lvlTxt2.text = "Level" + lvlnumber;

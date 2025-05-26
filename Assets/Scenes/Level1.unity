@@ -5229,7 +5229,6 @@ MonoBehaviour:
   currentCheese: 0
   playerLevel: 0
   noGemsPanel: {fileID: 1680000264}
-  noCheesePanel: {fileID: 1680000264}
 --- !u!1 &259987061
 GameObject:
   m_ObjectHideFlags: 0
@@ -11429,9 +11428,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1047081555}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: DectivateStorePanel
+      - m_Target: {fileID: 258781040}
+        m_TargetAssemblyTypeName: ShopManager, Assembly-CSharp
+        m_MethodName: DeactiveGemPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17636,6 +17635,7 @@ MonoBehaviour:
   - {fileID: 1805060929}
   selectedColor: {r: 1, g: 1, b: 1, a: 1}
   normalColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  shopManager: {fileID: 258781040}
 --- !u!1 &1050210702
 GameObject:
   m_ObjectHideFlags: 0

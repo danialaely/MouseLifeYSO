@@ -35,7 +35,8 @@ public class MouseMovement : MonoBehaviour
 
     public bool hasthrown = false;
 
-    public int cheeseCount = 0;
+    private int cheeseCount = 0;
+    private int levelCheeseCount = 0;
     public int giftCheeseInterval = 4;  // Number of cheese required to spawn the gift
     public int maxCheese = 4;  // Number of cheese required to spawn the gift
     private bool cageSpawned = false;
@@ -261,6 +262,8 @@ public class MouseMovement : MonoBehaviour
 
             Destroy(other.gameObject);  // Remove the cheese
             cheeseCount++;
+            levelCheeseCount++;
+            ShopManager.Instance.AddCheese(1); // add to global count
             AudioManager.instance.PlaySFX("PickCheese4");
             PlayCheeseEffect();
 

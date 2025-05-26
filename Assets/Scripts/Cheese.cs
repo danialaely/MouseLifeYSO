@@ -48,7 +48,7 @@ public class Cheese : MonoBehaviour
         MouseMovement mouseScript = mouse.GetComponent<MouseMovement>();
         if (mouseScript != null)
         {
-            mouseScript.cheeseCount++; // Increase cheese count
+          //  mouseScript.cheeseCount++; // Increase cheese count
         }
 
         Destroy(gameObject); // Remove cheese after collection

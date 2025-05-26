@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ShopManager : MonoBehaviour
 {
+    public static ShopManager Instance;
     public List<ShopItem> page1Items; // Skins
     public List<ShopItem> page2Items; // Weapons
 
@@ -11,17 +13,42 @@ public class ShopManager : MonoBehaviour
     public int playerLevel;
 
     public GameObject noGemsPanel;
-    public GameObject noCheesePanel;
+    //public GameObject noCheesePanel;
 
     private ShopItem selectedSkin;
+
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject); // Avoid duplicates on scene load
+        }
+    }
 
     void Start()
     {
        // LoadPlayerDataFromPlayFab();
         SetupShopItems();
+        setLevel(1);
     }
 
-    void SetupShopItems()
+    public void setLevel(int level) 
+    {
+        playerLevel = level;
+    }
+
+    public int getLevel() 
+    {
+        return playerLevel;
+    }
+
+    public void SetupShopItems()
     {
         foreach (ShopItem item in page1Items)
             SetupItem(item, true);
@@ -93,7 +120,7 @@ public class ShopManager : MonoBehaviour
                 }
                 else
                 {
-                    noCheesePanel.SetActive(true);
+                    noGemsPanel.SetActive(true);
                 }
                 break;
         }
@@ -127,6 +154,18 @@ public class ShopManager : MonoBehaviour
         selected.isSelected = true;
         selectedSkin = selected;
         SaveSelectionToPlayFab(selected);
+    }
+
+    // Call this to increase cheese
+    public void AddCheese(int amount)
+    {
+        currentCheese += amount;
+        Debug.Log("Total Cheese: " + currentCheese);
+    }
+
+    public void DeactiveGemPanel() 
+    {
+        noGemsPanel.SetActive(false);
     }
 
     // Dummy methods for PlayFab
