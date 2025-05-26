@@ -74,6 +74,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
             else if (this.gameObject.name == "rewardBtn2")
             {
                 Debug.Log("You have gained 50 Gems");
+                ShopManager.Instance.AddGem(50);
             }
 
             // 🟢 Load a new ad so the button can be used again

@@ -163,6 +163,12 @@ public class ShopManager : MonoBehaviour
         Debug.Log("Total Cheese: " + currentCheese);
     }
 
+    public void AddGem(int amount)
+    {
+        currentGems += amount;
+        Debug.Log("Total Cheese: " + currentGems);
+    }
+
     public void DeactiveGemPanel() 
     {
         noGemsPanel.SetActive(false);
