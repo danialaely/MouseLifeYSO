@@ -3436,7 +3436,6 @@ MonoBehaviour:
   SpeedMove: 5
   rotationSpeed: 10
   hasthrown: 0
-  cheeseCount: 0
   giftCheeseInterval: 4
   maxCheese: 4
   giftPrefab: {fileID: 405934214436772035, guid: 7744aece93bd09b43ab4fd8930bb61b3, type: 3}
@@ -8114,7 +8113,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 403644419}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 403644421}
+        m_TargetAssemblyTypeName: RewardedAds, Assembly-CSharp
+        m_MethodName: ShowAd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &403644419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8165,9 +8176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51edf9a380fe9b74e8cf0ec25940a149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showAdButton: {fileID: 403644418}
-  _androidAdUnitId: Rewarded_Android
-  _iOSAdUnitId: Rewarded_iOS
+  _adUnitId: Rewarded_Android
 --- !u!1 &413895215
 GameObject:
   m_ObjectHideFlags: 0
@@ -17635,7 +17644,6 @@ MonoBehaviour:
   - {fileID: 1805060929}
   selectedColor: {r: 1, g: 1, b: 1, a: 1}
   normalColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  shopManager: {fileID: 258781040}
 --- !u!1 &1050210702
 GameObject:
   m_ObjectHideFlags: 0
@@ -23787,7 +23795,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1391645875}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1391645877}
+        m_TargetAssemblyTypeName: RewardedAds, Assembly-CSharp
+        m_MethodName: ShowAd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1391645875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23838,9 +23858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51edf9a380fe9b74e8cf0ec25940a149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showAdButton: {fileID: 1391645874}
-  _androidAdUnitId: Rewarded_Android
-  _iOSAdUnitId: Rewarded_iOS
+  _adUnitId: Rewarded_Android
 --- !u!1 &1399004610
 GameObject:
   m_ObjectHideFlags: 0

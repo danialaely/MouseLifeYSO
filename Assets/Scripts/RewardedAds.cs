@@ -1,107 +1,79 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Advertisements;
 
-public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
+public class RewardedAds : MonoBehaviour, IUnityAdsShowListener, IUnityAdsLoadListener
 {
-    [SerializeField] Button _showAdButton;
-    [SerializeField] string _androidAdUnitId = "Rewarded_Android";
-    [SerializeField] string _iOSAdUnitId = "Rewarded_iOS";
-    string _adUnitId = null; // This will remain null for unsupported platforms
+    [SerializeField] string _adUnitId = "Rewarded_Android";
+    private bool isAdReady = false;
 
-    void Awake()
+    void Start()
     {
-        // Get the Ad Unit ID for the current platform:
-#if UNITY_IOS
-        _adUnitId = _iOSAdUnitId;
-#elif UNITY_ANDROID
-        _adUnitId = _androidAdUnitId;
-#endif
-
-        // Disable the button until the ad is ready to show:
-        _showAdButton.interactable = false;
+        LoadAd();
     }
 
-    // Call this public method when you want to get an ad ready to show.
     public void LoadAd()
     {
-        // IMPORTANT! Only load content AFTER initialization (in this example, initialization is handled in a different script).
-        Debug.Log("Loading Ad: " + _adUnitId);
         Advertisement.Load(_adUnitId, this);
     }
 
-    // If the ad successfully loads, add a listener to the button and enable it:
-    public void OnUnityAdsAdLoaded(string adUnitId)
-    {
-        Debug.Log("Ad Loaded: " + adUnitId);
-
-        if (adUnitId.Equals(_adUnitId))
-        {
-            // Configure the button to call the ShowAd() method when clicked:
-            _showAdButton.onClick.AddListener(ShowAd);
-            // Enable the button for users to click:
-            _showAdButton.interactable = true;
-        }
-    }
-
-    // Implement a method to execute when the user clicks the button:
     public void ShowAd()
     {
-        // Disable the button:
-        _showAdButton.interactable = false;
-        // Then show the ad:
-        Advertisement.Show(_adUnitId, this);
-    }
+        Debug.Log("ShowAd() called");
 
-    // Implement the Show Listener's OnUnityAdsShowComplete callback method to determine if the user gets a reward:
-    public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
-    {
-        if (adUnitId.Equals(_adUnitId) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
+        if (isAdReady)
         {
-            Debug.Log("Unity Ads Rewarded Ad Completed");
-            GameObject mouse = GameObject.FindGameObjectWithTag("Player");
-            MouseMovement mm = mouse.GetComponent<MouseMovement>();
-
-            // Grant the reward
-            if (this.gameObject.name == "rewardBtn")
-            {
-                Debug.Log("You have gained 1.5 Boost");
-                if (mouse != null)
-                {
-                    mm.SpeedMove = 7.5f;
-                }
-            }
-            else if (this.gameObject.name == "rewardBtn2")
-            {
-                Debug.Log("You have gained 50 Gems");
-                ShopManager.Instance.AddGem(50);
-            }
-
-            // 🟢 Load a new ad so the button can be used again
-            // 🕒 Delay loading the next ad
-            Invoke(nameof(LoadAd), 10f); // Delay 10 seconds
+            Advertisement.Show(_adUnitId, this);
+            Debug.Log("Showing Ad");
+        }
+        else
+        {
+            Debug.LogWarning("Ad not ready yet");
         }
     }
 
-    // Implement Load and Show Listener error callbacks:
+    public void OnUnityAdsAdLoaded(string adUnitId)
+    {
+        if (adUnitId.Equals(_adUnitId))
+        {
+            isAdReady = true;
+            Debug.Log("✅ Ad is ready");
+        }
+    }
+
+    public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
+    {
+        if (adUnitId.Equals(_adUnitId) && showCompletionState == UnityAdsShowCompletionState.COMPLETED)
+        {
+            Debug.Log("🎁 Ad Completed Successfully — Give Reward Here");
+            if (gameObject.name == "rewardBtn")
+            {
+                var mouse = GameObject.FindGameObjectWithTag("Player");
+                if (mouse != null)
+                {
+                    mouse.GetComponent<MouseMovement>().SpeedMove = 7.5f;
+                    Debug.Log("✅ Speed Boost Applied");
+                }
+            }
+            else if (gameObject.name == "rewardBtn2")
+            {
+                ShopManager.Instance.AddGem(50);
+                Debug.Log("✅ 50 Gems Added");
+            }
+        }
+    }
+
     public void OnUnityAdsFailedToLoad(string adUnitId, UnityAdsLoadError error, string message)
     {
-        Debug.Log($"Error loading Ad Unit {adUnitId}: {error.ToString()} - {message}");
-        // Use the error details to determine whether to try to load another ad.
+        Debug.LogError($"❌ Failed to load Ad Unit {adUnitId}: {error} - {message}");
+        isAdReady = false;
     }
 
     public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message)
     {
-        Debug.Log($"Error showing Ad Unit {adUnitId}: {error.ToString()} - {message}");
-        // Use the error details to determine whether to try to load another ad.
+        Debug.LogError($"❌ Failed to show Ad {adUnitId}: {error} - {message}");
     }
 
     public void OnUnityAdsShowStart(string adUnitId) { }
     public void OnUnityAdsShowClick(string adUnitId) { }
-
-    void OnDestroy()
-    {
-        // Clean up the button listeners:
-        _showAdButton.onClick.RemoveAllListeners();
-    }
 }
+
