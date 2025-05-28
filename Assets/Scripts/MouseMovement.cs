@@ -263,7 +263,6 @@ public class MouseMovement : MonoBehaviour
             Destroy(other.gameObject);  // Remove the cheese
             cheeseCount++;
             levelCheeseCount++;
-            ShopManager.Instance.AddCheese(1); // add to global count
             AudioManager.instance.PlaySFX("PickCheese4");
             PlayCheeseEffect();
 
@@ -274,6 +273,7 @@ public class MouseMovement : MonoBehaviour
             {
                 SpawnGift();
             }
+            ShopManager.Instance.AddCheese(1); // add to global count
         }
 
         if (other.CompareTag("Gift"))

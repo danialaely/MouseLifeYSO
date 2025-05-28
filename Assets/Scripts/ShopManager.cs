@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +17,14 @@ public class ShopManager : MonoBehaviour
     //public GameObject noCheesePanel;
 
     private ShopItem selectedSkin;
+
+    public TMP_Text coinCurrencyTxt;
+    public TMP_Text coinCurrencyTxt2;
+    public TMP_Text coinStoreCurrencyTxt;
+
+    public TMP_Text gemCurrencyTxt;
+    public TMP_Text gemStoreCurrencyTxt;
+    //public TMP_Text gemCurrencyTxt2;
 
 
     void Awake()
@@ -105,6 +114,8 @@ public class ShopManager : MonoBehaviour
                 {
                     currentGems -= item.gemCost;
                     canBuy = true;
+                    gemCurrencyTxt.text = currentGems.ToString();
+                    gemStoreCurrencyTxt.text = currentGems.ToString();
                 }
                 else
                 {
@@ -117,6 +128,9 @@ public class ShopManager : MonoBehaviour
                 {
                     currentCheese -= item.cheeseCost;
                     canBuy = true;
+                    coinCurrencyTxt.text = currentCheese.ToString();
+                    coinCurrencyTxt2.text = currentCheese.ToString();
+                    coinStoreCurrencyTxt.text = currentCheese.ToString();
                 }
                 else
                 {
@@ -160,12 +174,17 @@ public class ShopManager : MonoBehaviour
     public void AddCheese(int amount)
     {
         currentCheese += amount;
+        coinCurrencyTxt.text = currentCheese.ToString();
+        coinCurrencyTxt2.text = currentCheese.ToString();
+        coinStoreCurrencyTxt.text = currentCheese.ToString();
         Debug.Log("Total Cheese: " + currentCheese);
     }
 
     public void AddGem(int amount)
     {
         currentGems += amount;
+        gemCurrencyTxt.text = currentGems.ToString();
+        gemStoreCurrencyTxt.text = currentGems.ToString();
         Debug.Log("Total Cheese: " + currentGems);
     }
 

@@ -5228,6 +5228,11 @@ MonoBehaviour:
   currentCheese: 0
   playerLevel: 0
   noGemsPanel: {fileID: 1680000264}
+  coinCurrencyTxt: {fileID: 1297008161}
+  coinCurrencyTxt2: {fileID: 1662533085}
+  coinStoreCurrencyTxt: {fileID: 557651877}
+  gemCurrencyTxt: {fileID: 1067389626}
+  gemStoreCurrencyTxt: {fileID: 422535610}
 --- !u!1 &259987061
 GameObject:
   m_ObjectHideFlags: 0
@@ -17902,7 +17907,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -21650,7 +21655,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -28292,7 +28297,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
