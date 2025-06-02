@@ -5206,7 +5206,7 @@ MonoBehaviour:
     displayName: Shield
     isUnlocked: 0
     isSelected: 0
-    unlockLevel: 5
+    unlockLevel: 2
     gemCost: 150
     cheeseCost: 0
     currencyType: 0
@@ -5233,6 +5233,8 @@ MonoBehaviour:
   coinStoreCurrencyTxt: {fileID: 557651877}
   gemCurrencyTxt: {fileID: 1067389626}
   gemStoreCurrencyTxt: {fileID: 422535610}
+  shieldPrefab: {fileID: 5503407611527672497, guid: 29091525078d9d8408d521977ede3d8e, type: 3}
+  nukePrefab: {fileID: 6305237449084046360, guid: f601a26959359ce47a2727105b9e4193, type: 3}
 --- !u!1 &259987061
 GameObject:
   m_ObjectHideFlags: 0

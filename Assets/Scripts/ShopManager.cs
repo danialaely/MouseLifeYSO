@@ -26,6 +26,8 @@ public class ShopManager : MonoBehaviour
     public TMP_Text gemStoreCurrencyTxt;
     //public TMP_Text gemCurrencyTxt2;
 
+    public GameObject shieldPrefab;
+    public GameObject nukePrefab;
 
     void Awake()
     {
@@ -146,8 +148,34 @@ public class ShopManager : MonoBehaviour
             if (isSkin)
                 SelectSkin(item);
 
-            if (item.buyPanel != null)
+            if (item.buyPanel != null) 
+            {
+                Debug.Log("Bought:"+item.displayName);
+                // Dynamically find the current mouse in the scene
+                GameObject mouse = GameObject.FindGameObjectWithTag("Player");
+
+                // if item.displayName == "Shield" {  add shieldPrefab to weaponPrefab } else if item.displayName == "Nuke" { add nukePrefab to weaponPrefab}
+                if (mouse != null)
+                {
+                    MouseMovement mm = mouse.GetComponent<MouseMovement>();
+
+                    if (mm != null)
+                    {
+                        if (item.displayName == "Shield" && !mm.weaponPrefabs.Contains(shieldPrefab))
+                        {
+                            mm.weaponPrefabs.Add(shieldPrefab);
+                            Debug.Log("Shield prefab added to weaponPrefabs list.");
+                        }
+                        else if (item.displayName == "Nuke" && !mm.weaponPrefabs.Contains(nukePrefab))
+                        {
+                            mm.weaponPrefabs.Add(nukePrefab);
+                            Debug.Log("Nuke prefab added to weaponPrefabs list.");
+                        }
+                    }
+                }
+
                 item.buyPanel.SetActive(false);
+            }
 
             SavePurchaseToPlayFab(item);
         }

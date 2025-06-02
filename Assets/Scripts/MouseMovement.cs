@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem.EnhancedTouch;
 using ETouch = UnityEngine.InputSystem.EnhancedTouch;
+using System.Collections.Generic;
 
 public class MouseMovement : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class MouseMovement : MonoBehaviour
 
     public GameObject useBtn;
 
-    public GameObject[] weaponPrefabs; // Assign Mine, Bomb, Dynamite, Soccer Boot, Wheel in the Inspector
+    public List<GameObject> weaponPrefabs = new List<GameObject>(); // Assign Mine, Bomb, Dynamite, Soccer Boot, Wheel in the Inspector
 
 
     public GameObject currentWeapon; // Store the currently spawned weapon
@@ -293,10 +294,10 @@ public class MouseMovement : MonoBehaviour
                 StartCoroutine(DeactiveCheesePopUp(1.0f));
 
                 // Check if player has children (should be a hand or weapon holder)
-                if (transform.childCount > 0 && weaponPrefabs.Length > 0)
+                if (transform.childCount > 0 && weaponPrefabs.Count > 0)
                 {
 
-                    int randomIndex = Random.Range(0, weaponPrefabs.Length);
+                    int randomIndex = Random.Range(0, weaponPrefabs.Count);
 
                     // Instantiate weapon normally if it's NOT pistol_3
                     if (randomIndex != 3)
