@@ -202,6 +202,12 @@ public class MouseMovement : MonoBehaviour
             cageSlider.value = 0;
         }
 
+        // Add globally unlocked weapons when the level loads
+        foreach (GameObject weapon in GameData.unlockedWeapons)
+        {
+            if (!weaponPrefabs.Contains(weapon))
+                weaponPrefabs.Add(weapon);
+        }
     }
 
     void Update()

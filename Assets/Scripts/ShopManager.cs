@@ -164,12 +164,16 @@ public class ShopManager : MonoBehaviour
                         if (item.displayName == "Shield" && !mm.weaponPrefabs.Contains(shieldPrefab))
                         {
                             mm.weaponPrefabs.Add(shieldPrefab);
-                            Debug.Log("Shield prefab added to weaponPrefabs list.");
+
+                            if (!GameData.unlockedWeapons.Contains(shieldPrefab))
+                                GameData.unlockedWeapons.Add(shieldPrefab);
                         }
                         else if (item.displayName == "Nuke" && !mm.weaponPrefabs.Contains(nukePrefab))
                         {
                             mm.weaponPrefabs.Add(nukePrefab);
-                            Debug.Log("Nuke prefab added to weaponPrefabs list.");
+
+                            if (!GameData.unlockedWeapons.Contains(nukePrefab))
+                                GameData.unlockedWeapons.Add(nukePrefab);
                         }
                     }
                 }
