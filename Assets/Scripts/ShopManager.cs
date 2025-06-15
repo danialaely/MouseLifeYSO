@@ -225,6 +225,26 @@ public class ShopManager : MonoBehaviour
         noGemsPanel.SetActive(false);
     }
 
+    public void IAPBtn1() 
+    {
+        AddGem(500);
+    }
+
+    public void IAPBtn2()
+    {
+        AddGem(2500);
+    }
+
+    public void IAPBtn3()
+    {
+        AddCheese(3000);
+    }
+
+    public void IAPBtn4()
+    {
+        AddGem(500);
+    }
+
     // Dummy methods for PlayFab
     void SavePurchaseToPlayFab(ShopItem item) { }
     void SaveSelectionToPlayFab(ShopItem item) { }
