@@ -1,7 +1,8 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
@@ -75,13 +76,27 @@ public class ShopManager : MonoBehaviour
         if (isSkin && item.toggleUI != null)
         {
             item.toggleUI.isOn = item.isSelected;
-            item.toggleUI.interactable = item.isUnlocked || canUnlockByLevel;
 
-            item.toggleUI.onValueChanged.AddListener((isOn) =>
+            // Locked skins are NOT directly interactable
+            item.toggleUI.interactable = item.isUnlocked;
+
+            // Use a separate invisible Button overlay to handle "Buy" clicks
+            Button clickCatcher = item.toggleUI.GetComponentInChildren<Button>(true);
+            if (clickCatcher != null)
             {
-                if (isOn)
-                    OnItemClicked(item, true);
-            });
+                clickCatcher.onClick.RemoveAllListeners();
+                clickCatcher.onClick.AddListener(() =>
+                {
+                    if (item.isUnlocked)
+                    {
+                        OnItemClicked(item, true); // Normal selection
+                    }
+                    else
+                    {
+                        TryBuyItem(item);
+                    }
+                });
+            }
         }
         else if (!isSkin && item.buttonUI != null)
         {
@@ -201,6 +216,53 @@ public class ShopManager : MonoBehaviour
         selectedSkin = selected;
         SaveSelectionToPlayFab(selected);
     }
+
+    void TryBuyItem(ShopItem item)
+    {
+        bool canBuy = false;
+
+        switch (item.currencyType)
+        {
+            case CurrencyType.Gems:
+                if (currentGems >= item.gemCost)
+                {
+                    currentGems -= item.gemCost;
+                    gemCurrencyTxt.text = currentGems.ToString();
+                    gemStoreCurrencyTxt.text = currentGems.ToString();
+                    canBuy = true;
+                }
+                else
+                {
+                    noGemsPanel.SetActive(true);
+                }
+                break;
+
+            case CurrencyType.Cheese:
+                if (currentCheese >= item.cheeseCost)
+                {
+                    currentCheese -= item.cheeseCost;
+                    coinCurrencyTxt.text = currentCheese.ToString();
+                    coinCurrencyTxt2.text = currentCheese.ToString();
+                    coinStoreCurrencyTxt.text = currentCheese.ToString();
+                    canBuy = true;
+                }
+                else
+                {
+                    noGemsPanel.SetActive(true); // or noCheesePanel
+                }
+                break;
+        }
+
+        if (canBuy)
+        {
+            item.isUnlocked = true;
+            item.toggleUI.interactable = true;
+            OnItemClicked(item, true);
+            if (item.buyPanel != null)
+                item.buyPanel.SetActive(false);
+        }
+    }
+
 
     // Call this to increase cheese
     public void AddCheese(int amount)
