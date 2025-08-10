@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.SceneManagement;
 
 public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
 {
@@ -10,6 +11,8 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
 
     [SerializeField] RewardedAds _rewardedAds;
     [SerializeField] RewardedAds _rewardedAds2;
+
+    public GameObject loadingPanel;
 
     void Awake()
     {
@@ -56,6 +59,9 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
         // Pre-load your rewarded ads
         _rewardedAds?.LoadAd();
         _rewardedAds2?.LoadAd();
+
+        SceneManager.LoadScene("Level2");
+        loadingPanel?.SetActive(false);
     }
 
     public void OnInitializationFailed(UnityAdsInitializationError error, string message)
