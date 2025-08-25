@@ -56,7 +56,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsShowListener, IUnityAdsLoadLi
             }
             else if (gameObject.name == "rewardBtn2")
             {
-                ShopManager.Instance.AddGems(50);
+                ShopManager.Instance.AddGem(50);
                 Debug.Log("✅ 50 Gems Added");
             }
         }

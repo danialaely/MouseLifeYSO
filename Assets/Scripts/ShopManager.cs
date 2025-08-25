@@ -274,7 +274,7 @@ public class ShopManager : MonoBehaviour
         Debug.Log("Total Cheese: " + currentCheese);
     }
 
-    public void AddGems(int amount)
+    public void AddGem(int amount)
     {
         currentGems += amount;
         gemCurrencyTxt.text = currentGems.ToString();
@@ -307,12 +307,12 @@ public class ShopManager : MonoBehaviour
 
     public void IAPBtn1() 
     {
-        AddGems(500);
+        AddGem(500);
     }
 
     public void IAPBtn2()
     {
-        AddGems(2500);
+        AddGem(2500);
     }
 
     public void IAPBtn3()
@@ -322,7 +322,7 @@ public class ShopManager : MonoBehaviour
 
     public void IAPBtn4()
     {
-        AddGems(500);
+        AddGem(500);
     }
 
     // Dummy methods for PlayFab
