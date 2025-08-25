@@ -2296,7 +2296,7 @@ MonoBehaviour:
     gemCost: 0
     cheeseCost: 0
     currencyType: 0
-    toggleUI: {fileID: 597691868}
+    toggleUI: {fileID: 0}
     buttonUI: {fileID: 0}
     buyPanel: {fileID: 0}
   - itemId: 2
@@ -2307,7 +2307,7 @@ MonoBehaviour:
     gemCost: 0
     cheeseCost: 250
     currencyType: 0
-    toggleUI: {fileID: 380766875}
+    toggleUI: {fileID: 0}
     buttonUI: {fileID: 0}
     buyPanel: {fileID: 0}
   page2Items:
@@ -3726,7 +3726,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 354862302}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -3758,13 +3758,21 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1449200925}
-  toggleTransition: 1
-  graphic: {fileID: 2087167062}
-  m_Group: {fileID: 709952771}
-  onValueChanged:
+  m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 0
+      m_Calls:
+      - m_Target: {fileID: 1082246269}
+        m_TargetAssemblyTypeName: SkinsManager, Assembly-CSharp
+        m_MethodName: BuyOrSelectSkin
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 2
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &380766873
 GameObject:
   m_ObjectHideFlags: 0
@@ -3812,7 +3820,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 380766873}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -3844,13 +3852,21 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 389765568}
-  toggleTransition: 1
-  graphic: {fileID: 1197779038}
-  m_Group: {fileID: 709952771}
-  onValueChanged:
+  m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 0
+      m_Calls:
+      - m_Target: {fileID: 1082246269}
+        m_TargetAssemblyTypeName: SkinsManager, Assembly-CSharp
+        m_MethodName: BuyOrSelectSkin
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 1
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &383491900
 GameObject:
   m_ObjectHideFlags: 0
@@ -6738,7 +6754,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 597691866}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -6770,13 +6786,21 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 311797162}
-  toggleTransition: 1
-  graphic: {fileID: 321205799}
-  m_Group: {fileID: 709952771}
-  onValueChanged:
+  m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 1
+      m_Calls:
+      - m_Target: {fileID: 1082246269}
+        m_TargetAssemblyTypeName: SkinsManager, Assembly-CSharp
+        m_MethodName: BuyOrSelectSkin
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 0
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &616018565
 GameObject:
   m_ObjectHideFlags: 0
@@ -11268,6 +11292,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1067389624}
   m_CullTransparentMesh: 1
+--- !u!114 &1082246269 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+  m_PrefabInstance: {fileID: 1250243693877987764}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b562e40ee94dad4ebf88d51d950ab4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1099098429
 GameObject:
   m_ObjectHideFlags: 0
@@ -13268,7 +13303,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1267630117}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -13300,13 +13335,21 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1400965693}
-  toggleTransition: 1
-  graphic: {fileID: 527508114}
-  m_Group: {fileID: 709952771}
-  onValueChanged:
+  m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 0
+      m_Calls:
+      - m_Target: {fileID: 1082246269}
+        m_TargetAssemblyTypeName: SkinsManager, Assembly-CSharp
+        m_MethodName: BuyOrSelectSkin
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 3
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1291641169
 GameObject:
   m_ObjectHideFlags: 0
@@ -21217,7 +21260,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1965948107}
   - component: {fileID: 1965948106}
-  - component: {fileID: 1965948105}
   m_Layer: 0
   m_Name: PreviewCamera
   m_TagString: Untagged
@@ -21225,14 +21267,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1965948105
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1965948104}
-  m_Enabled: 1
 --- !u!20 &1965948106
 Camera:
   m_ObjectHideFlags: 0
@@ -22131,7 +22165,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2062307177}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -22163,13 +22197,21 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1476564932}
-  toggleTransition: 1
-  graphic: {fileID: 1670505433}
-  m_Group: {fileID: 709952771}
-  onValueChanged:
+  m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 0
+      m_Calls:
+      - m_Target: {fileID: 1082246269}
+        m_TargetAssemblyTypeName: SkinsManager, Assembly-CSharp
+        m_MethodName: BuyOrSelectSkin
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 4
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2062323677
 GameObject:
   m_ObjectHideFlags: 0
@@ -23201,9 +23243,117 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: PlayerMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: d7875ba1fd7d26641b21e89a366e4de9, type: 2}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[0].id
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[1].id
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[2].id
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[3].id
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[4].id
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[0].name
+      value: Default Skin
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[1].name
+      value: Black Skin
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[2].name
+      value: Orange Skin
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[3].name
+      value: Black Gold Skin
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[4].name
+      value: Vampire  Skin
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[1].price
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[2].price
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[3].price
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[4].price
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[0].payment
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[0].texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 66f0e9dd698700e47ae7e458bb433743, type: 3}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[1].payment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[1].texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 65c1d658fa3f03141beeb5242f2e6ed4, type: 3}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[2].payment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[2].texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 14144358b1870b641a2461724986f7c5, type: 3}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[3].payment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[3].texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 26c38685367b15c4f90da5c798817879, type: 3}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[4].payment
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 532046438009048372, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: Skins.Array.data[4].texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 3432d373af83a0441ab4ff99acdd82e5, type: 3}
     - target: {fileID: 1001745988138113768, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
       propertyPath: m_Name
       value: SkinsManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1001745988138113768, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7904819504669733854, guid: 2b4e26a0c4cd72f4a9dec1687cb2386b, type: 3}
       propertyPath: m_LocalPosition.x

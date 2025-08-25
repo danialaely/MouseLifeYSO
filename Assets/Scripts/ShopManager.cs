@@ -274,12 +274,30 @@ public class ShopManager : MonoBehaviour
         Debug.Log("Total Cheese: " + currentCheese);
     }
 
-    public void AddGem(int amount)
+    public void AddGems(int amount)
     {
         currentGems += amount;
         gemCurrencyTxt.text = currentGems.ToString();
         gemStoreCurrencyTxt.text = currentGems.ToString();
-        Debug.Log("Total Cheese: " + currentGems);
+        Debug.Log("Total Gems: " + currentGems);
+    }
+
+    // Call this to increase cheese
+    public void DeductCheese(int amount)
+    {
+        currentCheese -= amount;
+        coinCurrencyTxt.text = currentCheese.ToString();
+        coinCurrencyTxt2.text = currentCheese.ToString();
+        coinStoreCurrencyTxt.text = currentCheese.ToString();
+        Debug.Log("Total Cheese: " + currentCheese);
+    }
+
+    public void DeductGems(int amount)
+    {
+        currentGems -= amount;
+        gemCurrencyTxt.text = currentGems.ToString();
+        gemStoreCurrencyTxt.text = currentGems.ToString();
+        Debug.Log("Total Gems: " + currentGems);
     }
 
     public void DeactiveGemPanel() 
@@ -289,12 +307,12 @@ public class ShopManager : MonoBehaviour
 
     public void IAPBtn1() 
     {
-        AddGem(500);
+        AddGems(500);
     }
 
     public void IAPBtn2()
     {
-        AddGem(2500);
+        AddGems(2500);
     }
 
     public void IAPBtn3()
@@ -304,7 +322,7 @@ public class ShopManager : MonoBehaviour
 
     public void IAPBtn4()
     {
-        AddGem(500);
+        AddGems(500);
     }
 
     // Dummy methods for PlayFab

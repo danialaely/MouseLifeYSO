@@ -212,7 +212,7 @@ public class MouseMovement : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("CWWW:" + currentWeapon);
+        //Debug.Log("CWWW:" + currentWeapon);
         CreakingAudio.transform.position = transform.position;
 
         if (bulletPrefab != null)
