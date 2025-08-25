@@ -77,7 +77,7 @@ public class ShooterCat : MonoBehaviour
 
         GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.linearVelocity = shootPoint.forward * 20f;
+        rb.velocity = shootPoint.forward * 20f;
 
         // Optional: Add effects or sound 
     }

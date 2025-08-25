@@ -145,11 +145,11 @@ public class Grenade : MonoBehaviour
         isSlipping = true;
 
         // Disable movement or apply force to simulate slipping
-        catRB.linearVelocity = new Vector3(3f, 0, 3f); // Example slipping force
+        catRB.velocity = new Vector3(3f, 0, 3f); // Example slipping force
         catanim.SetBool("isSliding",true);
         yield return new WaitForSeconds(1f); // Slip for 1 second
 
-        catRB.linearVelocity = Vector3.zero; // Stop slipping
+        catRB.velocity = Vector3.zero; // Stop slipping
         isSlipping = false;
         catanim.SetBool("isSliding",false);
         Destroy(this.gameObject);
