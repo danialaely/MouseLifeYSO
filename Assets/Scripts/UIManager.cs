@@ -40,6 +40,8 @@ public class UIManager : MonoBehaviour
         new Vector2(-1660f, 0f)
     };
 
+    public int currentTry = 0;
+
     void Awake()
     {
         if (Instance == null)
@@ -73,11 +75,27 @@ public class UIManager : MonoBehaviour
     public void ShowLevelCompleted()   //When CageMouse collides with EndCollider
     {
         levelCompletedPanel.SetActive(true);
+
+        currentTry++;
+
+        if (currentTry >= 3)
+        {
+            InterstitialAds.Instance.ShowAd();
+            currentTry = 0;
+        }
     }
 
     public void ShowLevelFailed()   //Cat collides with Player
     {
         levelFailedPanel.SetActive(true);
+
+        currentTry++;
+
+        if (currentTry >= 3)
+        {
+            InterstitialAds.Instance.ShowAd();
+            currentTry = 0;
+        }
     }
 
     public void whenDragged() 

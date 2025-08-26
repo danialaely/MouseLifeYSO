@@ -1272,6 +1272,18 @@ PrefabInstance:
       propertyPath: 'giftSpawnPositions.Array.data[1]'
       value: 
       objectReference: {fileID: 176800417}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: playerControls.m_SingletonActionBindings.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: playerControls.m_SingletonActionBindings.Array.data[0].m_Id
+      value: e9500b81-c698-4491-bccf-61250010899b
+      objectReference: {fileID: 0}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: playerControls.m_SingletonActionBindings.Array.data[0].m_Action
+      value: Player Controls
+      objectReference: {fileID: 0}
     - target: {fileID: 1865022591899706479, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.78
@@ -1513,9 +1525,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerMaterial: {fileID: 0}
+  selectedSkinId: 
   Skins: []
-  Player: {fileID: 0}
-  ExtraObjects: []
+  SkinButtons: []
+  cashIcon: {fileID: 0}
+  cheeseIcon: {fileID: 0}
+  gemsIcon: {fileID: 0}
 --- !u!198 &138550970 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 4938095755617958530, guid: 2e79f16be10fbd14f8d5ef191f8db4aa, type: 3}

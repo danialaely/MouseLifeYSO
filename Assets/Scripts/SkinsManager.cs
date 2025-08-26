@@ -13,8 +13,13 @@ public class SkinsManager : MonoBehaviour
     public static SkinsManager INSTANCE { get; private protected set; }
 
     [SerializeField] Material PlayerMaterial;
-    [SerializeField] string selectedSkinId;
+    [SerializeField] public string selectedSkinId;
     [SerializeField] List<Skin> Skins = new List<Skin>();
+    [SerializeField] List<SkinButton> SkinButtons = new List<SkinButton>();
+
+    public Sprite cashIcon;
+    public Sprite cheeseIcon;
+    public Sprite gemsIcon;
 
     private string saveFilePath;
 
@@ -44,7 +49,7 @@ public class SkinsManager : MonoBehaviour
         Debug.Log($"[SkinsManager] Initialized with {Skins.Count} skins");
     }
 
-    private Skin GetSkin(string id) => Skins.FirstOrDefault(s => s.id == id);
+    public Skin GetSkin(string id) => Skins.FirstOrDefault(s => s.id == id);
 
 
     public void OnIAPSkinPurchased(Product product)
@@ -195,6 +200,9 @@ public class SkinsManager : MonoBehaviour
 
             string json = JsonUtility.ToJson(saveData, true);
             File.WriteAllText(saveFilePath, json);
+
+            SkinButtons.ForEach((s) => s.SetUp());
+
             Debug.Log($"[SkinsManager] Skin data saved successfully. Selected: {selectedSkinId}, Purchased: {saveData.purchasedSkinIds.Count}");
         }
         catch (System.Exception e)
@@ -234,6 +242,8 @@ public class SkinsManager : MonoBehaviour
                     }
                 }
 
+                SkinButtons.ForEach((s) => s.SetUp());
+
                 Debug.Log($"[SkinsManager] Skin data loaded successfully. Selected: {selectedSkinId}, Purchased: {saveData.purchasedSkinIds.Count}");
             }
             else
@@ -266,4 +276,5 @@ public class Skin
     public Texture texture;
     public Payment payment;
     public int price;
+    public string iapID;
 }
