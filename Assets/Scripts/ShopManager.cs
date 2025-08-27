@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
 public class ShopManager : MonoBehaviour
 {
@@ -30,12 +31,23 @@ public class ShopManager : MonoBehaviour
     public GameObject shieldPrefab;
     public GameObject nukePrefab;
 
+    private string currencySaveFilePath;
+
+    [System.Serializable]
+    public class CurrencyData
+    {
+        public int gems;
+        public int cheese;
+    }
+
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            
+            currencySaveFilePath = Path.Combine(Application.persistentDataPath, "currencydata.json");
         }
         else
         {
@@ -46,8 +58,10 @@ public class ShopManager : MonoBehaviour
     void Start()
     {
        // LoadPlayerDataFromPlayFab();
+        LoadCurrencyData();
         SetupShopItems();
         setLevel(1);
+        UpdateAllCurrencyUI();
     }
 
     public void setLevel(int level) 
@@ -268,35 +282,32 @@ public class ShopManager : MonoBehaviour
     public void AddCheese(int amount)
     {
         currentCheese += amount;
-        coinCurrencyTxt.text = currentCheese.ToString();
-        coinCurrencyTxt2.text = currentCheese.ToString();
-        coinStoreCurrencyTxt.text = currentCheese.ToString();
+        UpdateAllCurrencyUI();
+        SaveCurrencyData();
         Debug.Log("Total Cheese: " + currentCheese);
     }
 
     public void AddGem(int amount)
     {
         currentGems += amount;
-        gemCurrencyTxt.text = currentGems.ToString();
-        gemStoreCurrencyTxt.text = currentGems.ToString();
+        UpdateAllCurrencyUI();
+        SaveCurrencyData();
         Debug.Log("Total Gems: " + currentGems);
     }
 
-    // Call this to increase cheese
     public void DeductCheese(int amount)
     {
         currentCheese -= amount;
-        coinCurrencyTxt.text = currentCheese.ToString();
-        coinCurrencyTxt2.text = currentCheese.ToString();
-        coinStoreCurrencyTxt.text = currentCheese.ToString();
+        UpdateAllCurrencyUI();
+        SaveCurrencyData();
         Debug.Log("Total Cheese: " + currentCheese);
     }
 
     public void DeductGems(int amount)
     {
         currentGems -= amount;
-        gemCurrencyTxt.text = currentGems.ToString();
-        gemStoreCurrencyTxt.text = currentGems.ToString();
+        UpdateAllCurrencyUI();
+        SaveCurrencyData();
         Debug.Log("Total Gems: " + currentGems);
     }
 
@@ -329,4 +340,59 @@ public class ShopManager : MonoBehaviour
     void SavePurchaseToPlayFab(ShopItem item) { }
     void SaveSelectionToPlayFab(ShopItem item) { }
     void LoadPlayerDataFromPlayFab() { }
+
+    private void UpdateAllCurrencyUI()
+    {
+        if (coinCurrencyTxt != null) coinCurrencyTxt.text = currentCheese.ToString();
+        if (coinCurrencyTxt2 != null) coinCurrencyTxt2.text = currentCheese.ToString();
+        if (coinStoreCurrencyTxt != null) coinStoreCurrencyTxt.text = currentCheese.ToString();
+        
+        if (gemCurrencyTxt != null) gemCurrencyTxt.text = currentGems.ToString();
+        if (gemStoreCurrencyTxt != null) gemStoreCurrencyTxt.text = currentGems.ToString();
+    }
+
+    private void SaveCurrencyData()
+    {
+        try
+        {
+            CurrencyData currencyData = new CurrencyData
+            {
+                gems = currentGems,
+                cheese = currentCheese
+            };
+
+            string json = JsonUtility.ToJson(currencyData, true);
+            File.WriteAllText(currencySaveFilePath, json);
+            Debug.Log($"[ShopManager] Currency saved - Gems: {currentGems}, Cheese: {currentCheese}");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[ShopManager] Failed to save currency data: {e.Message}");
+        }
+    }
+
+    private void LoadCurrencyData()
+    {
+        try
+        {
+            if (File.Exists(currencySaveFilePath))
+            {
+                string json = File.ReadAllText(currencySaveFilePath);
+                CurrencyData currencyData = JsonUtility.FromJson<CurrencyData>(json);
+
+                currentGems = currencyData.gems;
+                currentCheese = currencyData.cheese;
+
+                Debug.Log($"[ShopManager] Currency loaded - Gems: {currentGems}, Cheese: {currentCheese}");
+            }
+            else
+            {
+                Debug.Log("[ShopManager] No currency save file found, starting with default values");
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[ShopManager] Failed to load currency data: {e.Message}");
+        }
+    }
 }

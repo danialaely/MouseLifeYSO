@@ -31,6 +31,9 @@ public class UIManager : MonoBehaviour
     public Color selectedColor = Color.white;
     public Color normalColor = Color.gray;
 
+    public Button Reward1Button;
+    public Button Reward2Button;
+
    // public ShopManager shopManager;
 
     private Vector2[] positions = new Vector2[]
@@ -78,6 +81,9 @@ public class UIManager : MonoBehaviour
 
         currentTry++;
 
+        Reward1Button.interactable = true;
+        Reward2Button.interactable = true;
+
         if (currentTry >= 3)
         {
             InterstitialAds.Instance.ShowAd();
@@ -90,6 +96,9 @@ public class UIManager : MonoBehaviour
         levelFailedPanel.SetActive(true);
 
         currentTry++;
+
+        Reward1Button.interactable = true;
+        Reward2Button.interactable = true;
 
         if (currentTry >= 3)
         {
