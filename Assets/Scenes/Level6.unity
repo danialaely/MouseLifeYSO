@@ -2186,7 +2186,6 @@ MonoBehaviour:
   SpeedMove: 5
   rotationSpeed: 10
   hasthrown: 0
-  cheeseCount: 0
   giftCheeseInterval: 4
   maxCheese: 4
   giftPrefab: {fileID: 405934214436772035, guid: 7744aece93bd09b43ab4fd8930bb61b3, type: 3}
@@ -15089,9 +15088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51edf9a380fe9b74e8cf0ec25940a149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showAdButton: {fileID: 1462380443}
-  _androidAdUnitId: Rewarded_Android
-  _iOSAdUnitId: Rewarded_iOS
+  _adUnitId: Rewarded_Android
 --- !u!1 &1475184713
 GameObject:
   m_ObjectHideFlags: 0
@@ -19010,9 +19007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51edf9a380fe9b74e8cf0ec25940a149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showAdButton: {fileID: 1836078940}
-  _androidAdUnitId: Rewarded_Android
-  _iOSAdUnitId: Rewarded_iOS
+  _adUnitId: Rewarded_Android
 --- !u!1 &1845781050
 GameObject:
   m_ObjectHideFlags: 0

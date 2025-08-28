@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Purchasing;
 using System.IO;
 using UnityEngine.Purchasing.Extension;
+using UnityEngine.SceneManagement;
 
 public class SkinsManager : MonoBehaviour
 {
@@ -45,11 +46,114 @@ public class SkinsManager : MonoBehaviour
         saveFilePath = Path.Combine(Application.persistentDataPath, "skindata.json");
         Debug.Log($"[SkinsManager] Save file path: {saveFilePath}");
         
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        
         LoadSkinData();
         Debug.Log($"[SkinsManager] Initialized with {Skins.Count} skins");
     }
 
     public Skin GetSkin(string id) => Skins.FirstOrDefault(s => s.id == id);
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log($"[SkinsManager] Scene loaded: {scene.name}, updating extraObjects references");
+        StartCoroutine(UpdateExtraObjectReferencesDelayed(scene));
+    }
+
+    private IEnumerator UpdateExtraObjectReferencesDelayed(Scene targetScene)
+    {
+        yield return new WaitForEndOfFrame();
+        
+        UpdateExtraObjectReferences(targetScene);
+        
+        if (!string.IsNullOrEmpty(selectedSkinId))
+        {
+            Skin selectedSkin = GetSkin(selectedSkinId);
+            if (selectedSkin != null && selectedSkin.isPurchased)
+            {
+                OnSkinSelected(selectedSkin);
+            }
+        }
+    }
+
+    private void UpdateExtraObjectReferences(Scene targetScene)
+    {
+        Debug.Log($"[SkinsManager] Updating extraObject references for {Skins.Count} skins in scene: {targetScene.name}");
+        
+        foreach (Skin skin in Skins)
+        {
+            if (skin.extraObjectNames != null && skin.extraObjectNames.Count > 0)
+            {
+                if (skin.extraObjects == null)
+                {
+                    skin.extraObjects = new List<GameObject>();
+                }
+                else
+                {
+                    skin.extraObjects.Clear();
+                }
+
+                Debug.Log($"[SkinsManager] Searching for {skin.extraObjectNames.Count} objects for skin {skin.id}");
+                
+                foreach (string objectName in skin.extraObjectNames)
+                {
+                    GameObject foundObj = FindGameObjectInScene(targetScene, objectName);
+                    
+                    if (foundObj != null)
+                    {
+                        skin.extraObjects.Add(foundObj);
+                        Debug.Log($"[SkinsManager] Found and added {objectName} to skin {skin.id} (scene: {foundObj.scene.name})");
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"[SkinsManager] Could not find GameObject with name: {objectName} for skin {skin.id} in scene {targetScene.name}");
+                    }
+                }
+                
+                Debug.Log($"[SkinsManager] Skin {skin.id} now has {skin.extraObjects.Count} extraObjects");
+            }
+        }
+    }
+
+    private GameObject FindGameObjectInScene(Scene scene, string objectName)
+    {
+        GameObject[] rootObjects = scene.GetRootGameObjects();
+        
+        foreach (GameObject rootObj in rootObjects)
+        {
+            if (rootObj.name == objectName)
+            {
+                return rootObj;
+            }
+            
+            GameObject foundChild = FindGameObjectInChildren(rootObj.transform, objectName);
+            if (foundChild != null)
+            {
+                return foundChild;
+            }
+        }
+        
+        return null;
+    }
+
+    private GameObject FindGameObjectInChildren(Transform parent, string objectName)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == objectName)
+            {
+                return child.gameObject;
+            }
+            
+            GameObject foundInChild = FindGameObjectInChildren(child, objectName);
+            if (foundInChild != null)
+            {
+                return foundInChild;
+            }
+        }
+        
+        return null;
+    }
 
 
     public void OnIAPSkinPurchased(Product product)
@@ -78,6 +182,11 @@ public class SkinsManager : MonoBehaviour
     public void OnIAPSkinPurchaseFailed(Product product, PurchaseFailureDescription description)
     {
         Debug.Log($"[SkinsManager] IAP Purchase Failed For: {description.productId} With Reason: {description.message}");
+
+
+        string id = product.definition.payout.data;
+        Skin targetSkin = GetSkin(id);
+        PurchaseStatusPanel.INSTANCE.Show(targetSkin.icon, targetSkin.name, false);
     }
 
 
@@ -89,11 +198,13 @@ public class SkinsManager : MonoBehaviour
         if (skin == null) 
         {
             Debug.LogError($"[SkinsManager] Skin {id} not found");
+            PurchaseStatusPanel.INSTANCE.Show(skin.icon, skin.name, false);
             return;
         }
         if (skin.isPurchased == true) 
         {
             Debug.Log($"[SkinsManager] Skin {id} already purchased");
+            PurchaseStatusPanel.INSTANCE.Show(skin.icon, skin.name, false);
             return;
         }
 
@@ -107,9 +218,11 @@ public class SkinsManager : MonoBehaviour
                 break;
             case Payment.Gems when shop.currentGems < skin.price:
                 Debug.LogWarning($"[SkinsManager] Not enough gems. Need: {skin.price}, Have: {shop.currentGems}");
+                PurchaseStatusPanel.INSTANCE.Show(skin.icon, skin.name, false);
                 return;
             case Payment.Cheese when shop.currentCheese < skin.price:
                 Debug.LogWarning($"[SkinsManager] Not enough cheese. Need: {skin.price}, Have: {shop.currentCheese}");
+                PurchaseStatusPanel.INSTANCE.Show(skin.icon, skin.name, false);
                 return;
             case Payment.Gems:
                 shop.DeductGems(skin.price);
@@ -124,11 +237,13 @@ public class SkinsManager : MonoBehaviour
                 break;
             default:
                 Debug.LogError($"[SkinsManager] Invalid payment type for skin {id}");
+                PurchaseStatusPanel.INSTANCE.Show(skin.icon, skin.name, false);
                 return;
         }
 
         skin.isPurchased = true;
         Debug.Log($"[SkinsManager] Skin {id} purchase completed successfully");
+        PurchaseStatusPanel.INSTANCE.Show(skin.icon, skin.name, true);
         SaveSkinData();
     }
 
@@ -154,9 +269,49 @@ public class SkinsManager : MonoBehaviour
         SaveSkinData();
     }
 
+    private void ManageExtraObjects(Skin selectedSkin)
+    {
+        foreach (Skin skin in Skins)
+        {
+            DisableExtraObjectsForSkin(skin);
+        }
+
+        EnableExtraObjectsForSkin(selectedSkin);
+        Debug.Log($"[SkinsManager] Extra objects managed for skin: {selectedSkin.name}");
+    }
+
+    private void DisableExtraObjectsForSkin(Skin skin)
+    {
+        if (skin.extraObjects != null)
+        {
+            foreach (GameObject extraObj in skin.extraObjects)
+            {
+                if (extraObj != null)
+                {
+                    extraObj.SetActive(false);
+                }
+            }
+        }
+    }
+
+    private void EnableExtraObjectsForSkin(Skin skin)
+    {
+        if (skin.extraObjects != null)
+        {
+            foreach (GameObject extraObj in skin.extraObjects)
+            {
+                if (extraObj != null)
+                {
+                    extraObj.SetActive(true);
+                }
+            }
+        }
+    }
+
     public void OnSkinSelected(Skin skin)
     {
         PlayerMaterial.mainTexture = skin.texture;
+        ManageExtraObjects(skin);
         Debug.Log($"[SkinsManager] Applied texture for skin: {skin.name}");
     }
 
@@ -201,7 +356,8 @@ public class SkinsManager : MonoBehaviour
             string json = JsonUtility.ToJson(saveData, true);
             File.WriteAllText(saveFilePath, json);
 
-            SkinButtons.ForEach((s) => s.SetUp());
+            // Delay the button setup to avoid collection modification issues during IAP processing
+            StartCoroutine(DelayedButtonSetup());
 
             Debug.Log($"[SkinsManager] Skin data saved successfully. Selected: {selectedSkinId}, Purchased: {saveData.purchasedSkinIds.Count}");
         }
@@ -242,7 +398,8 @@ public class SkinsManager : MonoBehaviour
                     }
                 }
 
-                SkinButtons.ForEach((s) => s.SetUp());
+                // Delay the button setup to avoid collection modification issues during IAP processing
+                StartCoroutine(DelayedButtonSetup());
 
                 Debug.Log($"[SkinsManager] Skin data loaded successfully. Selected: {selectedSkinId}, Purchased: {saveData.purchasedSkinIds.Count}");
             }
@@ -255,6 +412,14 @@ public class SkinsManager : MonoBehaviour
         {
             Debug.LogError($"[SkinsManager] Failed to load skin data: {e.Message}");
         }
+    }
+
+    private IEnumerator DelayedButtonSetup()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        
+        SkinButtons.ForEach((s) => s.SetUp());
     }
 }
 
@@ -274,7 +439,10 @@ public class Skin
     public string name;
     public bool isPurchased;
     public Texture texture;
+    public Sprite icon;
     public Payment payment;
     public int price;
     public string iapID;
+    public List<GameObject> extraObjects;
+    public List<string> extraObjectNames;
 }

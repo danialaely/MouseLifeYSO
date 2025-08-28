@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.Purchasing.Extension;
+using UnityEngine.Purchasing;
 
 public class ShopManager : MonoBehaviour
 {
@@ -20,16 +22,14 @@ public class ShopManager : MonoBehaviour
 
     private ShopItem selectedSkin;
 
-    public TMP_Text coinCurrencyTxt;
-    public TMP_Text coinCurrencyTxt2;
-    public TMP_Text coinStoreCurrencyTxt;
-
-    public TMP_Text gemCurrencyTxt;
-    public TMP_Text gemStoreCurrencyTxt;
-    //public TMP_Text gemCurrencyTxt2;
+    public List<TMP_Text> cheeseTextObjects = new List<TMP_Text>();
+    public List<TMP_Text> gemTextObjects = new List<TMP_Text>();
 
     public GameObject shieldPrefab;
     public GameObject nukePrefab;
+
+    public Sprite cheeseIcon; 
+    public Sprite gemsIcon; 
 
     private string currencySaveFilePath;
 
@@ -145,8 +145,7 @@ public class ShopManager : MonoBehaviour
                 {
                     currentGems -= item.gemCost;
                     canBuy = true;
-                    gemCurrencyTxt.text = currentGems.ToString();
-                    gemStoreCurrencyTxt.text = currentGems.ToString();
+                    UpdateGemUI();
                 }
                 else
                 {
@@ -159,9 +158,7 @@ public class ShopManager : MonoBehaviour
                 {
                     currentCheese -= item.cheeseCost;
                     canBuy = true;
-                    coinCurrencyTxt.text = currentCheese.ToString();
-                    coinCurrencyTxt2.text = currentCheese.ToString();
-                    coinStoreCurrencyTxt.text = currentCheese.ToString();
+                    UpdateCheeseUI();
                 }
                 else
                 {
@@ -241,8 +238,7 @@ public class ShopManager : MonoBehaviour
                 if (currentGems >= item.gemCost)
                 {
                     currentGems -= item.gemCost;
-                    gemCurrencyTxt.text = currentGems.ToString();
-                    gemStoreCurrencyTxt.text = currentGems.ToString();
+                    UpdateGemUI();
                     canBuy = true;
                 }
                 else
@@ -255,9 +251,7 @@ public class ShopManager : MonoBehaviour
                 if (currentCheese >= item.cheeseCost)
                 {
                     currentCheese -= item.cheeseCost;
-                    coinCurrencyTxt.text = currentCheese.ToString();
-                    coinCurrencyTxt2.text = currentCheese.ToString();
-                    coinStoreCurrencyTxt.text = currentCheese.ToString();
+                    UpdateCheeseUI();
                     canBuy = true;
                 }
                 else
@@ -343,12 +337,26 @@ public class ShopManager : MonoBehaviour
 
     private void UpdateAllCurrencyUI()
     {
-        if (coinCurrencyTxt != null) coinCurrencyTxt.text = currentCheese.ToString();
-        if (coinCurrencyTxt2 != null) coinCurrencyTxt2.text = currentCheese.ToString();
-        if (coinStoreCurrencyTxt != null) coinStoreCurrencyTxt.text = currentCheese.ToString();
-        
-        if (gemCurrencyTxt != null) gemCurrencyTxt.text = currentGems.ToString();
-        if (gemStoreCurrencyTxt != null) gemStoreCurrencyTxt.text = currentGems.ToString();
+        UpdateCheeseUI();
+        UpdateGemUI();
+    }
+
+    private void UpdateCheeseUI()
+    {
+        foreach (TMP_Text cheeseText in cheeseTextObjects)
+        {
+            if (cheeseText != null)
+                cheeseText.text = currentCheese.ToString();
+        }
+    }
+
+    private void UpdateGemUI()
+    {
+        foreach (TMP_Text gemText in gemTextObjects)
+        {
+            if (gemText != null)
+                gemText.text = currentGems.ToString();
+        }
     }
 
     private void SaveCurrencyData()
@@ -393,6 +401,49 @@ public class ShopManager : MonoBehaviour
         catch (System.Exception e)
         {
             Debug.LogError($"[ShopManager] Failed to load currency data: {e.Message}");
+        }
+    }
+
+    public void OnCurrencyIAPSuccessful(Product product)
+    {
+
+        bool cheeseOrGems = false;
+        foreach (var p in product.definition.payouts)
+        {
+            if (p.subtype == "cheese")
+            {
+                AddCheese((int)p.quantity);
+                cheeseOrGems = false;
+            }
+            else if (p.subtype == "gems")
+            {
+                AddGem((int)p.quantity);
+                cheeseOrGems = true;
+            }
+        }
+
+        PurchaseStatusPanel.INSTANCE.Show(cheeseOrGems == true ? gemsIcon : cheeseIcon, product.metadata.localizedTitle, true);
+    }
+
+    public void OnCurrencyIAPFailed(Product product, PurchaseFailureDescription description)
+    {
+        PurchaseStatusPanel.INSTANCE.Show(product.definition.payout.subtype == "gems" ? gemsIcon : cheeseIcon, product.metadata.localizedTitle, false);
+    }
+
+    public void BuyCheeseFromGems(int cheese)
+    {
+        if (currentGems < cheese)
+        {
+            PurchaseStatusPanel.INSTANCE.Show(cheeseIcon, cheese.ToString() + " Cheese", false);
+            return;
+        }
+
+        if (cheese == 250)
+        {
+            DeductGems(50);
+            AddCheese(cheese);
+
+            PurchaseStatusPanel.INSTANCE.Show(cheeseIcon, "250 Cheese", true);
         }
     }
 }

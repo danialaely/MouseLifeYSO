@@ -23,7 +23,7 @@ public class SkinButton : MonoBehaviour
     private ShopManager shopManager;
     private Skin skin;
 
-    // Child index constants — update these if prefab layout changes
+    // Child index constants ï¿½ update these if prefab layout changes
     private const int SELECTED_PARENT_INDEX = 0;      // transform.GetChild(0).GetChild(0)
     private const int PRICE_PARENT_INDEX = 2;         // transform.GetChild(2)
     private const int PRICE_ICON_INDEX = 0;           // priceParent.transform.GetChild(0)
@@ -106,7 +106,6 @@ public class SkinButton : MonoBehaviour
     public void SetUp()
     {
         CacheReferences();
-        ResetAll(); // deterministic baseline
 
         // Get skin data
         if (skinManager == null)
@@ -126,30 +125,43 @@ public class SkinButton : MonoBehaviour
         bool isSelected = skinManager.selectedSkinId == skin.id;
         if (selectedIndicator != null) selectedIndicator.SetActive(isSelected);
 
-        if (isSelected) return;
+        // Handle selected skin
+        if (isSelected)
+        {
+            ResetAllExceptIAP();
+            DisableIAPButton();
+            return;
+        }
 
+        // Handle purchased skin
         if (skin.isPurchased)
         {
+            ResetAllExceptIAP();
+            DisableIAPButton();
             ConfigureSelect();
             return;
         }
 
-        // Choose behaviour based on payment type
+        // Handle unpurchased skins based on payment type
         switch (skin.payment)
         {
             case Payment.IAP:
+                // Don't reset anything for IAP - preserve existing IAP button setup
                 ConfigureIAP(skin);
                 break;
 
             case Payment.Gems:
+                ResetAllExceptIAP();
                 ConfigureCurrency(skin, Currency.Gems);
                 break;
 
             case Payment.Cheese:
+                ResetAllExceptIAP();
                 ConfigureCurrency(skin, Currency.Cheese);
                 break;
 
             case Payment.Free:
+                ResetAllExceptIAP();
                 ConfigureFree(skin);
                 break;
 
@@ -162,16 +174,6 @@ public class SkinButton : MonoBehaviour
     // Reset to known clean state so SetUp is idempotent.
     public void ResetAll()
     {
-        // IAP cleanup
-        if (iapButton != null)
-        {
-            iapButton.onPurchaseComplete.RemoveAllListeners();
-            iapButton.onPurchaseFailed.RemoveAllListeners();
-            iapButton.button = null;
-            iapButton.productId = null;
-            iapButton.enabled = false;
-        }
-
         // Button cleanup
         if (button != null)
         {
@@ -185,6 +187,44 @@ public class SkinButton : MonoBehaviour
         if (priceIcon != null) priceIcon.sprite = null;
     }
 
+    // Reset everything except IAP button functionality
+    public void ResetAllExceptIAP()
+    {
+        // Only reset regular button listeners, not IAP
+        if (button != null && skin != null && skin.payment != Payment.IAP)
+        {
+            button.onClick.RemoveAllListeners();
+            button.interactable = false;
+        }
+
+        // Price UI baseline
+        if (priceParent != null) priceParent.SetActive(false);
+        if (priceText != null) priceText.text = string.Empty;
+        if (priceIcon != null) priceIcon.sprite = null;
+    }
+
+    private void DisableIAPButton()
+    {
+        if (iapButton != null)
+        {
+            Debug.Log($"[SkinButton] Disabling IAP functionality for skin {skinId}");
+            // Disable the IAP component but keep the button interactive for selection
+            iapButton.enabled = false;
+            
+            if (button != null)
+            {
+                button.interactable = true;
+                // Remove any existing listeners and add select functionality
+                button.onClick.RemoveAllListeners();
+                button.onClick.AddListener(() => skinManager.SelectSkin(skin.id));
+            }
+        }
+        else
+        {
+            Debug.Log($"[SkinButton] No IAP button found for skin {skinId}");
+        }
+    }
+
     #endregion
 
     #region Configuration helpers (icons pulled from SkinsManager)
@@ -194,6 +234,7 @@ public class SkinButton : MonoBehaviour
         if (button != null)
         {
             button.interactable = true;
+            button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => skinManager.SelectSkin(skin.id));
         }
         if (priceParent != null) priceParent.SetActive(false);
@@ -204,28 +245,10 @@ public class SkinButton : MonoBehaviour
         // Resolve icons from SkinManager
         var (cashIcon, _, _) = GetIconsFromManager();
 
-        if (iapButton == null)
-        {
-            ConfigurePrice($"{s.price}$", cashIcon);
-            if (button != null) button.interactable = false;
-            Debug.LogWarning($"SkinButton: IAP requested for '{s.id}' but CodelessIAPButton missing on '{name}'.");
-            return;
-        }
-
-        // clear then attach
-        iapButton.onPurchaseComplete.RemoveAllListeners();
-        iapButton.onPurchaseFailed.RemoveAllListeners();
-
-        iapButton.enabled = true;
-        iapButton.productId = s.iapID;
-        iapButton.button = button;
-
-        iapButton.onPurchaseComplete.AddListener((p) => skinManager.OnIAPSkinPurchased(p));
-        iapButton.onPurchaseFailed.AddListener((p, d) => skinManager.OnIAPSkinPurchaseFailed(p, d));
-
         ConfigurePrice($"{s.price}$", cashIcon);
 
-        if (button != null) button.interactable = true;
+        // Don't modify button for IAP - preserve existing IAP button setup
+        // The IAP button component handles the functionality
     }
 
     private void ConfigureCurrency(Skin s, Currency currency)
