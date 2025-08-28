@@ -520,6 +520,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1526179289}
     - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: cageObj
+      value: 
+      objectReference: {fileID: 2077494744}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
       propertyPath: cageTxt
       value: 
       objectReference: {fileID: 1365256929}
@@ -539,6 +543,10 @@ PrefabInstance:
       propertyPath: uiCanvas3d
       value: 
       objectReference: {fileID: 1728332417}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: mHouseEffect
+      value: 
+      objectReference: {fileID: 1477561680}
     - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
       propertyPath: CreakingAudio
       value: 
@@ -563,6 +571,26 @@ PrefabInstance:
       propertyPath: cheesePopUpPanel
       value: 
       objectReference: {fileID: 927297676}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: giftSpawnPositions.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: 'giftSpawnPositions.Array.data[0]'
+      value: 
+      objectReference: {fileID: 826228989}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: 'giftSpawnPositions.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1900549111}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: 'giftSpawnPositions.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1144678718}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: 'giftSpawnPositions.Array.data[3]'
+      value: 
+      objectReference: {fileID: 798131196}
     - target: {fileID: 1865022591899706479, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2
@@ -605,7 +633,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1865022591899875407, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: MouseNew
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11688,6 +11716,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdc919a43bba95b4a8b6916b6aa5321d, type: 3}
+--- !u!198 &1477561680 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4823518202205099634, guid: cdc919a43bba95b4a8b6916b6aa5321d, type: 3}
+  m_PrefabInstance: {fileID: 1477561679}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1525460580
 GameObject:
   m_ObjectHideFlags: 0
@@ -16752,6 +16785,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae77b554df99c784289e2034cdb9bac7, type: 3}
+--- !u!1 &2077494744 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9050397187837690591, guid: ae77b554df99c784289e2034cdb9bac7, type: 3}
+  m_PrefabInstance: {fileID: 2077494743}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2095363267
 GameObject:
   m_ObjectHideFlags: 0

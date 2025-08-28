@@ -1139,6 +1139,90 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: Cam
+      value: 
+      objectReference: {fileID: 963194225}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: knob
+      value: 
+      objectReference: {fileID: 2030111668}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: catRB
+      value: 
+      objectReference: {fileID: 1638951406}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: useBtn
+      value: 
+      objectReference: {fileID: 1526179289}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: cageTxt
+      value: 
+      objectReference: {fileID: 1365256929}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: saveObj
+      value: 
+      objectReference: {fileID: 715583796}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: Joystick
+      value: 
+      objectReference: {fileID: 1977609938}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: cageSlider
+      value: 
+      objectReference: {fileID: 1459215382}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: uiCanvas3d
+      value: 
+      objectReference: {fileID: 1728332417}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: mHouseEffect
+      value: 
+      objectReference: {fileID: 791541478}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: CreakingAudio
+      value: 
+      objectReference: {fileID: 1953394639}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: cagemouseAnim
+      value: 
+      objectReference: {fileID: 10796919}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: dummyJoystick
+      value: 
+      objectReference: {fileID: 1708378935}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: giftPopUpPanel
+      value: 
+      objectReference: {fileID: 692899306}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: navMeshSurface
+      value: 
+      objectReference: {fileID: 259987062}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: cheesePopUpPanel
+      value: 
+      objectReference: {fileID: 927297676}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: giftSpawnPositions.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: 'giftSpawnPositions.Array.data[0]'
+      value: 
+      objectReference: {fileID: 569659842}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: 'giftSpawnPositions.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1096883787}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: 'giftSpawnPositions.Array.data[2]'
+      value: 
+      objectReference: {fileID: 827781944}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: 'giftSpawnPositions.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2001457436}
     - target: {fileID: 1865022591899706479, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
       propertyPath: m_LocalScale.x
       value: 4
@@ -1987,7 +2071,8 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: a6ce594744c583748be62fff91726321, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1865022591899706479, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
@@ -2063,7 +2148,7 @@ MonoBehaviour:
   - {fileID: 7415069322882024312, guid: 62854b0fa4e8a974badf84173c590fdb, type: 3}
   - {fileID: 9141661214742953279, guid: 3a47821fbfa4779418b4e01958c3247a, type: 3}
   currentWeapon: {fileID: 0}
-  knob: {fileID: 0}
+  knob: {fileID: 2030111668}
   SpeedMove: 5
   rotationSpeed: 10
   hasthrown: 0
