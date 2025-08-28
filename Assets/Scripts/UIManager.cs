@@ -31,6 +31,9 @@ public class UIManager : MonoBehaviour
     public Color selectedColor = Color.white;
     public Color normalColor = Color.gray;
 
+    public Button Reward1Button;
+    public Button Reward2Button;
+
    // public ShopManager shopManager;
 
     private Vector2[] positions = new Vector2[]
@@ -39,6 +42,8 @@ public class UIManager : MonoBehaviour
         new Vector2(-830f, 0f),
         new Vector2(-1660f, 0f)
     };
+
+    public int currentTry = 0;
 
     void Awake()
     {
@@ -73,11 +78,33 @@ public class UIManager : MonoBehaviour
     public void ShowLevelCompleted()   //When CageMouse collides with EndCollider
     {
         levelCompletedPanel.SetActive(true);
+
+        currentTry++;
+
+        Reward1Button.interactable = true;
+        Reward2Button.interactable = true;
+
+        if (currentTry >= 3)
+        {
+            InterstitialAds.Instance.ShowAd();
+            currentTry = 0;
+        }
     }
 
     public void ShowLevelFailed()   //Cat collides with Player
     {
         levelFailedPanel.SetActive(true);
+
+        currentTry++;
+
+        Reward1Button.interactable = true;
+        Reward2Button.interactable = true;
+
+        if (currentTry >= 3)
+        {
+            InterstitialAds.Instance.ShowAd();
+            currentTry = 0;
+        }
     }
 
     public void whenDragged() 

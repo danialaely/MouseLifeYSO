@@ -3,6 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
+using UnityEngine.Purchasing.Extension;
+using UnityEngine.Purchasing;
 
 public class ShopManager : MonoBehaviour
 {
@@ -19,16 +22,23 @@ public class ShopManager : MonoBehaviour
 
     private ShopItem selectedSkin;
 
-    public TMP_Text coinCurrencyTxt;
-    public TMP_Text coinCurrencyTxt2;
-    public TMP_Text coinStoreCurrencyTxt;
-
-    public TMP_Text gemCurrencyTxt;
-    public TMP_Text gemStoreCurrencyTxt;
-    //public TMP_Text gemCurrencyTxt2;
+    public List<TMP_Text> cheeseTextObjects = new List<TMP_Text>();
+    public List<TMP_Text> gemTextObjects = new List<TMP_Text>();
 
     public GameObject shieldPrefab;
     public GameObject nukePrefab;
+
+    public Sprite cheeseIcon; 
+    public Sprite gemsIcon; 
+
+    private string currencySaveFilePath;
+
+    [System.Serializable]
+    public class CurrencyData
+    {
+        public int gems;
+        public int cheese;
+    }
 
     void Awake()
     {
@@ -36,6 +46,8 @@ public class ShopManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            
+            currencySaveFilePath = Path.Combine(Application.persistentDataPath, "currencydata.json");
         }
         else
         {
@@ -46,8 +58,10 @@ public class ShopManager : MonoBehaviour
     void Start()
     {
        // LoadPlayerDataFromPlayFab();
+        LoadCurrencyData();
         SetupShopItems();
         setLevel(1);
+        UpdateAllCurrencyUI();
     }
 
     public void setLevel(int level) 
@@ -131,8 +145,7 @@ public class ShopManager : MonoBehaviour
                 {
                     currentGems -= item.gemCost;
                     canBuy = true;
-                    gemCurrencyTxt.text = currentGems.ToString();
-                    gemStoreCurrencyTxt.text = currentGems.ToString();
+                    UpdateGemUI();
                 }
                 else
                 {
@@ -145,9 +158,7 @@ public class ShopManager : MonoBehaviour
                 {
                     currentCheese -= item.cheeseCost;
                     canBuy = true;
-                    coinCurrencyTxt.text = currentCheese.ToString();
-                    coinCurrencyTxt2.text = currentCheese.ToString();
-                    coinStoreCurrencyTxt.text = currentCheese.ToString();
+                    UpdateCheeseUI();
                 }
                 else
                 {
@@ -227,8 +238,7 @@ public class ShopManager : MonoBehaviour
                 if (currentGems >= item.gemCost)
                 {
                     currentGems -= item.gemCost;
-                    gemCurrencyTxt.text = currentGems.ToString();
-                    gemStoreCurrencyTxt.text = currentGems.ToString();
+                    UpdateGemUI();
                     canBuy = true;
                 }
                 else
@@ -241,9 +251,7 @@ public class ShopManager : MonoBehaviour
                 if (currentCheese >= item.cheeseCost)
                 {
                     currentCheese -= item.cheeseCost;
-                    coinCurrencyTxt.text = currentCheese.ToString();
-                    coinCurrencyTxt2.text = currentCheese.ToString();
-                    coinStoreCurrencyTxt.text = currentCheese.ToString();
+                    UpdateCheeseUI();
                     canBuy = true;
                 }
                 else
@@ -268,18 +276,33 @@ public class ShopManager : MonoBehaviour
     public void AddCheese(int amount)
     {
         currentCheese += amount;
-        coinCurrencyTxt.text = currentCheese.ToString();
-        coinCurrencyTxt2.text = currentCheese.ToString();
-        coinStoreCurrencyTxt.text = currentCheese.ToString();
+        UpdateAllCurrencyUI();
+        SaveCurrencyData();
         Debug.Log("Total Cheese: " + currentCheese);
     }
 
     public void AddGem(int amount)
     {
         currentGems += amount;
-        gemCurrencyTxt.text = currentGems.ToString();
-        gemStoreCurrencyTxt.text = currentGems.ToString();
-        Debug.Log("Total Cheese: " + currentGems);
+        UpdateAllCurrencyUI();
+        SaveCurrencyData();
+        Debug.Log("Total Gems: " + currentGems);
+    }
+
+    public void DeductCheese(int amount)
+    {
+        currentCheese -= amount;
+        UpdateAllCurrencyUI();
+        SaveCurrencyData();
+        Debug.Log("Total Cheese: " + currentCheese);
+    }
+
+    public void DeductGems(int amount)
+    {
+        currentGems -= amount;
+        UpdateAllCurrencyUI();
+        SaveCurrencyData();
+        Debug.Log("Total Gems: " + currentGems);
     }
 
     public void DeactiveGemPanel() 
@@ -311,4 +334,116 @@ public class ShopManager : MonoBehaviour
     void SavePurchaseToPlayFab(ShopItem item) { }
     void SaveSelectionToPlayFab(ShopItem item) { }
     void LoadPlayerDataFromPlayFab() { }
+
+    private void UpdateAllCurrencyUI()
+    {
+        UpdateCheeseUI();
+        UpdateGemUI();
+    }
+
+    private void UpdateCheeseUI()
+    {
+        foreach (TMP_Text cheeseText in cheeseTextObjects)
+        {
+            if (cheeseText != null)
+                cheeseText.text = currentCheese.ToString();
+        }
+    }
+
+    private void UpdateGemUI()
+    {
+        foreach (TMP_Text gemText in gemTextObjects)
+        {
+            if (gemText != null)
+                gemText.text = currentGems.ToString();
+        }
+    }
+
+    private void SaveCurrencyData()
+    {
+        try
+        {
+            CurrencyData currencyData = new CurrencyData
+            {
+                gems = currentGems,
+                cheese = currentCheese
+            };
+
+            string json = JsonUtility.ToJson(currencyData, true);
+            File.WriteAllText(currencySaveFilePath, json);
+            Debug.Log($"[ShopManager] Currency saved - Gems: {currentGems}, Cheese: {currentCheese}");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[ShopManager] Failed to save currency data: {e.Message}");
+        }
+    }
+
+    private void LoadCurrencyData()
+    {
+        try
+        {
+            if (File.Exists(currencySaveFilePath))
+            {
+                string json = File.ReadAllText(currencySaveFilePath);
+                CurrencyData currencyData = JsonUtility.FromJson<CurrencyData>(json);
+
+                currentGems = currencyData.gems;
+                currentCheese = currencyData.cheese;
+
+                Debug.Log($"[ShopManager] Currency loaded - Gems: {currentGems}, Cheese: {currentCheese}");
+            }
+            else
+            {
+                Debug.Log("[ShopManager] No currency save file found, starting with default values");
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[ShopManager] Failed to load currency data: {e.Message}");
+        }
+    }
+
+    public void OnCurrencyIAPSuccessful(Product product)
+    {
+
+        bool cheeseOrGems = false;
+        foreach (var p in product.definition.payouts)
+        {
+            if (p.subtype == "cheese")
+            {
+                AddCheese((int)p.quantity);
+                cheeseOrGems = false;
+            }
+            else if (p.subtype == "gems")
+            {
+                AddGem((int)p.quantity);
+                cheeseOrGems = true;
+            }
+        }
+
+        PurchaseStatusPanel.INSTANCE.Show(cheeseOrGems == true ? gemsIcon : cheeseIcon, product.metadata.localizedTitle, true);
+    }
+
+    public void OnCurrencyIAPFailed(Product product, PurchaseFailureDescription description)
+    {
+        PurchaseStatusPanel.INSTANCE.Show(product.definition.payout.subtype == "gems" ? gemsIcon : cheeseIcon, product.metadata.localizedTitle, false);
+    }
+
+    public void BuyCheeseFromGems(int cheese)
+    {
+        if (currentGems < cheese)
+        {
+            PurchaseStatusPanel.INSTANCE.Show(cheeseIcon, cheese.ToString() + " Cheese", false);
+            return;
+        }
+
+        if (cheese == 250)
+        {
+            DeductGems(50);
+            AddCheese(cheese);
+
+            PurchaseStatusPanel.INSTANCE.Show(cheeseIcon, "250 Cheese", true);
+        }
+    }
 }

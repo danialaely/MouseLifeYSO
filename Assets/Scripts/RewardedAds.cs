@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.UI;
 
 public class RewardedAds : MonoBehaviour, IUnityAdsShowListener, IUnityAdsLoadListener
 {
@@ -24,6 +25,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsShowListener, IUnityAdsLoadLi
         {
             Advertisement.Show(_adUnitId, this);
             Debug.Log("Showing Ad");
+            GetComponent<Button>().interactable = false;
         }
         else
         {

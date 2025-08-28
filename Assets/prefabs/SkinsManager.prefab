@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1001745988138113768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7904819504669733854}
+  - component: {fileID: 532046438009048372}
+  m_Layer: 0
+  m_Name: SkinsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7904819504669733854
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001745988138113768}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &532046438009048372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001745988138113768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b562e40ee94dad4ebf88d51d950ab4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerMaterial: {fileID: 2100000, guid: d7875ba1fd7d26641b21e89a366e4de9, type: 2}
+  selectedSkinId: 0
+  Skins:
+  - id: 0
+    name: Default Skin
+    isPurchased: 1
+    texture: {fileID: 2800000, guid: 66f0e9dd698700e47ae7e458bb433743, type: 3}
+    icon: {fileID: 21300000, guid: d9fd7f889a5a720419a1257c55b6fb09, type: 3}
+    payment: 3
+    price: 0
+    iapID: 
+    extraObjects: []
+    extraObjectNames: []
+  - id: 1
+    name: Black Skin
+    isPurchased: 0
+    texture: {fileID: 2800000, guid: 65c1d658fa3f03141beeb5242f2e6ed4, type: 3}
+    icon: {fileID: 21300000, guid: c08e175497c81e847abdf004ea18e60d, type: 3}
+    payment: 1
+    price: 5
+    iapID: 
+    extraObjects: []
+    extraObjectNames: []
+  - id: 2
+    name: Orange Skin
+    isPurchased: 0
+    texture: {fileID: 2800000, guid: 14144358b1870b641a2461724986f7c5, type: 3}
+    icon: {fileID: 21300000, guid: 0739c5a3804e77f448bb3417e485a1da, type: 3}
+    payment: 2
+    price: 10
+    iapID: 
+    extraObjects: []
+    extraObjectNames: []
+  - id: 3
+    name: Black Gold Skin
+    isPurchased: 0
+    texture: {fileID: 2800000, guid: 26c38685367b15c4f90da5c798817879, type: 3}
+    icon: {fileID: 21300000, guid: ebcb029b37c83e94aa98e8cd6e6fb2fc, type: 3}
+    payment: 2
+    price: 20
+    iapID: 
+    extraObjects:
+    - {fileID: 0}
+    - {fileID: 0}
+    extraObjectNames:
+    - cap
+    - chain
+  - id: 4
+    name: Vampire  Skin
+    isPurchased: 0
+    texture: {fileID: 2800000, guid: 3432d373af83a0441ab4ff99acdd82e5, type: 3}
+    icon: {fileID: 21300000, guid: 7589188277f635f41aa41e2763a2fa36, type: 3}
+    payment: 0
+    price: 5
+    iapID: vampire.skin
+    extraObjects:
+    - {fileID: 0}
+    - {fileID: 0}
+    extraObjectNames:
+    - vampire horns
+    - vampire cape
+  SkinButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  cashIcon: {fileID: 21300000, guid: 6d51bcf6fdedee742bd0352e2bbafb77, type: 3}
+  cheeseIcon: {fileID: 21300000, guid: 73fba41421cab8d478eebd8be6390062, type: 3}
+  gemsIcon: {fileID: 21300000, guid: 63d434a69ba1ddd4b8bbbdd6f701964c, type: 3}
