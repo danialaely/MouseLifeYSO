@@ -53,6 +53,8 @@ public class ShopManager : MonoBehaviour
         {
             Destroy(gameObject); // Avoid duplicates on scene load
         }
+        PlayerPrefs.SetInt("CurrentLevel", 2);
+
     }
 
     void Start()

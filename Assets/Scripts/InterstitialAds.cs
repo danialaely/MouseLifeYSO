@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.Events;
+using System.Collections;
 
 [DisallowMultipleComponent]
 public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
@@ -9,29 +10,26 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     [Header("Ad Unit IDs (set per-platform)")]
     [SerializeField] string _androidAdUnitId = "Interstitial_Android";
     [SerializeField] string _iOSAdUnitId = "Interstitial_iOS";
-
     [Header("Behaviour")]
     [SerializeField] bool _autoLoadOnStart = true;
-    [SerializeField] float _loadTimeoutSeconds = 10f;
+    [SerializeField] float _loadTimeoutSeconds = 15f; // Increased for more grace time
     [SerializeField] bool _showOnLoadIfRequested = false; // set true if you want ShowAd() to auto-show when loaded
     [SerializeField] bool _testMode = true; // toggle for testing
-
     [Header("Events")]
     public UnityEvent OnAdLoaded;
     public UnityEvent OnAdFailedToLoad;
     public UnityEvent OnAdShown;
     public UnityEvent OnAdFailedToShow;
     public UnityEvent OnAdClosed; // called after show completes or is skipped
-
     // singleton for convenience
     public static InterstitialAds Instance { get; private set; }
-
     string AdUnitId => Application.platform == RuntimePlatform.IPhonePlayer ? _iOSAdUnitId : _androidAdUnitId;
-
     bool _isLoaded;
     bool _isLoading;
     float _loadStartTime;
     Action _onClosedCallback; // optional callback caller can provide to resume gameplay
+    private int _retryCount = 0; // For exponential backoff
+    [SerializeField] GameObject loadingPanel;
 
     void Awake()
     {
@@ -54,7 +52,29 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
             Debug.Log($"[InterstitialAds] Advertisement not initialized. You should call Advertisement.Initialize(gameId, testMode) elsewhere with your real game id.");
         }
 
-        if (_autoLoadOnStart) LoadAd();
+        if (_autoLoadOnStart)
+        {
+            if (Advertisement.isInitialized)
+            {
+                LoadAd();
+            }
+            else
+            {
+                StartCoroutine(WaitForInitialization());
+            }
+        }
+    }
+
+    private IEnumerator WaitForInitialization()
+    {
+        Debug.Log("[InterstitialAds] Waiting for Unity Ads initialization...");
+        while (!Advertisement.isInitialized)
+        {
+            yield return null;
+        }
+        Debug.Log("[InterstitialAds] Unity Ads initialized. Proceeding to load ad.");
+        loadingPanel.SetActive(false);
+        LoadAd();
     }
 
     void Update()
@@ -75,7 +95,17 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     public void LoadAd()
     {
         if (_isLoaded || _isLoading) return;
-
+        if (!Advertisement.isSupported)
+        {
+            Debug.LogWarning("[InterstitialAds] Unity Ads not supported on this platform.");
+            return;
+        }
+        if (!Advertisement.isInitialized)
+        {
+            Debug.LogWarning("[InterstitialAds] Cannot load ad: Unity Ads not initialized. Waiting...");
+            StartCoroutine(WaitForInitialization());
+            return;
+        }
         _isLoading = true;
         _loadStartTime = Time.unscaledTime;
         Debug.Log($"[InterstitialAds] Loading Ad Unit: {AdUnitId}");
@@ -89,7 +119,6 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     public void ShowAd(Action onClosed = null)
     {
         _onClosedCallback = onClosed;
-
         if (_isLoaded)
         {
             Debug.Log("[InterstitialAds] Showing ad.");
@@ -99,7 +128,6 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
         {
             Debug.LogWarning("[InterstitialAds] Ad not ready. Attempting to load.");
             if (!_isLoading) LoadAd();
-
             if (_showOnLoadIfRequested)
             {
                 // When loaded, OnAdLoaded will call ShowAd again because _isLoaded will be true then.
@@ -118,12 +146,11 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     public void OnUnityAdsAdLoaded(string adUnitId)
     {
         if (!adUnitId.Equals(AdUnitId)) return;
-
         _isLoading = false;
         _isLoaded = true;
+        _retryCount = 0; // Reset retry count on success
         Debug.Log("[InterstitialAds] ✅ Ad loaded: " + adUnitId);
         OnAdLoaded?.Invoke();
-
         if (_showOnLoadIfRequested)
         {
             ShowAd(_onClosedCallback);
@@ -133,15 +160,15 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     public void OnUnityAdsFailedToLoad(string adUnitId, UnityAdsLoadError error, string message)
     {
         if (!adUnitId.Equals(AdUnitId)) return;
-
         _isLoading = false;
         _isLoaded = false;
-        Debug.LogError($"[InterstitialAds] ❌ Failed to load Ad Unit {adUnitId}: {error} - {message}");
+        Debug.LogError($"[InterstitialAds] ❌ Failed to load Ad Unit {adUnitId}: {error} - {message}. TestMode: {_testMode}, Platform: {Application.platform}");
         OnAdFailedToLoad?.Invoke();
-
-        // auto-retry with exponential/backoff could be placed here
-        // for simplicity, schedule a reload after a short delay
-        Invoke(nameof(LoadAd), 5f);
+        // Exponential backoff retry: 5s, 10s, 20s, etc., cap at 60s
+        float retryDelay = Mathf.Min(5f * Mathf.Pow(2, _retryCount), 60f);
+        _retryCount++;
+        Debug.Log($"[InterstitialAds] Retrying load in {retryDelay} seconds.");
+        Invoke(nameof(LoadAd), retryDelay);
     }
     #endregion
 
@@ -149,15 +176,12 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message)
     {
         if (!adUnitId.Equals(AdUnitId)) return;
-
         Debug.LogError($"[InterstitialAds] ❌ Failed to show Ad {adUnitId}: {error} - {message}");
         OnAdFailedToShow?.Invoke();
-
         // ensure we attempt to reload for next time
         _isLoaded = false;
         _isLoading = false;
         Invoke(nameof(LoadAd), 2f);
-
         // call closure so gameplay can continue
         _onClosedCallback?.Invoke();
         _onClosedCallback = null;
@@ -180,15 +204,12 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
     {
         if (!adUnitId.Equals(AdUnitId)) return;
-
         // For interstitials we do NOT give rewards. Treat COMPLETED or SKIPPED as closed.
         Debug.Log($"[InterstitialAds] Ad show complete: {showCompletionState}");
-
         // reset and prepare next ad
         _isLoaded = false;
         _isLoading = false;
         Invoke(nameof(LoadAd), 1f); // preload next ad quickly
-
         // event & callback to resume game/flow
         OnAdClosed?.Invoke();
         _onClosedCallback?.Invoke();

@@ -37,6 +37,7 @@ public class UIManager : MonoBehaviour
     // Reference to HostageMouse (shown in Inspector)
     [Header("References")]
     public GameObject hostageMouse;
+    int nextSceneIndex;
 
     // public ShopManager shopManager;
 
@@ -58,13 +59,19 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject); 
+            Destroy(gameObject);
+        }
+        if (!PlayerPrefs.HasKey("CurrentLevel"))
+        {
+            PlayerPrefs.SetInt("CurrentLevel", 2);
         }
     }
 
     private void Start()
     {
         StartCoroutine(FindHostageMouse());
+        SceneManager.LoadScene(PlayerPrefs.GetInt("CurrentLevel"));
+
     }
 
     private IEnumerator FindHostageMouse()
@@ -134,6 +141,7 @@ public class UIManager : MonoBehaviour
 
     public void whenDragged() 
     {
+        //SceneManager.LoadScene(PlayerPrefs.GetInt("CurrentLevel"));
         gameplayPanel.SetActive(true);
         startPanel.SetActive(false);
         setGameState(true);
@@ -169,13 +177,16 @@ public class UIManager : MonoBehaviour
 
     public void NextLvlBtn()
     {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        int nextSceneIndex = currentSceneIndex + 1;
+        //int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        //int nextSceneIndex = currentSceneIndex + 1;
+        nextSceneIndex=PlayerPrefs.GetInt("CurrentLevel");
+        nextSceneIndex = nextSceneIndex + 1;
+        PlayerPrefs.SetInt("CurrentLevel", nextSceneIndex);
 
         // Optional: Check if the next scene exists
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
-            int lvlnumber = nextSceneIndex + 1;
+            int lvlnumber = PlayerPrefs.GetInt("CurrentLevel")-1;
             ShopManager.Instance.setLevel(lvlnumber);
             ShopManager.Instance.SetupShopItems();
 
