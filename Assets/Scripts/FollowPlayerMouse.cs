@@ -22,12 +22,25 @@ public class FollowPlayerMouse : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        agent.updateRotation = false; // We'll handle rotation manually
+        agent.updateRotation = false;
 
         allCats = FindObjectsOfType<CatAI>();
-        wall.GetComponent<NavMeshObstacle>().enabled = false;
-        //innerPortal = GameObject.FindGameObjectWithTag("inPortal");
+
+        if (wall == null) // in case you forgot to assign
+        {
+            wall = GameObject.FindGameObjectWithTag("Wall"); // make sure you set the tag in Inspector
+        }
+
+        if (wall != null)
+        {
+            wall.GetComponent<NavMeshObstacle>().enabled = false;
+        }
+        else
+        {
+            Debug.LogError("Wall not found! Assign it in Inspector or check tag.");
+        }
     }
+
 
     void Update()
     {
