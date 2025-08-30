@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -34,7 +34,12 @@ public class UIManager : MonoBehaviour
     public Button Reward1Button;
     public Button Reward2Button;
 
-   // public ShopManager shopManager;
+    // Reference to HostageMouse (shown in Inspector)
+    [Header("References")]
+    public GameObject hostageMouse;
+    int nextSceneIndex;
+
+    // public ShopManager shopManager;
 
     private Vector2[] positions = new Vector2[]
     {
@@ -54,16 +59,43 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject); // Avoid duplicates on scene load
+            Destroy(gameObject);
+        }
+        if (!PlayerPrefs.HasKey("CurrentLevel"))
+        {
+            PlayerPrefs.SetInt("CurrentLevel", 2);
         }
     }
 
     private void Start()
     {
-        GameObject mouse = GameObject.FindGameObjectWithTag("HostageMouse");
-        //Debug.Log("Hello:" + mouse);
-        mouse.GetComponent<FollowPlayerMouse>().touchCanvas.SetActive(false);
+        StartCoroutine(FindHostageMouse());
+        SceneManager.LoadScene(PlayerPrefs.GetInt("CurrentLevel"));
+
     }
+
+    private IEnumerator FindHostageMouse()
+    {
+
+        while (hostageMouse == null)
+        {
+            hostageMouse = GameObject.FindGameObjectWithTag("HostageMouse");
+            yield return null; 
+        }
+
+        Debug.Log("HostageMouse found and assigned in Inspector: " + hostageMouse.name);
+
+        FollowPlayerMouse fpm = hostageMouse.GetComponent<FollowPlayerMouse>();
+        if (fpm != null && fpm.touchCanvas != null)
+        {
+            fpm.touchCanvas.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("⚠️ FollowPlayerMouse or touchCanvas missing on HostageMouse.");
+        }
+    }
+
 
     public void ShowInitialPanel() //Call in start
     {
@@ -109,6 +141,7 @@ public class UIManager : MonoBehaviour
 
     public void whenDragged() 
     {
+        //SceneManager.LoadScene(PlayerPrefs.GetInt("CurrentLevel"));
         gameplayPanel.SetActive(true);
         startPanel.SetActive(false);
         setGameState(true);
@@ -144,13 +177,21 @@ public class UIManager : MonoBehaviour
 
     public void NextLvlBtn()
     {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        int nextSceneIndex = currentSceneIndex + 1;
+        //int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        //int nextSceneIndex = currentSceneIndex + 1;
+        nextSceneIndex=PlayerPrefs.GetInt("CurrentLevel");
+        
+        if (PlayerPrefs.GetInt("CurrentLevel") <= 8)
+        {
+        nextSceneIndex = nextSceneIndex + 1;
 
+        }
+        PlayerPrefs.SetInt("CurrentLevel", nextSceneIndex);
+        
         // Optional: Check if the next scene exists
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
-            int lvlnumber = nextSceneIndex + 1;
+            int lvlnumber = PlayerPrefs.GetInt("CurrentLevel")-1;
             ShopManager.Instance.setLevel(lvlnumber);
             ShopManager.Instance.SetupShopItems();
 
@@ -168,6 +209,11 @@ public class UIManager : MonoBehaviour
         {
             Debug.Log("No more levels! Looping back to first level or show GameComplete screen.");
             SceneManager.LoadScene(0); // Or load a "GameComplete" scene
+        }
+
+        if (PlayerPrefs.GetInt("CurrentLevel") > 8)
+        {
+            PlayerPrefs.SetInt("CurrentLevel", 2);
         }
     }
 

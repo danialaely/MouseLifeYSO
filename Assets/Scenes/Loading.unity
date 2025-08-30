@@ -3388,6 +3388,7 @@ MonoBehaviour:
   OnAdClosed:
     m_PersistentCalls:
       m_Calls: []
+  loadingPanel: {fileID: 2144990086}
 --- !u!1 &299095468
 GameObject:
   m_ObjectHideFlags: 0
@@ -12932,6 +12933,7 @@ MonoBehaviour:
   normalColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   Reward1Button: {fileID: 403644418}
   Reward2Button: {fileID: 1391645874}
+  hostageMouse: {fileID: 0}
   currentTry: 0
 --- !u!1 &1099098429
 GameObject:
@@ -26172,7 +26174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2125712589
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26305,7 +26307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2144990087
 RectTransform:
   m_ObjectHideFlags: 0

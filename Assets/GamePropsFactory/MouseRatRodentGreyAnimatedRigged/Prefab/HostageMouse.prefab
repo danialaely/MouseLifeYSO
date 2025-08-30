@@ -13179,7 +13179,7 @@ GameObject:
   - component: {fileID: 8073276778257987299}
   - component: {fileID: 7172130848658173205}
   m_Layer: 0
-  m_Name: CageMouse
+  m_Name: HostageMouse
   m_TagString: HostageMouse
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

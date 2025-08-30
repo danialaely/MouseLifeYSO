@@ -57,15 +57,17 @@ public class SkinsManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log($"[SkinsManager] Scene loaded: {scene.name}, updating extraObjects references");
-        StartCoroutine(UpdateExtraObjectReferencesDelayed(scene));
+        StartCoroutine(UpdateExtraObjectReferencesDelayed());
     }
 
-    private IEnumerator UpdateExtraObjectReferencesDelayed(Scene targetScene)
+
+    private IEnumerator UpdateExtraObjectReferencesDelayed()
     {
         yield return new WaitForEndOfFrame();
-        
+
+        Scene targetScene = SceneManager.GetActiveScene();
         UpdateExtraObjectReferences(targetScene);
-        
+
         if (!string.IsNullOrEmpty(selectedSkinId))
         {
             Skin selectedSkin = GetSkin(selectedSkinId);
@@ -75,6 +77,7 @@ public class SkinsManager : MonoBehaviour
             }
         }
     }
+
 
     private void UpdateExtraObjectReferences(Scene targetScene)
     {
