@@ -180,9 +180,14 @@ public class UIManager : MonoBehaviour
         //int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         //int nextSceneIndex = currentSceneIndex + 1;
         nextSceneIndex=PlayerPrefs.GetInt("CurrentLevel");
+        
+        if (PlayerPrefs.GetInt("CurrentLevel") <= 8)
+        {
         nextSceneIndex = nextSceneIndex + 1;
-        PlayerPrefs.SetInt("CurrentLevel", nextSceneIndex);
 
+        }
+        PlayerPrefs.SetInt("CurrentLevel", nextSceneIndex);
+        
         // Optional: Check if the next scene exists
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
@@ -204,6 +209,11 @@ public class UIManager : MonoBehaviour
         {
             Debug.Log("No more levels! Looping back to first level or show GameComplete screen.");
             SceneManager.LoadScene(0); // Or load a "GameComplete" scene
+        }
+
+        if (PlayerPrefs.GetInt("CurrentLevel") > 8)
+        {
+            PlayerPrefs.SetInt("CurrentLevel", 2);
         }
     }
 
