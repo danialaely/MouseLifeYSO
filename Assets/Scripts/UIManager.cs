@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -34,7 +34,11 @@ public class UIManager : MonoBehaviour
     public Button Reward1Button;
     public Button Reward2Button;
 
-   // public ShopManager shopManager;
+    // Reference to HostageMouse (shown in Inspector)
+    [Header("References")]
+    public GameObject hostageMouse;
+
+    // public ShopManager shopManager;
 
     private Vector2[] positions = new Vector2[]
     {
@@ -54,16 +58,37 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject); // Avoid duplicates on scene load
+            Destroy(gameObject); 
         }
     }
 
     private void Start()
     {
-        GameObject mouse = GameObject.FindGameObjectWithTag("HostageMouse");
-        //Debug.Log("Hello:" + mouse);
-        mouse.GetComponent<FollowPlayerMouse>().touchCanvas.SetActive(false);
+        StartCoroutine(FindHostageMouse());
     }
+
+    private IEnumerator FindHostageMouse()
+    {
+
+        while (hostageMouse == null)
+        {
+            hostageMouse = GameObject.FindGameObjectWithTag("HostageMouse");
+            yield return null; 
+        }
+
+        Debug.Log("HostageMouse found and assigned in Inspector: " + hostageMouse.name);
+
+        FollowPlayerMouse fpm = hostageMouse.GetComponent<FollowPlayerMouse>();
+        if (fpm != null && fpm.touchCanvas != null)
+        {
+            fpm.touchCanvas.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("⚠️ FollowPlayerMouse or touchCanvas missing on HostageMouse.");
+        }
+    }
+
 
     public void ShowInitialPanel() //Call in start
     {

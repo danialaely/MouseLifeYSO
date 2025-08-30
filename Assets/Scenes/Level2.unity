@@ -17187,7 +17187,7 @@ PrefabInstance:
       objectReference: {fileID: 1908766772}
     - target: {fileID: 4598064030107190380, guid: 1200bbb56323d614c8744424d4404e89, type: 3}
       propertyPath: m_Name
-      value: CageMouse
+      value: HostageMouse
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
