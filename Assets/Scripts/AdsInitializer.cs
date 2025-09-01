@@ -4,8 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
 {
-    [SerializeField] string _androidGameId;
-    [SerializeField] string _iOSGameId;
+
+    public static AdsInitializer INSTANCE {  get; private protected set; }
+
+    [SerializeField] string _androidGameId = "1401815";
+    [SerializeField] string _iOSGameId = "1401814";
     [SerializeField] bool _testMode = true;
     private string _gameId;
     [SerializeField] RewardedAds _rewardedAds;
@@ -14,12 +17,14 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
 
     void Awake()
     {
-        // Prevent duplicates and persist this object
-        if (FindObjectsOfType<AdsInitializer>().Length > 1)
+        if (INSTANCE != null)
         {
+            Debug.Log("[AdsInitializer] Duplicate instance destroyed");
             Destroy(gameObject);
             return;
         }
+
+        INSTANCE = this;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -63,7 +68,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
         // Pre-load your rewarded ads
         _rewardedAds?.LoadAd();
         _rewardedAds2?.LoadAd();
-        loadingPanel.SetActive(false);
+        //loadingPanel.SetActive(false);
         //SceneManager.LoadScene("Level2");
     }
 
@@ -71,7 +76,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     {
         Debug.LogError($"[AdsInitializer] Unity Ads Initialization Failed: {error} - {message}. Proceeding without ads.");
         // Proceed to load scene to prevent app from being stuck
-        loadingPanel.SetActive(false);
+        //loadingPanel.SetActive(false);
         //SceneManager.LoadScene("Level2");
     }
 }
