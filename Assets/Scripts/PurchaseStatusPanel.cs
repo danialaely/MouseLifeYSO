@@ -16,12 +16,14 @@ public class PurchaseStatusPanel : MonoBehaviour
     public Sprite successBg;
     public Sprite failedBg;
 
+    private GameObject panel;
+
     public static PurchaseStatusPanel INSTANCE { get; protected private set; }
 
     private void Awake()
-    {
+    {      
         INSTANCE = this;
-        gameObject.SetActive(false);
+        panel = transform.GetChild(0).gameObject;
     }
 
     public void Show(Sprite sprite, string text, bool status)
@@ -41,11 +43,11 @@ public class PurchaseStatusPanel : MonoBehaviour
 
         itemIcon.sprite = sprite;
         itemText.text = text;
-        gameObject.SetActive(true);
+        panel.SetActive(true);
     }
 
     public void Close()
     {
-        gameObject.SetActive(false);
+        panel.SetActive(false);
     }
 }

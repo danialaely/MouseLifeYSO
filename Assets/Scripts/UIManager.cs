@@ -111,30 +111,26 @@ public class UIManager : MonoBehaviour
     {
         levelCompletedPanel.SetActive(true);
 
-        currentTry++;
-
-        Reward1Button.interactable = true;
-        Reward2Button.interactable = true;
-
-        if (currentTry >= 3)
-        {
-            InterstitialAds.Instance.ShowAd();
-            currentTry = 0;
-        }
+        TryShowAd();
     }
 
     public void ShowLevelFailed()   //Cat collides with Player
     {
         levelFailedPanel.SetActive(true);
 
-        currentTry++;
+        TryShowAd();
+    }
 
+    public void TryShowAd()
+    {
         Reward1Button.interactable = true;
         Reward2Button.interactable = true;
 
+        currentTry++;
+
         if (currentTry >= 3)
         {
-            InterstitialAds.Instance.ShowAd();
+            InterstitialAds.Instance.ShowOrLoadAd();
             currentTry = 0;
         }
     }

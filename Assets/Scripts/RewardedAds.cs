@@ -1,20 +1,67 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.UI;
 
 public class RewardedAds : MonoBehaviour, IUnityAdsShowListener, IUnityAdsLoadListener
 {
-    [SerializeField] string _adUnitId = "Rewarded_Android";
+    [Header("Ad Unit Configuration")]
+    [SerializeField] string _androidAdUnitId = "Rewarded_Android";
+    [SerializeField] string _iOSAdUnitId = "Rewarded_iOS";
+    [Header("Settings")]
+    [SerializeField] bool _testMode = true;
+    
+    string AdUnitId => Application.platform == RuntimePlatform.IPhonePlayer ? _iOSAdUnitId : _androidAdUnitId;
     private bool isAdReady = false;
+
+    public bool OnAdLoaded;
 
     void Start()
     {
         LoadAd();
     }
 
+
+    public void ShowOrLoadAd() => StartCoroutine(IEShowOrLoadAd());
+
+
+    public IEnumerator IEShowOrLoadAd()
+    {
+
+        if (!isAdReady)
+        {
+            LoadingPanel.INSTANCE.Show();
+
+            OnAdLoaded = false;
+            LoadAd();
+            yield return new WaitUntil(() => OnAdLoaded == true);   
+
+            if (!isAdReady)
+            {
+                Debug.LogError("Ad Unable To Load!");
+                LoadingPanel.INSTANCE.Hide();
+            }
+            else
+            {
+                ShowAd();
+                LoadingPanel.INSTANCE.Hide();
+            }
+        }
+        else
+        {
+            yield return StartCoroutine(LoadingPanel.INSTANCE.ShowLoading(2f));
+            ShowAd();
+        }
+
+        
+    }
+
+
     public void LoadAd()
     {
-        Advertisement.Load(_adUnitId, this);
+        Debug.Log($"[RewardedAds] Loading ad: {AdUnitId}, Test Mode: {_testMode}, Platform: {Application.platform}");
+        Advertisement.Load(AdUnitId, this);
     }
 
     public void ShowAd()
@@ -23,7 +70,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsShowListener, IUnityAdsLoadLi
 
         if (isAdReady)
         {
-            Advertisement.Show(_adUnitId, this);
+            Advertisement.Show(AdUnitId, this);
             Debug.Log("Showing Ad");
             GetComponent<Button>().interactable = false;
         }
@@ -35,16 +82,22 @@ public class RewardedAds : MonoBehaviour, IUnityAdsShowListener, IUnityAdsLoadLi
 
     public void OnUnityAdsAdLoaded(string adUnitId)
     {
-        if (adUnitId.Equals(_adUnitId))
+        if (adUnitId.Equals(AdUnitId))
         {
             isAdReady = true;
             Debug.Log("✅ Ad is ready");
         }
+        else
+        {
+            isAdReady = false;
+        }
+
+        OnAdLoaded = true;
     }
 
     public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
     {
-        if (adUnitId.Equals(_adUnitId) && showCompletionState == UnityAdsShowCompletionState.COMPLETED)
+        if (adUnitId.Equals(AdUnitId) && showCompletionState == UnityAdsShowCompletionState.COMPLETED)
         {
             Debug.Log("🎁 Ad Completed Successfully — Give Reward Here");
             if (gameObject.name == "rewardBtn")
@@ -66,8 +119,9 @@ public class RewardedAds : MonoBehaviour, IUnityAdsShowListener, IUnityAdsLoadLi
 
     public void OnUnityAdsFailedToLoad(string adUnitId, UnityAdsLoadError error, string message)
     {
-        Debug.LogError($"❌ Failed to load Ad Unit {adUnitId}: {error} - {message}");
+        Debug.LogError($"❌ Failed to load Ad Unit {adUnitId}: {error} - {message}. Test Mode: {_testMode}, Platform: {Application.platform}");
         isAdReady = false;
+        OnAdLoaded = true;
     }
 
     public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message)
