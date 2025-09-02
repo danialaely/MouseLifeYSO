@@ -29,7 +29,6 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     float _loadStartTime;
     Action _onClosedCallback; // optional callback caller can provide to resume gameplay
     private int _retryCount = 0; // For exponential backoff
-    [SerializeField] GameObject loadingPanel;
 
     void Awake()
     {
@@ -73,7 +72,6 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
             yield return null;
         }
         Debug.Log("[InterstitialAds] Unity Ads initialized. Proceeding to load ad.");
-        loadingPanel.SetActive(false);
         LoadAd();
     }
 
@@ -86,6 +84,39 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
             _isLoading = false;
             _isLoaded = false;
             OnUnityAdsFailedToLoad(AdUnitId, UnityAdsLoadError.NO_FILL, "Load timeout");
+        }
+    }
+
+    public void ShowOrLoadAd() => StartCoroutine(IEShowOrLoadAd());
+
+    public IEnumerator IEShowOrLoadAd()
+    {
+        LoadingPanel.INSTANCE.Show(2f);
+
+        if (!_isLoaded)
+        {
+            LoadingPanel.INSTANCE.Show();
+
+            LoadAd();
+            yield return new WaitUntil(() => _isLoading == false);
+
+            
+
+            if (!_isLoaded)
+            {
+                Debug.LogError("Ad Unable To Load!");
+                LoadingPanel.INSTANCE.Hide();
+            }
+            else
+            {
+                ShowAd();
+                LoadingPanel.INSTANCE.Hide();
+            }
+        }
+        else
+        {
+            yield return StartCoroutine(LoadingPanel.INSTANCE.ShowLoading(2f));
+            ShowAd();
         }
     }
 
