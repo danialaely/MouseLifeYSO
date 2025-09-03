@@ -7,18 +7,31 @@ using UnityEngine.UI;
 public class RewardedAds : MonoBehaviour, IUnityAdsShowListener, IUnityAdsLoadListener
 {
     [Header("Ad Unit Configuration")]
-    [SerializeField] string _androidAdUnitId = "Rewarded_Android";
-    [SerializeField] string _iOSAdUnitId = "Rewarded_iOS";
+    [SerializeField] string _androidProdId = "Rewarded_Android";
+    [SerializeField] string _iOSProdId = "Rewarded_iOS";
+    private const string TEST_REWARDED = "rewardedVideo";
     [Header("Settings")]
     [SerializeField] bool _testMode = true;
-    
-    string AdUnitId => Application.platform == RuntimePlatform.IPhonePlayer ? _iOSAdUnitId : _androidAdUnitId;
+
+    string AdUnitId; /*=> Application.platform == RuntimePlatform.IPhonePlayer ? _iOSAdUnitId : _androidAdUnitId;*/
     private bool isAdReady = false;
 
     public bool OnAdLoaded;
+    private void Awake()
+    {
+
+    }
 
     void Start()
     {
+#if UNITY_IOS
+        AdUnitId = AdsInitializer.INSTANCE._testMode ? TEST_REWARDED : _iOSProdId;
+#elif UNITY_ANDROID
+        AdUnitId = AdsInitializer.INSTANCE._testMode ? TEST_REWARDED : _androidProdId;
+#elif UNITY_EDITOR
+        // Use Android path for Editor
+       AdUnitId = AdsInitializer.INSTANCE._testMode ? TEST_REWARDED : _androidProdId;
+#endif
         LoadAd();
     }
 
@@ -115,6 +128,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsShowListener, IUnityAdsLoadLi
                 Debug.Log("✅ 50 Gems Added");
             }
         }
+        LoadAd();
     }
 
     public void OnUnityAdsFailedToLoad(string adUnitId, UnityAdsLoadError error, string message)
