@@ -10,6 +10,7 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     [Header("Ad Unit IDs (set per-platform)")]
     [SerializeField] string _androidAdUnitId = "Interstitial_Android";
     [SerializeField] string _iOSAdUnitId = "Interstitial_iOS";
+    string Interstetial_test_id = "video";
     [Header("Behaviour")]
     [SerializeField] bool _autoLoadOnStart = true;
     [SerializeField] float _loadTimeoutSeconds = 15f; // Increased for more grace time
@@ -23,7 +24,7 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     public UnityEvent OnAdClosed; // called after show completes or is skipped
     // singleton for convenience
     public static InterstitialAds Instance { get; private set; }
-    string AdUnitId => Application.platform == RuntimePlatform.IPhonePlayer ? _iOSAdUnitId : _androidAdUnitId;
+    string AdUnitId; /*=> Application.platform == RuntimePlatform.IPhonePlayer ? _iOSAdUnitId : _androidAdUnitId;*/
     bool _isLoaded;
     bool _isLoading;
     float _loadStartTime;
@@ -39,10 +40,19 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
     }
 
     void Start()
     {
+#if UNITY_IOS
+        AdUnitId = AdsInitializer.INSTANCE._testMode ?Interstetial_test_id: _iOSAdUnitId ;
+#elif UNITY_ANDROID
+        AdUnitId = AdsInitializer.INSTANCE._testMode ? Interstetial_test_id : _androidAdUnitId;
+#elif UNITY_EDITOR
+        // Use Android path for Editor
+       AdUnitId = AdsInitializer.INSTANCE._testMode ? Interstetial_test_id: _androidAdUnitId ;
+#endif
         // Initialize Unity Ads if not already
         if (!Advertisement.isInitialized)
         {

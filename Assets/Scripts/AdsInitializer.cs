@@ -9,7 +9,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
 
     [SerializeField] string _androidGameId = "1401815";
     [SerializeField] string _iOSGameId = "1401814";
-    [SerializeField] bool _testMode = true;
+    public bool _testMode = true;
     private string _gameId;
     [SerializeField] RewardedAds _rewardedAds;
     [SerializeField] RewardedAds _rewardedAds2;
@@ -30,6 +30,11 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
 
     private void Start()
     {
+        if (_testMode)
+        {
+            _androidGameId = "14851";
+         _iOSGameId = "14850";
+        }
         InitializeAds();
     }
 
