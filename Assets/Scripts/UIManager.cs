@@ -127,11 +127,12 @@ public class UIManager : MonoBehaviour
         Reward2Button.interactable = true;
 
         currentTry++;
-
-        if (currentTry >= 3)
+        Debug.Log("Current try" + currentTry);
+        if (currentTry == 3)
         {
             InterstitialAds.Instance.ShowOrLoadAd();
             currentTry = 0;
+
         }
     }
 
