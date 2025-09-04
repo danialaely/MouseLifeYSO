@@ -45,7 +45,11 @@
       "source": "builtin",
       "dependencies": {
         "com.unity.ide.visualstudio": "2.0.22",
+<<<<<<< Updated upstream
         "com.unity.ide.rider": "3.0.31",
+=======
+        "com.unity.ide.rider": "3.0.36",
+>>>>>>> Stashed changes
         "com.unity.editorcoroutines": "1.0.0",
         "com.unity.performance.profile-analyzer": "1.2.3",
         "com.unity.test-framework": "1.4.6",
@@ -153,6 +157,17 @@
       },
       "url": "https://packages.unity.com"
     },
+<<<<<<< Updated upstream
+=======
+    "com.unity.textmeshpro": {
+      "version": "5.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.ugui": "2.0.0"
+      }
+    },
+>>>>>>> Stashed changes
     "com.unity.timeline": {
       "version": "1.8.7",
       "depth": 0,
