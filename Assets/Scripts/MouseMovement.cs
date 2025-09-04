@@ -571,7 +571,7 @@ public class MouseMovement : MonoBehaviour
             //catRB.isKinematic = false;
 
             currentWeapon = null;
-            //useBtn.SetActive(false);
+            useBtn.SetActive(false);
             UIManager.Instance.DeactiveWeaponBtn();
         }
         else if (currentWeapon != null && currentWeapon.name == "Pistol_3(Clone)")
@@ -584,6 +584,7 @@ public class MouseMovement : MonoBehaviour
             AudioManager.instance.PlaySFX("Bullet2");
             // currentWeapon = null;
             useBtn.SetActive(false);
+            UIManager.Instance.DeactiveWeaponBtn();
             StartCoroutine(DeactiveGun(2.0f));
 
             bullet.transform.localPosition = Vector3.zero;
