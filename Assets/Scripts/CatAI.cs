@@ -411,11 +411,12 @@ public class CatAI : MonoBehaviour
         yield return new WaitForSeconds(del);
         AudioManager.instance.StopSFX();
     }
-
+    bool isCollided = false;
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player")&& isCollided==false)
         {
+            isCollided = true;
             NavMeshAgent mouseAgent = hMouse.GetComponent<NavMeshAgent>();
             mouseAgent.isStopped = true;
             Debug.Log("Level Failed!");
