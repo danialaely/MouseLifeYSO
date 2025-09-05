@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     [Header("Texts")]
     public TMP_Text lvlTxt;
     public TMP_Text lvlTxt2;
+    public TMP_Text storeHeadingTxt;
 
     private bool gameStarted = false;
    // public Button useButton;
@@ -271,21 +272,24 @@ public class UIManager : MonoBehaviour
     }
 
     public void BtnOne()
-    {
+    { 
         HighlightButton(0);
         StartCoroutine(ScrollToPosition(positions[0]));
+        storeHeadingTxt.text = "Skins";
     }
 
     public void BtnTwo()
     {
         HighlightButton(1);
         StartCoroutine(ScrollToPosition(positions[1]));
+        storeHeadingTxt.text = "Weapons";
     }
 
     public void BtnThree()
     {
         HighlightButton(2);
         StartCoroutine(ScrollToPosition(positions[2]));
+        storeHeadingTxt.text = "Gadgets";
     }
 
     private IEnumerator ScrollToPosition(Vector2 target)

@@ -116,7 +116,7 @@ public class Grenade : MonoBehaviour
                 catRB = collision.gameObject.GetComponent<Rigidbody>();
                 AudioManager.instance.PlaySFX("Banana2");
                 Slip();
-                Destroy(this.gameObject);
+                //Destroy(this.gameObject);
             }
             else if (this.gameObject.CompareTag("Pistol")) 
             {
