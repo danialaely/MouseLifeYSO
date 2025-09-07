@@ -195,6 +195,7 @@ public class MouseMovement : MonoBehaviour
         mousetrapped = false;
         cagemouseAnim.enabled = false;
         wallrotation = false;
+        UIManager.Instance.DeactiveWeaponBtn();
 
         if (cageSlider != null)
         {
@@ -276,7 +277,9 @@ public class MouseMovement : MonoBehaviour
             Debug.Log("Cheese Collected: " + cheeseCount);
 
             // Spawn gift on reaching milestones: 4, 8, 12, 16...
-            if (cheeseCount % maxCheese == 0)
+            // Only allow gift spawn after Level 6
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            if (cheeseCount % maxCheese == 0 && currentSceneIndex > 2)
             {
                 SpawnGift();
             }

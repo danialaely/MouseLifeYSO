@@ -207,6 +207,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1638951406}
     - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: useBtn
+      value: 
+      objectReference: {fileID: 213196527}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
       propertyPath: cageCol
       value: 
       objectReference: {fileID: 1082781138}
@@ -1136,11 +1140,17 @@ PrefabInstance:
       propertyPath: touchCanvas
       value: 
       objectReference: {fileID: 1322779126}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 871441811304509710, guid: 82f70c7790656d849adc17ccd8c067df, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82f70c7790656d849adc17ccd8c067df, type: 3}
+--- !u!1 &213196527 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1865022591899875407, guid: 82f70c7790656d849adc17ccd8c067df, type: 3}
+  m_PrefabInstance: {fileID: 213196526}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &259987061
 GameObject:
   m_ObjectHideFlags: 0
@@ -7019,7 +7029,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1322779127
 MonoBehaviour:
   m_ObjectHideFlags: 0

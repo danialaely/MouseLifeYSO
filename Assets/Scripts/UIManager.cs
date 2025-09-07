@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public GameObject levelFailedPanel;
     public GameObject storePanel;
     public GameObject currencyPanel;
+    public GameObject WeaponUnlockedPanel;
 
     [Header("Texts")]
     public TMP_Text lvlTxt;
@@ -41,6 +42,16 @@ public class UIManager : MonoBehaviour
     int nextSceneIndex;
 
     // public ShopManager shopManager;
+    public GameObject BananaPrefab;
+    public GameObject DynamitePrefab;
+    public GameObject PistolPrefab;
+    public GameObject MinePrefab;
+
+
+    public GameObject BananaPreview;
+    public GameObject DynamitePreview;
+    public GameObject PistolPreview;
+    public GameObject MinePreview;
 
     private Vector2[] positions = new Vector2[]
     {
@@ -112,7 +123,42 @@ public class UIManager : MonoBehaviour
     {
         levelCompletedPanel.SetActive(true);
 
+        int level = PlayerPrefs.GetInt("CurrentLevel");
+        if (level == 2)
+        {
+            WeaponUnlockedPanel.SetActive(true);
+            BananaPreview.SetActive(true);
+            GameData.unlockedWeapons.Add(BananaPrefab);
+        }
+        else if (level == 4)
+        {
+            WeaponUnlockedPanel.SetActive(true);
+            DynamitePreview.SetActive(true);
+            GameData.unlockedWeapons.Add(DynamitePrefab);
+        }
+        else if (level == 5)
+        {
+            WeaponUnlockedPanel.SetActive(true);
+            PistolPreview.SetActive(true);
+            GameData.unlockedWeapons.Add(PistolPrefab);
+        }
+        else if (level == 6)
+        {
+            WeaponUnlockedPanel.SetActive(true);
+            MinePreview.SetActive(true);
+            GameData.unlockedWeapons.Add(MinePrefab);
+        }
+
         TryShowAd();
+    }
+
+    public void ClaimWeaponBtn() 
+    {
+        WeaponUnlockedPanel.SetActive(false);
+        BananaPreview.SetActive(false);
+        DynamitePreview.SetActive(false);
+        PistolPreview.SetActive(false);
+        MinePreview.SetActive(false);
     }
 
     public void ShowLevelFailed()   //Cat collides with Player
@@ -213,6 +259,7 @@ public class UIManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("CurrentLevel", 2);
         }
+
     }
 
     public void ActiveWeaponBtn() 
