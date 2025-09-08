@@ -576,6 +576,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1709014346}
     - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: weaponPrefabs.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
       propertyPath: giftSpawnPositions.Array.size
       value: 4
       objectReference: {fileID: 0}
