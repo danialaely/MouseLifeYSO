@@ -1782,7 +1782,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 41b648158f2257644a247293615990a7, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: ed93f34b8ebf27e499353b24f5af3998, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &259987063
 Transform:
@@ -3828,8 +3828,8 @@ Transform:
   m_GameObject: {fileID: 510336173}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.05, y: 0.56, z: -8.56}
-  m_LocalScale: {x: 0.63, y: 1, z: 2.57}
+  m_LocalPosition: {x: -1.8105, y: 0.56, z: -8.56}
+  m_LocalScale: {x: 1.108989, y: 1, z: 2.57}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -5515,8 +5515,8 @@ Transform:
   m_GameObject: {fileID: 732356547}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 3.19, y: -13.9192, z: 8.5117}
-  m_LocalScale: {x: 22.736454, y: 4.2652, z: 0.5}
+  m_LocalPosition: {x: 3.4765, y: -13.9192, z: 7.798}
+  m_LocalScale: {x: 24.164305, y: 4.2652, z: 1.07295}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 400570459}
@@ -8478,8 +8478,8 @@ Transform:
   m_GameObject: {fileID: 1169999272}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -11.67, y: -13.9192, z: 8.527}
-  m_LocalScale: {x: 22.536175, y: 4.2652, z: 0.5}
+  m_LocalPosition: {x: -12.1592, y: -13.9192, z: 8.0011}
+  m_LocalScale: {x: 23.852152, y: 4.2652, z: 1.47845}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 400570459}
@@ -12614,8 +12614,8 @@ MonoBehaviour:
   - {fileID: 774571368}
   mouse: {fileID: 19505919}
   hostageMouse: {fileID: 1865022591910419231}
-  sightRange: 5
-  chaseSpeed: 7
+  sightRange: 5.5
+  chaseSpeed: 7.5
   patrolSpeed: 3.5
   retryPanel: {fileID: 169428316}
   BoomParticleEffect: {fileID: 1531178227}
@@ -12626,7 +12626,7 @@ MonoBehaviour:
     m_Bits: 64
   mouseAnim: {fileID: 526912434}
   questionMarkPanel: {fileID: 700583312}
-  detectionRadius: 1.2
+  detectionRadius: 1.5
   lockDistance: 0.5
   catHealth: 0
   catHealthSlider: {fileID: 1050210704}
@@ -12862,13 +12862,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1667355170}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -5.1764, y: -14.4793, z: 21.21}
-  m_LocalScale: {x: 0.54585, y: 2.0786, z: 5.279993}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.13, y: -14.4793, z: 6.8724}
+  m_LocalScale: {x: 0.54585, y: 2.0786, z: 4.3950663}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 400570459}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!208 &1667355172
 NavMeshObstacle:
   m_ObjectHideFlags: 0
