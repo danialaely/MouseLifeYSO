@@ -249,7 +249,7 @@ PrefabInstance:
     - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
       propertyPath: cagemouseAnim
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 213196528}
     - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
       propertyPath: dummyJoystick
       value: 
@@ -1149,6 +1149,11 @@ PrefabInstance:
 --- !u!1 &213196527 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1865022591899875407, guid: 82f70c7790656d849adc17ccd8c067df, type: 3}
+  m_PrefabInstance: {fileID: 213196526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &213196528 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2689725644783038096, guid: 82f70c7790656d849adc17ccd8c067df, type: 3}
   m_PrefabInstance: {fileID: 213196526}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &259987061
