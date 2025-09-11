@@ -309,7 +309,7 @@ public class MouseMovement : MonoBehaviour
                     int randomIndex = Random.Range(0, weaponPrefabs.Count);
 
                     // Instantiate weapon normally if it's NOT pistol_3
-                    if (randomIndex != 3)
+                    if (randomIndex != 2)
                     {
                         Debug.Log("Random Index: " + randomIndex);
                         newWeapon = Instantiate(weaponPrefabs[randomIndex], targetChild.position, Quaternion.identity);

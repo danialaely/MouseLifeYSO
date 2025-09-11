@@ -395,7 +395,8 @@ public class CatAI : MonoBehaviour
             float waitTime = Random.Range(5f, 10f);
             yield return new WaitForSeconds(waitTime);
 
-            if (isPatrolling) // Check again in case patrol stopped during wait
+            int level = PlayerPrefs.GetInt("CurrentLevel");
+            if (isPatrolling && UIManager.Instance.GetGameState() == true && level >= 5) // Check again in case patrol stopped during wait
             {
                 //Vector3 trapPos = transform.position;
                 //trapPos.y = 0.1f; // Optional: adjust height if needed
