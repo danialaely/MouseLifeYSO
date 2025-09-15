@@ -1351,6 +1351,11 @@ MonoBehaviour:
   wallrotation: 0
   Joystick: {fileID: 1478118370}
   dummyJoystick: {fileID: 1447428125}
+  keyHolder: {fileID: 0}
+  doorPivot: {fileID: 0}
+  keyPE: {fileID: 0}
+  rotationAngle: 90
+  rotDoorSpeed: 2
 --- !u!4 &125532969 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1865022591899706479, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
