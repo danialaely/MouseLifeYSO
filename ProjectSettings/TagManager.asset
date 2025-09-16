@@ -29,6 +29,7 @@ TagManager:
   - touchCanvas
   - DoorColl
   - keyColl
+  - Lever
   layers:
   - Default
   - TransparentFX

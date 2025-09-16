@@ -106,6 +106,13 @@ public class MouseMovement : MonoBehaviour
     private Quaternion openRotation;
     private Coroutine rotateCoroutine;
 
+    public GameObject grill1;
+    public GameObject grill2;
+    public GameObject grill3;
+    public GameObject leverHandle;
+
+    private bool leverPulled = false;
+
     private void OnEnable()
     {
         EnhancedTouchSupport.Enable(); // starting with Unity 2022 this does not work! You need to attach a TouchSimulation.cs script to your player
@@ -492,6 +499,12 @@ public class MouseMovement : MonoBehaviour
             Destroy(keyHolder);
         }
 
+        if (other.CompareTag("Lever") && !leverPulled) // tag your lever collider as "Lever"
+        {
+            leverPulled = true;
+            StartCoroutine(PullLeverAndDropGrills());
+        }
+
         if (other.CompareTag("DoorColl") && keyCollected == true) 
         {
             // Open smoothly
@@ -517,6 +530,47 @@ public class MouseMovement : MonoBehaviour
             // Close smoothly
             if (rotateCoroutine != null) StopCoroutine(rotateCoroutine);
             rotateCoroutine = StartCoroutine(RotateDoor(originalRotation));
+        }
+    }
+
+    private IEnumerator PullLeverAndDropGrills()
+    {
+        // Rotate lever smoothly on X from 50 to -45
+        float duration = 1f; // smooth rotation time
+        float elapsed = 0f;
+
+        Quaternion startRot = leverHandle.transform.localRotation;
+        Quaternion targetRot = Quaternion.Euler(-45f, leverHandle.transform.localEulerAngles.y, leverHandle.transform.localEulerAngles.z);
+
+        while (elapsed < duration)
+        {
+            leverHandle.transform.localRotation = Quaternion.Slerp(startRot, targetRot, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        leverHandle.transform.localRotation = targetRot; // snap to final
+
+        // Activate gravity on grills
+        EnableGravity(grill1);
+        EnableGravity(grill2);
+        EnableGravity(grill3);
+
+        // Destroy after 2 seconds
+        Destroy(grill1, 2f);
+        Destroy(grill2, 2f);
+        Destroy(grill3, 2f);
+    }
+
+    private void EnableGravity(GameObject grill)
+    {
+        if (grill != null)
+        {
+            Rigidbody rb = grill.GetComponent<Rigidbody>();
+            if (rb != null) 
+            { 
+                rb.useGravity = true;
+                rb.isKinematic = false;
+            }
         }
     }
 
