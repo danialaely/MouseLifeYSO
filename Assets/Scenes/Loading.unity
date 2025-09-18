@@ -10208,6 +10208,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2182516959157863702, guid: b6edfd2b5590fac48b1ea6aac201a7fe, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2182516959157863702, guid: b6edfd2b5590fac48b1ea6aac201a7fe, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.018
       objectReference: {fileID: 0}
@@ -10245,6 +10249,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2182516959157863702, guid: b6edfd2b5590fac48b1ea6aac201a7fe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2182516959157863702, guid: b6edfd2b5590fac48b1ea6aac201a7fe, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -32222,6 +32230,7 @@ GameObject:
   - component: {fileID: 2144990087}
   - component: {fileID: 2144990089}
   - component: {fileID: 2144990088}
+  - component: {fileID: 2144990090}
   m_Layer: 5
   m_Name: LoadingPanel
   m_TagString: Untagged
@@ -32287,6 +32296,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144990086}
   m_CullTransparentMesh: 1
+--- !u!114 &2144990090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144990086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8278c739d3b4ce84bb27ffaeb58dee6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingText: {fileID: 1224795381}
+  dotSpeed: 0.5
 --- !u!65 &326657497628243982
 BoxCollider:
   m_ObjectHideFlags: 0

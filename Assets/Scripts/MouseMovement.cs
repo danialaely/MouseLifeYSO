@@ -566,10 +566,10 @@ public class MouseMovement : MonoBehaviour
         if (grill != null)
         {
             Rigidbody rb = grill.GetComponent<Rigidbody>();
+                rb.isKinematic = false;
+                rb.useGravity = true;
             if (rb != null) 
             { 
-                rb.useGravity = true;
-                rb.isKinematic = false;
             }
         }
     }
