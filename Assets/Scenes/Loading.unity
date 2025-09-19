@@ -6463,6 +6463,7 @@ MonoBehaviour:
   _iOSProdId: Rewarded_iOS
   _testMode: 1
   OnAdLoaded: 0
+  SpeedPE: {fileID: 3119582596686719139, guid: cee3cf1f03c6f0249a26ff3d158b118d, type: 3}
 --- !u!1 &413895215
 GameObject:
   m_ObjectHideFlags: 0
@@ -20118,6 +20119,7 @@ MonoBehaviour:
   _iOSProdId: Rewarded_iOS
   _testMode: 1
   OnAdLoaded: 0
+  SpeedPE: {fileID: 0}
 --- !u!1 &1400965691
 GameObject:
   m_ObjectHideFlags: 0
