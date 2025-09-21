@@ -92,6 +92,26 @@ public class MouseMovement : MonoBehaviour
 
     private Finger MovementFinger;
     private Vector2 MovementAmount;
+    
+    private bool keyCollected;
+    //public GameObject keyCol;
+    public GameObject keyHolder; //destroy when mouse collides with keyCollider
+    public Transform doorPivot;
+    public GameObject keyPE;
+
+    public float rotationAngle = 90f;   // How much to rotate
+    public float rotDoorSpeed = 2f;    // How fast to rotate
+
+    private Quaternion originalRotation;
+    private Quaternion openRotation;
+    private Coroutine rotateCoroutine;
+
+    public GameObject grill1;
+    public GameObject grill2;
+    public GameObject grill3;
+    public GameObject leverHandle;
+
+    private bool leverPulled = false;
 
     private void OnEnable()
     {
@@ -196,6 +216,7 @@ public class MouseMovement : MonoBehaviour
         cagemouseAnim.enabled = false;
         wallrotation = false;
         UIManager.Instance.DeactiveWeaponBtn();
+        keyCollected = false;
 
         if (cageSlider != null)
         {
@@ -209,6 +230,14 @@ public class MouseMovement : MonoBehaviour
             if (!weaponPrefabs.Contains(weapon))
                 weaponPrefabs.Add(weapon);
         }
+
+        // Store original & target rotations
+        if (doorPivot != null) 
+        {
+            originalRotation = doorPivot.rotation;
+            openRotation = doorPivot.rotation * Quaternion.Euler(0, -rotationAngle, 0);
+        }
+
     }
 
     void Update()
@@ -461,6 +490,27 @@ public class MouseMovement : MonoBehaviour
                 wallrotation = false;
             }
         }
+
+        if (other.CompareTag("keyColl")) 
+        {
+            keyCollected = true;
+            Destroy(keyPE);
+            Destroy(other.gameObject);
+            Destroy(keyHolder);
+        }
+
+        if (other.CompareTag("Lever") && !leverPulled) // tag your lever collider as "Lever"
+        {
+            leverPulled = true;
+            StartCoroutine(PullLeverAndDropGrills());
+        }
+
+        if (other.CompareTag("DoorColl") && keyCollected == true) 
+        {
+            // Open smoothly
+            if (rotateCoroutine != null) StopCoroutine(rotateCoroutine);
+            rotateCoroutine = StartCoroutine(RotateDoor(openRotation));
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -474,6 +524,66 @@ public class MouseMovement : MonoBehaviour
         {
             //wallToRotate.transform.GetChild(0).GetComponent<NavMeshObstacle>().enabled = true;
         }
+
+        if (other.CompareTag("DoorColl") && keyCollected == true)
+        {
+            // Close smoothly
+            if (rotateCoroutine != null) StopCoroutine(rotateCoroutine);
+            rotateCoroutine = StartCoroutine(RotateDoor(originalRotation));
+        }
+    }
+
+    private IEnumerator PullLeverAndDropGrills()
+    {
+        // Rotate lever smoothly on X from 50 to -45
+        float duration = 1f; // smooth rotation time
+        float elapsed = 0f;
+
+        Quaternion startRot = leverHandle.transform.localRotation;
+        Quaternion targetRot = Quaternion.Euler(-45f, leverHandle.transform.localEulerAngles.y, leverHandle.transform.localEulerAngles.z);
+
+        while (elapsed < duration)
+        {
+            leverHandle.transform.localRotation = Quaternion.Slerp(startRot, targetRot, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        leverHandle.transform.localRotation = targetRot; // snap to final
+
+        // Activate gravity on grills
+        EnableGravity(grill1);
+        EnableGravity(grill2);
+        EnableGravity(grill3);
+
+        // Destroy after 2 seconds
+        Destroy(grill1, 2f);
+        Destroy(grill2, 2f);
+        Destroy(grill3, 2f);
+    }
+
+    private void EnableGravity(GameObject grill)
+    {
+        if (grill != null)
+        {
+            Rigidbody rb = grill.GetComponent<Rigidbody>();
+                rb.isKinematic = false;
+                rb.useGravity = true;
+            if (rb != null) 
+            { 
+            }
+        }
+    }
+
+    IEnumerator RotateDoor(Quaternion targetRotation)
+    {
+        while (Quaternion.Angle(doorPivot.rotation, targetRotation) > 0.1f)
+        {
+            doorPivot.rotation = Quaternion.Slerp(doorPivot.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            yield return null;
+        }
+
+        // Snap exactly to target
+        doorPivot.rotation = targetRotation;
     }
 
     IEnumerator Teleport(float del)

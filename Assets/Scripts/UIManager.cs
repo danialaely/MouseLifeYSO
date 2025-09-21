@@ -225,7 +225,7 @@ public class UIManager : MonoBehaviour
         //int nextSceneIndex = currentSceneIndex + 1;
         nextSceneIndex=PlayerPrefs.GetInt("CurrentLevel");
         
-        if (PlayerPrefs.GetInt("CurrentLevel") <= 8)
+        if (PlayerPrefs.GetInt("CurrentLevel") <= 10)
         {
         nextSceneIndex = nextSceneIndex + 1;
 
@@ -255,7 +255,7 @@ public class UIManager : MonoBehaviour
             SceneManager.LoadScene(0); // Or load a "GameComplete" scene
         }
 
-        if (PlayerPrefs.GetInt("CurrentLevel") > 8)
+        if (PlayerPrefs.GetInt("CurrentLevel") > 10)
         {
             PlayerPrefs.SetInt("CurrentLevel", 2);
         }

@@ -27,6 +27,9 @@ TagManager:
   - Pistol
   - Dynamite
   - touchCanvas
+  - DoorColl
+  - keyColl
+  - Lever
   layers:
   - Default
   - TransparentFX

@@ -13,10 +13,13 @@ public class RewardedAds : MonoBehaviour, IUnityAdsShowListener, IUnityAdsLoadLi
     [Header("Settings")]
     [SerializeField] bool _testMode = true;
 
+    private ParticleSystem speedBoostPE;
+
     string AdUnitId; /*=> Application.platform == RuntimePlatform.IPhonePlayer ? _iOSAdUnitId : _androidAdUnitId;*/
     private bool isAdReady = false;
 
     public bool OnAdLoaded;
+
     private void Awake()
     {
 
@@ -120,6 +123,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsShowListener, IUnityAdsLoadLi
                 {
                     mouse.GetComponent<MouseMovement>().SpeedMove = 7.5f;
                     Debug.Log("✅ Speed Boost Applied");
+
                 }
             }
             else if (gameObject.name == "rewardBtn2")
