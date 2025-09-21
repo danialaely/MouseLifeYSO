@@ -1313,7 +1313,7 @@ MonoBehaviour:
   - {fileID: 9141661214742953279, guid: 3a47821fbfa4779418b4e01958c3247a, type: 3}
   currentWeapon: {fileID: 0}
   knob: {fileID: 796701672}
-  SpeedMove: 5
+  SpeedMove: 5.5
   rotationSpeed: 10
   hasthrown: 0
   giftCheeseInterval: 4
@@ -1432,7 +1432,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.9700003, y: 3.7800016}
+  m_AnchoredPosition: {x: -1.89, y: 6}
   m_SizeDelta: {x: 14.3347, y: 9.3194}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &127023776
@@ -13360,7 +13360,7 @@ Transform:
   m_GameObject: {fileID: 1344399212}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.500299, y: -15.02, z: 11.079201}
+  m_LocalPosition: {x: -1.1562994, y: -15.02, z: 15.075197}
   m_LocalScale: {x: 2.46454, y: 1, z: 2.4271817}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15469,7 +15469,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.92, y: 3.52}
+  m_AnchoredPosition: {x: -1.8399999, y: 5.7399983}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1459215382
