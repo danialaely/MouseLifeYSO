@@ -1138,7 +1138,7 @@ MonoBehaviour:
   weaponPrefabs: []
   currentWeapon: {fileID: 0}
   knob: {fileID: 2030111668}
-  SpeedMove: 5
+  SpeedMove: 5.4
   rotationSpeed: 10
   hasthrown: 0
   giftCheeseInterval: 4
