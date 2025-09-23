@@ -111,6 +111,8 @@ public class MouseMovement : MonoBehaviour
     public GameObject grill3;
     public GameObject leverHandle;
 
+    public GameObject doorLock;
+
     private bool leverPulled = false;
 
     private void OnEnable()
@@ -527,6 +529,9 @@ public class MouseMovement : MonoBehaviour
 
         if (other.CompareTag("DoorColl") && keyCollected == true)
         {
+            EnableLockGravity(doorLock);
+            Destroy(doorLock, 2f);
+
             // Close smoothly
             if (rotateCoroutine != null) StopCoroutine(rotateCoroutine);
             rotateCoroutine = StartCoroutine(RotateDoor(originalRotation));
@@ -570,6 +575,19 @@ public class MouseMovement : MonoBehaviour
                 rb.useGravity = true;
             if (rb != null) 
             { 
+            }
+        }
+    }
+
+    public void EnableLockGravity(GameObject grill)
+    {
+        if (grill != null)
+        {
+            Rigidbody rb = doorLock.GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            if (rb != null)
+            {
             }
         }
     }
