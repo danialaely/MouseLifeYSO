@@ -499,6 +499,9 @@ public class MouseMovement : MonoBehaviour
             Destroy(keyPE);
             Destroy(other.gameObject);
             Destroy(keyHolder);
+
+            EnableLockGravity(doorLock);
+            Destroy(doorLock, 2f);
         }
 
         if (other.CompareTag("Lever") && !leverPulled) // tag your lever collider as "Lever"
@@ -529,9 +532,6 @@ public class MouseMovement : MonoBehaviour
 
         if (other.CompareTag("DoorColl") && keyCollected == true)
         {
-            EnableLockGravity(doorLock);
-            Destroy(doorLock, 2f);
-
             // Close smoothly
             if (rotateCoroutine != null) StopCoroutine(rotateCoroutine);
             rotateCoroutine = StartCoroutine(RotateDoor(originalRotation));
