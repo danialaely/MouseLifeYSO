@@ -110,6 +110,7 @@ public class MouseMovement : MonoBehaviour
     public GameObject grill2;
     public GameObject grill3;
     public GameObject leverHandle;
+    public GameObject leverPE;
 
     public GameObject doorLock;
 
@@ -499,6 +500,7 @@ public class MouseMovement : MonoBehaviour
             Destroy(keyPE);
             Destroy(other.gameObject);
             Destroy(keyHolder);
+            UIManager.Instance.KeyCollectedSound();
 
             EnableLockGravity(doorLock);
             Destroy(doorLock, 2f);
@@ -508,6 +510,12 @@ public class MouseMovement : MonoBehaviour
         {
             leverPulled = true;
             StartCoroutine(PullLeverAndDropGrills());
+            UIManager.Instance.KeyCollectedSound();
+            
+            if (leverPE != null) 
+            {
+                Destroy(leverPE);
+            }
         }
 
         if (other.CompareTag("DoorColl") && keyCollected == true) 

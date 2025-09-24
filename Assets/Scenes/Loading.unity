@@ -3103,7 +3103,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 1feed20c4e803784288c78d7888af10a, type: 3}
   m_Resource: {fileID: 8300000, guid: 1feed20c4e803784288c78d7888af10a, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.36
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -5283,7 +5283,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1449200925}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1047081555}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: ToggleBtnClickedSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &354862305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5773,7 +5785,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 389765568}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1047081555}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: ToggleBtnClickedSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &380766876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9457,7 +9481,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 311797162}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1047081555}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: ToggleBtnClickedSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &597691869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18992,7 +19028,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1400965693}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1047081555}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: ToggleBtnClickedSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1267630120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21014,8 +21062,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicsounds:
-  - mName: 
-    clip: {fileID: 0}
+  - mName: Music
+    clip: {fileID: 8300000, guid: 1feed20c4e803784288c78d7888af10a, type: 3}
   sfxSounds:
   - mName: PickCheese
     clip: {fileID: 8300000, guid: c5e2a73ad4706440f93bf05df0b465fe, type: 3}
@@ -21061,6 +21109,14 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b8afc21ed8aff844cb5456f5560ec7df, type: 3}
   - mName: mouseTrap
     clip: {fileID: 8300000, guid: 0caa179a1d6ea17439b203f01b91d92f, type: 3}
+  - mName: key
+    clip: {fileID: 8300000, guid: af7437f7608f0234885d77024910159d, type: 3}
+  - mName: weaponUnlocked
+    clip: {fileID: 8300000, guid: 8d4c7a552b509194c8299ce0bdb448d8, type: 3}
+  - mName: toggleClicked
+    clip: {fileID: 8300000, guid: bf2a825f4b56d8d4f8bd055a779fff7e, type: 3}
+  - mName: normalBtn
+    clip: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
   creakingsounds:
   - mName: Creaking
     clip: {fileID: 8300000, guid: 02a4b74d43fe7a54e85a5eb389e1a6c0, type: 3}
@@ -31136,7 +31192,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1476564932}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1047081555}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: ToggleBtnClickedSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2062307180
 MonoBehaviour:
   m_ObjectHideFlags: 0

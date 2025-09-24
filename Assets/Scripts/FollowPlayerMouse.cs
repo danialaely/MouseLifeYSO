@@ -87,7 +87,9 @@ public class FollowPlayerMouse : MonoBehaviour
             confetti.gameObject.SetActive(true);
             confetti.Play();
             StartCoroutine(levelComp(1.0f));
-            AudioManager.instance.PlaySFX("LevelCompleted");
+            //AudioManager.instance.StopMusic();
+            //AudioManager.instance.PlayMusic();
+            AudioManager.instance.PlaySFX("LevelCompleted3");
             touchCanvas.SetActive(false);
             playerMouse.gameObject.GetComponent<MouseMovement>().dummyJoystick.SetActive(false);
             // Loop through and stop their agents

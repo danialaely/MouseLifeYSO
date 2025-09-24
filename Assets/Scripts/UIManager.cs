@@ -129,6 +129,7 @@ public class UIManager : MonoBehaviour
             WeaponUnlockedPanel.SetActive(true);
             BananaPreview.SetActive(true);
             GameData.unlockedWeapons.Add(BananaPrefab);
+            //WeaponUnlockedSound();
         }
         else if (level == 4)
         {
@@ -217,13 +218,17 @@ public class UIManager : MonoBehaviour
         startPanel.SetActive(true);
         setGameState(false);
         activeTouchCanvas = false;
+
+        NormalBtnClickedSound();
     }
 
     public void NextLvlBtn()
     {
+        NormalBtnClickedSound();
+        //AudioManager.instance.PlayMusic("Music");
         //int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         //int nextSceneIndex = currentSceneIndex + 1;
-        nextSceneIndex=PlayerPrefs.GetInt("CurrentLevel");
+        nextSceneIndex =PlayerPrefs.GetInt("CurrentLevel");
         
         if (PlayerPrefs.GetInt("CurrentLevel") <= 10)
         {
@@ -301,23 +306,28 @@ public class UIManager : MonoBehaviour
     public void ActiveStorePanel() 
     {
         storePanel.SetActive(true);
+        NormalBtnClickedSound();
     }
 
     public void DectivateStorePanel()
     {
         storePanel.SetActive(false);
+        NormalBtnClickedSound();
     }
 
     public void ActiveCurrencyPanel()
     {
-       currencyPanel.SetActive(true);
+        currencyPanel.SetActive(true);
+        NormalBtnClickedSound();
     }
 
     public void DeactiveCurrencyPanel()
     {
         currencyPanel.SetActive(false);
+        NormalBtnClickedSound();
     }
 
+    
     public void BtnOne()
     { 
         HighlightButton(0);
@@ -337,6 +347,31 @@ public class UIManager : MonoBehaviour
         HighlightButton(2);
         StartCoroutine(ScrollToPosition(positions[2]));
         storeHeadingTxt.text = "Gadgets";
+    }
+
+    public void ToggleBtnClickedSound() 
+    {
+        AudioManager.instance.PlaySFX("toggleClicked");
+    }
+
+    public void NormalBtnClickedSound()
+    {
+        AudioManager.instance.PlaySFX("normalBtn");
+    }
+
+    public void KeyCollectedSound()
+    {
+        AudioManager.instance.PlaySFX("key");
+    }
+
+    public void WeaponUnlockedSound()
+    {
+        AudioManager.instance.PlaySFX("weaponUnlocked");
+    }
+
+    public void LevelCompletedSound() 
+    {
+        AudioManager.instance.PlaySFX("LevelCompleted3");
     }
 
     private IEnumerator ScrollToPosition(Vector2 target)
