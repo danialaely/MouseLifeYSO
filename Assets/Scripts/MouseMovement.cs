@@ -62,7 +62,7 @@ public class MouseMovement : MonoBehaviour
     public GameObject bulletPrefab;
     GameObject bullet;
     public ParticleSystem cheeseEffect;
-    public GameObject CreakingAudio;
+    private GameObject CreakingAudio;
     public GameObject sliderPrefab;
     public Transform uiCanvas3d; // Drag your Canvas here in the inspector
 

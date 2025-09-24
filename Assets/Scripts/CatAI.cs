@@ -28,7 +28,7 @@ public class CatAI : MonoBehaviour
     Animator catAnimator;
     private Rigidbody rb;
 
-    public float hearingRange = 8.0f; // Distance the cat can hear
+    public float hearingRange = 18.0f; // Distance the cat can hear
     public LayerMask soundLayer; // Layer for sound-emitting objects
     public Animator mouseAnim;
 

@@ -558,7 +558,7 @@ PrefabInstance:
     - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
       propertyPath: CreakingAudio
       value: 
-      objectReference: {fileID: 1953394639}
+      objectReference: {fileID: 0}
     - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
       propertyPath: cagemouseAnim
       value: 
