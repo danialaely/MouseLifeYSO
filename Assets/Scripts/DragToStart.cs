@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DragToStart : MonoBehaviour
+public class DragToStart : MonoBehaviour, IPointerDownHandler
 {
     public GameObject gameplayUI;
     public GameObject startPanel;
@@ -11,8 +11,9 @@ public class DragToStart : MonoBehaviour
         //Time.timeScale = 0.0f;
     }
 
-    public void OnDrag(BaseEventData data)
-    {
+    public void OnPointerDown(PointerEventData eventData)
+    { 
+
         bool gameStarted = UIManager.Instance.GetGameState();
         if (!gameStarted)
         {
@@ -28,6 +29,11 @@ public class DragToStart : MonoBehaviour
         {
             Debug.Log("Nahi chal raha ukhar le kuch= GameStarted:"+gameStarted);
         }
+    }
+
+
+    public void OnDrag(BaseEventData data)
+    {
     }
 
     private void Update()

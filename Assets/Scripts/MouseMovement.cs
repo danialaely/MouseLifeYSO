@@ -172,11 +172,20 @@ public class MouseMovement : MonoBehaviour
         {
             MovementFinger = TouchedFinger;
             MovementAmount = Vector2.zero;
-            Joystick.gameObject.SetActive(true);
-            dummyJoystick.SetActive(false);
-            Joystick.RectTransform.sizeDelta = JoystickSize;
-            Joystick.RectTransform.anchoredPosition = ClampStartPosition(TouchedFinger.screenPosition);
+
+            StartCoroutine(ActivateAndPlaceJoystick(TouchedFinger));
         }
+    }
+
+    private IEnumerator ActivateAndPlaceJoystick(Finger touchedFinger)
+    {
+        Joystick.gameObject.SetActive(true);
+        dummyJoystick.SetActive(false);
+
+        yield return null; // wait one frame so RectTransform updates
+
+        Joystick.RectTransform.sizeDelta = JoystickSize;
+        Joystick.RectTransform.anchoredPosition = ClampStartPosition(touchedFinger.screenPosition);
     }
 
 
