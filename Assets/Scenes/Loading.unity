@@ -6615,6 +6615,7 @@ MonoBehaviour:
   _androidProdId: Rewarded_Android
   _iOSProdId: Rewarded_iOS
   _testMode: 1
+  speedBoost: {fileID: 3119582596686719139, guid: cee3cf1f03c6f0249a26ff3d158b118d, type: 3}
   OnAdLoaded: 0
 --- !u!1 &413895215
 GameObject:
@@ -20575,6 +20576,7 @@ MonoBehaviour:
   _androidProdId: Rewarded_Android
   _iOSProdId: Rewarded_iOS
   _testMode: 1
+  speedBoost: {fileID: 0}
   OnAdLoaded: 0
 --- !u!1 &1400965691
 GameObject:

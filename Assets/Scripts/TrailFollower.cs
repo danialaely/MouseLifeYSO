@@ -2,8 +2,15 @@ using UnityEngine;
 
 public class TrailFollower : MonoBehaviour
 {
-    public Transform target; // assign the mouse here
+    private Transform target; // assign the mouse here
     public float followSpeed = 10f;
+
+
+    private void Start()
+    {
+        GameObject mouse = GameObject.FindGameObjectWithTag("Player");
+        target = mouse.GetComponent<Transform>();
+    }
 
     void Update()
     {

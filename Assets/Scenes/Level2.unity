@@ -16085,7 +16085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3119582596686719139, guid: cee3cf1f03c6f0249a26ff3d158b118d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3119582596686719149, guid: cee3cf1f03c6f0249a26ff3d158b118d, type: 3}
       propertyPath: playOnAwake
@@ -16093,7 +16093,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3119582596686719150, guid: cee3cf1f03c6f0249a26ff3d158b118d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.063
+      value: -2.09
       objectReference: {fileID: 0}
     - target: {fileID: 3119582596686719150, guid: cee3cf1f03c6f0249a26ff3d158b118d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16101,7 +16101,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3119582596686719150, guid: cee3cf1f03c6f0249a26ff3d158b118d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.052
+      value: -8.96
       objectReference: {fileID: 0}
     - target: {fileID: 3119582596686719150, guid: cee3cf1f03c6f0249a26ff3d158b118d, type: 3}
       propertyPath: m_LocalRotation.w
