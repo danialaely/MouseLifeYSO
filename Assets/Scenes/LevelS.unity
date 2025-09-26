@@ -1214,6 +1214,15 @@ MonoBehaviour:
   wallrotation: 0
   Joystick: {fileID: 410119753}
   dummyJoystick: {fileID: 1424173115}
+  keyHolder: {fileID: 0}
+  doorPivot: {fileID: 0}
+  keyPE: {fileID: 0}
+  rotationAngle: 90
+  rotDoorSpeed: 2
+  grill1: {fileID: 0}
+  grill2: {fileID: 0}
+  grill3: {fileID: 0}
+  leverHandle: {fileID: 0}
 --- !u!4 &125532969 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1865022591899706479, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
@@ -5598,7 +5607,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &599792586
 Transform:
   m_ObjectHideFlags: 0
@@ -5683,7 +5692,6 @@ MonoBehaviour:
   musicSource: {fileID: 1455699655}
   sfxSource: {fileID: 1676768801}
   creakingSource: {fileID: 1953394642}
-  continuedFromGame: 0
 --- !u!1 &613221328
 GameObject:
   m_ObjectHideFlags: 0

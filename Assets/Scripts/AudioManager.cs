@@ -12,15 +12,15 @@ public class AudioManager : MonoBehaviour
     public Sound[] musicsounds, sfxSounds, creakingsounds;
     public AudioSource musicSource, sfxSource, creakingSource;
 
-    public bool continuedFromGame;
+    private bool continuedFromGame;
 
     public void Awake()
     {
         if (instance == null)
         {
             instance = this;
-           // DontDestroyOnLoad(gameObject);
-            continuedFromGame = false;
+            DontDestroyOnLoad(gameObject);
+            //continuedFromGame = false;
         }
         else
         {

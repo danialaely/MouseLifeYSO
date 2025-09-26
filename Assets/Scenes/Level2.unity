@@ -558,7 +558,7 @@ PrefabInstance:
     - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
       propertyPath: CreakingAudio
       value: 
-      objectReference: {fileID: 1953394639}
+      objectReference: {fileID: 0}
     - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
       propertyPath: cagemouseAnim
       value: 
@@ -3632,7 +3632,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &599792586
 Transform:
   m_ObjectHideFlags: 0
@@ -3717,7 +3717,6 @@ MonoBehaviour:
   musicSource: {fileID: 1455699655}
   sfxSource: {fileID: 1676768801}
   creakingSource: {fileID: 1953394642}
-  continuedFromGame: 0
 --- !u!1 &649944269
 GameObject:
   m_ObjectHideFlags: 0
@@ -16086,7 +16085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3119582596686719139, guid: cee3cf1f03c6f0249a26ff3d158b118d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3119582596686719149, guid: cee3cf1f03c6f0249a26ff3d158b118d, type: 3}
       propertyPath: playOnAwake
@@ -16094,7 +16093,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3119582596686719150, guid: cee3cf1f03c6f0249a26ff3d158b118d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.063
+      value: -2.09
       objectReference: {fileID: 0}
     - target: {fileID: 3119582596686719150, guid: cee3cf1f03c6f0249a26ff3d158b118d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16102,7 +16101,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3119582596686719150, guid: cee3cf1f03c6f0249a26ff3d158b118d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.052
+      value: -8.96
       objectReference: {fileID: 0}
     - target: {fileID: 3119582596686719150, guid: cee3cf1f03c6f0249a26ff3d158b118d, type: 3}
       propertyPath: m_LocalRotation.w

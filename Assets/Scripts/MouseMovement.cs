@@ -62,7 +62,7 @@ public class MouseMovement : MonoBehaviour
     public GameObject bulletPrefab;
     GameObject bullet;
     public ParticleSystem cheeseEffect;
-    public GameObject CreakingAudio;
+    private GameObject CreakingAudio;
     public GameObject sliderPrefab;
     public Transform uiCanvas3d; // Drag your Canvas here in the inspector
 
@@ -98,6 +98,7 @@ public class MouseMovement : MonoBehaviour
     public GameObject keyHolder; //destroy when mouse collides with keyCollider
     public Transform doorPivot;
     public GameObject keyPE;
+    public GameObject keyPreview;
 
     public float rotationAngle = 90f;   // How much to rotate
     public float rotDoorSpeed = 2f;    // How fast to rotate
@@ -110,6 +111,9 @@ public class MouseMovement : MonoBehaviour
     public GameObject grill2;
     public GameObject grill3;
     public GameObject leverHandle;
+    public GameObject leverPE;
+
+    public GameObject doorLock;
 
     private bool leverPulled = false;
 
@@ -169,11 +173,20 @@ public class MouseMovement : MonoBehaviour
         {
             MovementFinger = TouchedFinger;
             MovementAmount = Vector2.zero;
-            Joystick.gameObject.SetActive(true);
-            dummyJoystick.SetActive(false);
-            Joystick.RectTransform.sizeDelta = JoystickSize;
-            Joystick.RectTransform.anchoredPosition = ClampStartPosition(TouchedFinger.screenPosition);
+
+            StartCoroutine(ActivateAndPlaceJoystick(TouchedFinger));
         }
+    }
+
+    private IEnumerator ActivateAndPlaceJoystick(Finger touchedFinger)
+    {
+        Joystick.gameObject.SetActive(true);
+        dummyJoystick.SetActive(false);
+
+        yield return null; // wait one frame so RectTransform updates
+
+        Joystick.RectTransform.sizeDelta = JoystickSize;
+        Joystick.RectTransform.anchoredPosition = ClampStartPosition(touchedFinger.screenPosition);
     }
 
 
@@ -497,12 +510,18 @@ public class MouseMovement : MonoBehaviour
             Destroy(keyPE);
             Destroy(other.gameObject);
             Destroy(keyHolder);
+            UIManager.Instance.KeyCollectedSound();
+
+            EnableLockGravity(doorLock);
+            Destroy(doorLock, 2f);
         }
 
         if (other.CompareTag("Lever") && !leverPulled) // tag your lever collider as "Lever"
         {
             leverPulled = true;
             StartCoroutine(PullLeverAndDropGrills());
+            UIManager.Instance.KeyCollectedSound();
+            Destroy(leverPE);
         }
 
         if (other.CompareTag("DoorColl") && keyCollected == true) 
@@ -510,6 +529,10 @@ public class MouseMovement : MonoBehaviour
             // Open smoothly
             if (rotateCoroutine != null) StopCoroutine(rotateCoroutine);
             rotateCoroutine = StartCoroutine(RotateDoor(openRotation));
+            if (keyPreview != null) 
+            {
+                Destroy(keyPreview);
+            }
         }
     }
 
@@ -570,6 +593,19 @@ public class MouseMovement : MonoBehaviour
                 rb.useGravity = true;
             if (rb != null) 
             { 
+            }
+        }
+    }
+
+    public void EnableLockGravity(GameObject grill)
+    {
+        if (grill != null)
+        {
+            Rigidbody rb = doorLock.GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            if (rb != null)
+            {
             }
         }
     }

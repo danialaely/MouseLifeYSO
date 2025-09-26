@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TrailFollower : MonoBehaviour
+public class KeyCollected : MonoBehaviour
 {
     private Transform target; // assign the mouse here
     public float followSpeed = 10f;
@@ -17,7 +17,6 @@ public class TrailFollower : MonoBehaviour
         if (target == null) return;
 
         // Smooth follow
-        transform.position = Vector3.Lerp(transform.position, target.position+new Vector3(0,0.50f,0), followSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, target.position + new Vector3(0, 1.50f, 0), followSpeed * Time.deltaTime);
     }
 }
-
