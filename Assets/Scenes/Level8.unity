@@ -1092,6 +1092,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1459215382}
     - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
+      propertyPath: keyPreview
+      value: 
+      objectReference: {fileID: 1672465987943629334, guid: 11814ef1b3dc8124290935414edc2966, type: 3}
+    - target: {fileID: 871441811304509710, guid: 5d97baeaade798a428ea5c9c879c2192, type: 3}
       propertyPath: uiCanvas3d
       value: 
       objectReference: {fileID: 1728332417}
@@ -2893,6 +2897,7 @@ MonoBehaviour:
   _androidProdId: Rewarded_Android
   _iOSProdId: Rewarded_iOS
   _testMode: 1
+  speedBoost: {fileID: 0}
   OnAdLoaded: 0
 --- !u!1001 &327213469
 PrefabInstance:
@@ -4368,6 +4373,7 @@ MonoBehaviour:
   _androidProdId: Rewarded_Android
   _iOSProdId: Rewarded_iOS
   _testMode: 1
+  speedBoost: {fileID: 0}
   OnAdLoaded: 0
 --- !u!1 &444168687
 GameObject:

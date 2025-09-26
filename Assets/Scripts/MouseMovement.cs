@@ -98,6 +98,7 @@ public class MouseMovement : MonoBehaviour
     public GameObject keyHolder; //destroy when mouse collides with keyCollider
     public Transform doorPivot;
     public GameObject keyPE;
+    public GameObject keyPreview;
 
     public float rotationAngle = 90f;   // How much to rotate
     public float rotDoorSpeed = 2f;    // How fast to rotate
@@ -520,11 +521,7 @@ public class MouseMovement : MonoBehaviour
             leverPulled = true;
             StartCoroutine(PullLeverAndDropGrills());
             UIManager.Instance.KeyCollectedSound();
-            
-            if (leverPE != null) 
-            {
-                Destroy(leverPE);
-            }
+            Destroy(leverPE);
         }
 
         if (other.CompareTag("DoorColl") && keyCollected == true) 
@@ -532,6 +529,10 @@ public class MouseMovement : MonoBehaviour
             // Open smoothly
             if (rotateCoroutine != null) StopCoroutine(rotateCoroutine);
             rotateCoroutine = StartCoroutine(RotateDoor(openRotation));
+            if (keyPreview != null) 
+            {
+                Destroy(keyPreview);
+            }
         }
     }
 
